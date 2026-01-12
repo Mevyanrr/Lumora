@@ -29,9 +29,6 @@ class CustomTxtField extends StatelessWidget {
     return TextField(
       controller: controller,
       readOnly: fieldType == CustomFieldType.date,
-       onTap: fieldType == CustomFieldType.date
-        ? () => _selectDate(context)
-        : null,
       keyboardType: _keyboardType(),
       inputFormatters: _inputFormatters(),
       decoration: InputDecoration(

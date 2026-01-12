@@ -56,27 +56,37 @@ class Page1View extends StatelessWidget {
 
                 SizedBox(height: sizeheight* 15/fullheight),
 
-                Text("Jenis Kelamin"),
+                const Text("Jenis Kelamin"),
 
-                SizedBox(height: sizeheight* 8/fullheight),
+        BlocBuilder<GenderBloc, GenderState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                Radio<String>(
+                  value: 'L',
+                  groupValue: state.selectedGender,
+                  onChanged: (value) {
+                    context
+                        .read<GenderBloc>()
+                        .add(GenderSelected(value!));
+                  },
+                ),
+                const Text('Laki-laki'),
 
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'L',
-                      
-                    ),
-                    Text('Laki-laki'),
-
-                    SizedBox(width:sizewidth* 24/ fullwidth),
-
-                    Radio<String>(
-                      value: 'P',
-                    
-                    ),
-                    Text('Perempuan'),
-                  ],
-                )
+                Radio<String>(
+                  value: 'P',
+                  groupValue: state.selectedGender,
+                  onChanged: (value) {
+                    context
+                        .read<GenderBloc>()
+                        .add(GenderSelected(value!));
+                  },
+                ),
+                const Text('Perempuan'),
+              ],
+            );
+          },
+        ),
               ],
             ),
           ],
