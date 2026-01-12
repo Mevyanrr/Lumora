@@ -44,7 +44,7 @@ class TopContainer extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: sizeheight*32/fullheight ),
 
           Text(
             "Mari Kenali Si Kecil!",
@@ -57,7 +57,7 @@ class TopContainer extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 12),
+          SizedBox(height: sizeheight*8/fullheight ),
 
           Text(
             "Isi beberapa pertanyaan berikut agar kami bisa membantu  proses tumbuh kembang si kecil dengan baik.",
@@ -71,7 +71,7 @@ class TopContainer extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: sizeheight*9/fullheight ),
 
           Image.asset(
             image,
@@ -79,6 +79,8 @@ class TopContainer extends StatelessWidget {
             width: sizewidth* 202/fullwidth,
             fit: BoxFit.contain,
           ),
+
+        
         ],
       ),
     );

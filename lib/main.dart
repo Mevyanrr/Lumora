@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 
 void main() {
@@ -10,15 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return MaterialApp(
-      theme: ThemeData(fontFamily: 'poppins'),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/kuisioner1',
-      routes: {
-        '/kuisioner1': (context) => const Page1(),
-       
-      },
+    return BlocProvider(
+      create: (_) => KuisionerBloc(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'poppins'),
+        initialRoute: '/kuisioner1',
+        routes: {
+          '/kuisioner1': (context) => Page1(),
+        },
+      ),
     );
   }
 }
-

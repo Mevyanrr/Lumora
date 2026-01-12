@@ -45,21 +45,11 @@ class _BottomNavState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(50),
-          topRight: Radius.circular(50),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(0, -2),
-          )
-        ],
-      ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+      topLeft: Radius.circular(50),
+      topRight: Radius.circular(50),
+    ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.white,

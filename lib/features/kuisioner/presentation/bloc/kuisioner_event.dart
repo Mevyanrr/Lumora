@@ -1,18 +1,18 @@
 abstract class KuisionerEvent {}
 
-class NamaChanged extends KuisionerEvent {
+class IsiNama extends KuisionerEvent {
   final String nama;
-  NamaChanged(this.nama);
+  IsiNama(this.nama);
 }
 
-class GenderChanged extends KuisionerEvent {
+class IsiGender extends KuisionerEvent {
   final String gender;
-  GenderChanged(this.gender);
+  IsiGender(this.gender);
 }
 
-class TanggalLahirChanged extends KuisionerEvent {
+class IsiTglLahir extends KuisionerEvent {
   final DateTime tanggal;
-  TanggalLahirChanged(this.tanggal);
+ IsiTglLahir(this.tanggal);
 }
 
 class SubmitKuisioner extends KuisionerEvent {}
