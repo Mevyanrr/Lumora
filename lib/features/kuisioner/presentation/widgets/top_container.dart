@@ -43,9 +43,9 @@ class TopContainer extends StatelessWidget {
               ),
             ),
           ),
-
+    
           SizedBox(height: sizeheight*32/fullheight ),
-
+    
           Text(
             "Mari Kenali Si Kecil!",
             textAlign: TextAlign.center,
@@ -56,30 +56,33 @@ class TopContainer extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-
+    
           SizedBox(height: sizeheight*8/fullheight ),
-
-          Text(
-            "Isi beberapa pertanyaan berikut agar kami bisa membantu  proses tumbuh kembang si kecil dengan baik.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.txtPrimary,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              height: 1.5,
+    
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: sizewidth*18/fullwidth),
+            child: Text(
+              "Isi beberapa pertanyaan berikut agar kami bisa\n membantu  proses tumbuh kembang si kecil dengan\n baik.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.txtPrimary,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                height: 1.5,
+              ),
             ),
           ),
-
+    
           SizedBox(height: sizeheight*9/fullheight ),
-
+    
           Image.asset(
             image,
             height: sizeheight* 151/fullheight,
             width: sizewidth* 202/fullwidth,
             fit: BoxFit.contain,
           ),
-
+    
         
         ],
       ),
