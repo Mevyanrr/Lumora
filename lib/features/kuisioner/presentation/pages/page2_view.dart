@@ -5,25 +5,28 @@ import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
-import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
+import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
+import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/widgets/top_container.dart';
 import 'package:lumora/core/widgets/textfield.dart';
 
-class Page1View extends StatefulWidget {
-  final TextEditingController nameController;
-  final TextEditingController dateController;
+class Page2View extends StatefulWidget {
+  final TextEditingController bbController;
+  final TextEditingController tbController;
+  final TextEditingController lingkarKepalaController;
 
-  const Page1View({
+  const Page2View({
     super.key,
-    required this.nameController,
-    required this.dateController,
+    required this.bbController,
+    required this.tbController,
+    required this.lingkarKepalaController,
   });
 
   @override
-  State<Page1View> createState() => _Page1ViewState();
+  State<Page2View> createState() => _Page2ViewState();
 }
 
-class _Page1ViewState extends State<Page1View> {
+class _Page2ViewState extends State<Page2View> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -39,8 +42,8 @@ class _Page1ViewState extends State<Page1View> {
           child: Column(
             children: [
               TopContainer(
-                stepPage: "1 / 4",
-                image: "assets/images/kuisioner-1.png",
+                stepPage: "2 / 4",
+                image: "assets/images/kuisioner-2.png",
               ),
 
               SizedBox(height: sizeheight * 30 / fullheight),
@@ -51,7 +54,7 @@ class _Page1ViewState extends State<Page1View> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Nama Bayi",
+                      "Berat badan saat ini (Kg)",
                       style: TextStyle(
                         color: AppColors.txtPrimary,
                         fontFamily: 'Poppins',
@@ -61,15 +64,16 @@ class _Page1ViewState extends State<Page1View> {
                     ),
                     SizedBox(height: sizeheight * 9 / fullheight),
                     CustomTxtField(
-                      labelText: "Masukkan nama bayi...",
-                      controller: widget.nameController,
+                      labelText: "Masukkan berat badan bayi...",
+                      controller: widget.bbController,
                       onChanged: (value) {
                         context.read<KuisionerBloc>().add(IsiNama(value));
                       },
                     ),
                     SizedBox(height: sizeheight * 12 / fullheight),
+
                     Text(
-                      "Tanggal Lahir",
+                      "Tinggi badan saat ini (Cm)",
                       style: TextStyle(
                         color: AppColors.txtPrimary,
                         fontFamily: 'Poppins',
@@ -77,26 +81,18 @@ class _Page1ViewState extends State<Page1View> {
                         fontSize: 18,
                       ),
                     ),
-
                     SizedBox(height: sizeheight * 9 / fullheight),
-
                     CustomTxtField(
-                      labelText: "DD/MM/YYYY",
-                      controller: widget.dateController,
-                      fieldType: CustomFieldType.date,
-                      suffixIcon: Icon(
-                        Icons.calendar_month,
-                        color: AppColors.txtPrimary,
-                      ),
-                      onDateSelected: (date) {
-                        context.read<KuisionerBloc>().add(IsiTglLahir(date));
+                      labelText: "Masukkan tinggi badan bayi...",
+                      controller: widget.tbController,
+                      onChanged: (value) {
+                        context.read<KuisionerBloc>().add(IsiNama(value));
                       },
                     ),
-
-                    SizedBox(height: sizeheight * 24 / fullheight),
+                    SizedBox(height: sizeheight * 12 / fullheight),
 
                     Text(
-                      "Jenis Kelamin",
+                      "Lingkar kepala saat ini (Cm)",
                       style: TextStyle(
                         color: AppColors.txtPrimary,
                         fontFamily: 'Poppins',
@@ -104,52 +100,12 @@ class _Page1ViewState extends State<Page1View> {
                         fontSize: 18,
                       ),
                     ),
-
-                    BlocBuilder<KuisionerBloc, KuisionerState>(
-                      builder: (context, state) {
-                        return Row(
-                          children: [
-                            Radio<String>(
-                              value: 'L',
-                              groupValue: state.gender,
-                              onChanged: (value) {
-                                context.read<KuisionerBloc>().add(
-                                  IsiGender(value!),
-                                );
-                              },
-                            ),
-                            Text(
-                              'Laki-laki',
-                              style: TextStyle(
-                                color: AppColors.txtPrimary,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),
-                            ),
-
-                            SizedBox(width: sizewidth * 24 / fullwidth),
-
-                            Radio<String>(
-                              value: 'P',
-                              groupValue: state.gender,
-                              onChanged: (value) {
-                                context.read<KuisionerBloc>().add(
-                                  IsiGender(value!),
-                                );
-                              },
-                            ),
-                            Text(
-                              'Perempuan',
-                              style: TextStyle(
-                                color: AppColors.txtPrimary,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        );
+                    SizedBox(height: sizeheight * 9 / fullheight),
+                    CustomTxtField(
+                      labelText: "Jika belum tahu dapat dilewatkan...",
+                      controller: widget.lingkarKepalaController,
+                      onChanged: (value) {
+                        context.read<KuisionerBloc>().add(IsiNama(value));
                       },
                     ),
 
@@ -164,7 +120,7 @@ class _Page1ViewState extends State<Page1View> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => Page2()),
+                          MaterialPageRoute(builder: (_) => Page3()),
                         );
                       },
 
@@ -180,7 +136,10 @@ class _Page1ViewState extends State<Page1View> {
                       height: sizeheight * 45 / fullheight,
                       backgroundColor: AppColors.background,
                       borderColor: AppColors.txtPrimary,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+
                       radius: 15,
                       txColor: AppColors.txtPrimary,
                     ),

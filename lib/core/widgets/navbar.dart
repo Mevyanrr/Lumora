@@ -16,7 +16,7 @@ class _BottomNavState extends State<Navbar> {
     if (index == widget.selectedItem) return;
 
     if (index == 0) {
-      Navigator.pushReplacementNamed(context, '/homepage');
+      Navigator.pushReplacementNamed(context, '/kuisioner1');
     } else if (index == 1) {
       Navigator.pushReplacementNamed(context, '');
     } else if (index == 2) {

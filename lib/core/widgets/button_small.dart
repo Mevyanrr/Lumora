@@ -44,8 +44,9 @@ class ButtonSmall extends StatelessWidget {
                 text,
                 style: TextStyle(
                   color: txColor,
-                  fontSize: 14,
-                  fontFamily: 'Poppins-Regular'
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),

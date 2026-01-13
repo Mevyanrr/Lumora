@@ -4,6 +4,8 @@ import 'kuisioner_state.dart';
 
 class KuisionerBloc extends Bloc<KuisionerEvent, KuisionerState> {
   KuisionerBloc() : super(const KuisionerState()) {
+
+    //PAGE1
     on<IsiNama>((event, emit) {
       emit(state.copyWith(nama: event.nama));
     });
@@ -14,6 +16,29 @@ class KuisionerBloc extends Bloc<KuisionerEvent, KuisionerState> {
 
     on<IsiTglLahir>((event, emit) {
       emit(state.copyWith(tanggalLahir: event.tanggal));
+    });
+
+        //PAGE2
+    on<IsiBB>((event, emit) {
+      emit(state.copyWith(bb: event.bb));
+    });
+    
+    on<IsiTB>((event, emit) {
+      emit(state.copyWith(tb: event.tb));
+    });
+
+     //PAGE3
+    on<PilKondisiBayi>((event, emit) {
+      emit(state.copyWith(kondisiBayi: event.kondisiBayi));
+    });
+    
+    on<PilKontrol>((event, emit) {
+      emit(state.copyWith(pilKontrol: event.pilKontrol));
+    });
+
+    //PAGE4
+    on<PilAktivitasBayi>((event, emit) {
+      emit(state.copyWith(aktivitasBayi: event.aktivitasBayi));
     });
 
     on<SubmitKuisioner>((event, emit) {

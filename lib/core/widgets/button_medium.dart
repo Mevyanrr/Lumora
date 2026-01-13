@@ -45,7 +45,8 @@ class ButtonMedium extends StatelessWidget {
                 style: TextStyle(
                   color: txColor,
                   fontSize: 16,
-                  fontFamily: 'Poppins-Medium'
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
