@@ -1,9 +1,29 @@
-part of 'auth_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class AuthState extends Equatable {
-  const AuthState();  
+
+
+
+enum AuthStatus { initial, loading, success, failure }
+
+class AuthState extends Equatable {
+  final AuthStatus status;
+  final String? errorMessage;
+
+  const AuthState({
+    this.status = AuthStatus.initial,
+    this.errorMessage,
+  });
+
+  AuthState copyWith({
+    AuthStatus? status,
+    String? errorMessage,
+  }) {
+    return AuthState(
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [status, errorMessage];
 }
-class AuthInitial extends AuthState {}

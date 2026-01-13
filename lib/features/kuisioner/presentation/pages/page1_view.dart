@@ -33,161 +33,163 @@ class _Page1ViewState extends State<Page1View> {
     final fullwidth = 412;
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: sizeheight * 77 / fullheight, bottom: sizeheight*61/fullheight),
-          child: Column(
-            children: [
-              TopContainer(
-                stepPage: "1 / 4",
-                image: "assets/images/kuisioner-1.png",
-              ),
-
-              SizedBox(height: sizeheight * 30 / fullheight),
-
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Nama Bayi",
-                      style: TextStyle(
-                        color: AppColors.txtPrimary,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: sizeheight * 9 / fullheight),
-                    CustomTxtField(
-                      labelText: "Masukkan nama bayi...",
-                      controller: widget.nameController,
-                      onChanged: (value) {
-                        context.read<KuisionerBloc>().add(IsiNama(value));
-                      },
-                    ),
-                    SizedBox(height: sizeheight * 12 / fullheight),
-                    Text(
-                      "Tanggal Lahir",
-                      style: TextStyle(
-                        color: AppColors.txtPrimary,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                      ),
-                    ),
-
-                    SizedBox(height: sizeheight * 9 / fullheight),
-
-                    CustomTxtField(
-                      labelText: "DD/MM/YYYY",
-                      controller: widget.dateController,
-                      fieldType: CustomFieldType.date,
-                      suffixIcon: Icon(
-                        Icons.calendar_month,
-                        color: AppColors.txtPrimary,
-                      ),
-                      onDateSelected: (date) {
-                        context.read<KuisionerBloc>().add(IsiTglLahir(date));
-                      },
-                    ),
-
-                    SizedBox(height: sizeheight * 24 / fullheight),
-
-                    Text(
-                      "Jenis Kelamin",
-                      style: TextStyle(
-                        color: AppColors.txtPrimary,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                      ),
-                    ),
-
-                    BlocBuilder<KuisionerBloc, KuisionerState>(
-                      builder: (context, state) {
-                        return Row(
-                          children: [
-                            Radio<String>(
-                              value: 'L',
-                              groupValue: state.gender,
-                              onChanged: (value) {
-                                context.read<KuisionerBloc>().add(
-                                  IsiGender(value!),
-                                );
-                              },
-                            ),
-                            Text(
-                              'Laki-laki',
-                              style: TextStyle(
-                                color: AppColors.txtPrimary,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),
-                            ),
-
-                            SizedBox(width: sizewidth * 24 / fullwidth),
-
-                            Radio<String>(
-                              value: 'P',
-                              groupValue: state.gender,
-                              onChanged: (value) {
-                                context.read<KuisionerBloc>().add(
-                                  IsiGender(value!),
-                                );
-                              },
-                            ),
-                            Text(
-                              'Perempuan',
-                              style: TextStyle(
-                                color: AppColors.txtPrimary,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-
-                    SizedBox(height: sizeheight * 56 / fullheight),
-
-                    ButtonMedium(
-                      text: "Lanjutkan",
-                      width: sizewidth * 327 / fullwidth,
-                      height: sizeheight * 45 / fullheight,
-                      backgroundColor: AppColors.txtPrimary,
-                      borderColor: AppColors.txtPrimary,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => Page2()),
-                        );
-                      },
-
-                      radius: 15,
-                      txColor: AppColors.background,
-                    ),
-
-                    SizedBox(height: sizeheight * 12 / fullheight),
-
-                    ButtonMedium(
-                      text: "Kembali",
-                      width: sizewidth * 327 / fullwidth,
-                      height: sizeheight * 45 / fullheight,
-                      backgroundColor: AppColors.background,
-                      borderColor: AppColors.txtPrimary,
-                      onTap: () {},
-                      radius: 15,
-                      txColor: AppColors.txtPrimary,
-                    ),
-                  ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(top: sizeheight * 77 / fullheight, bottom: sizeheight*61/fullheight),
+            child: Column(
+              children: [
+                TopContainer(
+                  stepPage: "1 / 4",
+                  image: "assets/images/kuisioner-1.png",
                 ),
-              ),
-            ],
+        
+                SizedBox(height: sizeheight * 30 / fullheight),
+        
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Nama Bayi",
+                        style: TextStyle(
+                          color: AppColors.txtPrimary,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: sizewidth*18/fullwidth,
+                        ),
+                      ),
+                      SizedBox(height: sizeheight * 9 / fullheight),
+                      CustomTxtField(
+                        labelText: "Masukkan nama bayi...",
+                        controller: widget.nameController,
+                        onChanged: (value) {
+                          context.read<KuisionerBloc>().add(IsiNama(value));
+                        },
+                      ),
+                      SizedBox(height: sizeheight * 12 / fullheight),
+                      Text(
+                        "Tanggal Lahir",
+                        style: TextStyle(
+                          color: AppColors.txtPrimary,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: sizewidth*18/fullwidth,
+                        ),
+                      ),
+        
+                      SizedBox(height: sizeheight * 9 / fullheight),
+        
+                      CustomTxtField(
+                        labelText: "DD/MM/YYYY",
+                        controller: widget.dateController,
+                        fieldType: CustomFieldType.date,
+                        suffixIcon: Icon(
+                          Icons.calendar_month,
+                          color: AppColors.txtPrimary,
+                        ),
+                        onDateSelected: (date) {
+                          context.read<KuisionerBloc>().add(IsiTglLahir(date));
+                        },
+                      ),
+        
+                      SizedBox(height: sizeheight * 24 / fullheight),
+        
+                      Text(
+                        "Jenis Kelamin",
+                        style: TextStyle(
+                          color: AppColors.txtPrimary,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: sizewidth*18/fullwidth,
+                        ),
+                      ),
+        
+                      BlocBuilder<KuisionerBloc, KuisionerState>(
+                        builder: (context, state) {
+                          return Row(
+                            children: [
+                              Radio<String>(
+                                value: 'L',
+                                groupValue: state.gender,
+                                onChanged: (value) {
+                                  context.read<KuisionerBloc>().add(
+                                    IsiGender(value!),
+                                  );
+                                },
+                              ),
+                              Text(
+                                'Laki-laki',
+                                style: TextStyle(
+                                  color: AppColors.txtPrimary,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: sizewidth*16/fullwidth,
+                                ),
+                              ),
+        
+                              SizedBox(width: sizewidth * 24 / fullwidth),
+        
+                              Radio<String>(
+                                value: 'P',
+                                groupValue: state.gender,
+                                onChanged: (value) {
+                                  context.read<KuisionerBloc>().add(
+                                    IsiGender(value!),
+                                  );
+                                },
+                              ),
+                              Text(
+                                'Perempuan',
+                                style: TextStyle(
+                                  color: AppColors.txtPrimary,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: sizewidth*16/fullwidth,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+        
+                      SizedBox(height: sizeheight * 56 / fullheight),
+        
+                      ButtonMedium(
+                        text: "Lanjutkan",
+                        width: sizewidth * 327 / fullwidth,
+                        height: sizeheight * 45 / fullheight,
+                        backgroundColor: AppColors.txtPrimary,
+                        borderColor: AppColors.txtPrimary,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => Page2()),
+                          );
+                        },
+        
+                        radius: 15,
+                        txColor: AppColors.background,
+                      ),
+        
+                      SizedBox(height: sizeheight * 12 / fullheight),
+        
+                      ButtonMedium(
+                        text: "Kembali",
+                        width: sizewidth * 327 / fullwidth,
+                        height: sizeheight * 45 / fullheight,
+                        backgroundColor: AppColors.background,
+                        borderColor: AppColors.txtPrimary,
+                        onTap: () {},
+                        radius: 15,
+                        txColor: AppColors.txtPrimary,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

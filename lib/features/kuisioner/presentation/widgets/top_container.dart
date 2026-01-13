@@ -20,7 +20,6 @@ class TopContainer extends StatelessWidget {
     final fullwidth = 412;
     return SizedBox(
       width: double.infinity,
-      height: sizeheight* 326/ fullheight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -68,7 +67,7 @@ class TopContainer extends StatelessWidget {
                 color: AppColors.txtPrimary,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w400,
-                fontSize: 14,
+                fontSize: sizewidth*14/fullwidth,
                 height: 1.5,
               ),
             ),

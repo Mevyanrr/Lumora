@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/features/auth/presentation/pages/login.dart';
 import 'package:lumora/features/auth/presentation/pages/regist.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
@@ -12,6 +14,15 @@ import 'package:lumora/features/kuisioner/presentation/pages/page4_view.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onBoarding.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: AppColors.background, 
+      statusBarIconBrightness: Brightness.dark, // icon hitam
+      statusBarBrightness: Brightness.light, // iOS
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -24,7 +35,19 @@ class MyApp extends StatelessWidget {
       create: (_) => KuisionerBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'poppins'),
+
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+          radioTheme: RadioThemeData(
+            fillColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.selected)) {
+                return AppColors.radio;
+              }
+              return AppColors.txtPrimary;
+            }),
+          ),
+        ),
+
         initialRoute: '/onboarding',
         routes: {
           '/kuisioner1': (context) => Page1(),

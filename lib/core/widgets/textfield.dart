@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lumora/core/theme/colors.dart';
 
-enum CustomFieldType { text, date }
+enum CustomFieldType {
+  text,
+  number,
+  email,
+  password,
+  date,
+}
+
 
 class CustomTxtField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
   final CustomFieldType fieldType;
   final Widget? suffixIcon;
+  final String? Function(String?)? validator;
 
   final ValueChanged<String>? onChanged;
   final ValueChanged<DateTime>? onDateSelected;
@@ -20,15 +28,16 @@ class CustomTxtField extends StatelessWidget {
     this.suffixIcon,
     this.onChanged,
     this.onDateSelected,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
+      validator: validator,
       readOnly: fieldType == CustomFieldType.date,
-      keyboardType:
-          fieldType == CustomFieldType.text ? TextInputType.text : TextInputType.none,
+        keyboardType: _getKeyboardType(fieldType),
       onChanged: fieldType == CustomFieldType.text ? onChanged : null,
       onTap: fieldType == CustomFieldType.date
           ? () async {
@@ -62,3 +71,19 @@ class CustomTxtField extends StatelessWidget {
     );
   }
 }
+
+TextInputType _getKeyboardType(CustomFieldType type) {
+  switch (type) {
+    case CustomFieldType.number:
+      return TextInputType.number;
+    case CustomFieldType.email:
+      return TextInputType.emailAddress;
+    case CustomFieldType.password:
+      return TextInputType.visiblePassword;
+    case CustomFieldType.text:
+      return TextInputType.text;
+    case CustomFieldType.date:
+      return TextInputType.none;
+  }
+}
+

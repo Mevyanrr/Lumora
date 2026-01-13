@@ -10,4 +10,5 @@ class AppColors{
   static const white = Color(0xFFFFFFFF);
   static const green = Color(0xFF8ED6B5);
   static const yellowSemantic = Color(0xFFFFD875);
+  static const radio = Color(0xFFBDF7DD);
 }
