@@ -35,7 +35,7 @@ class _Page1ViewState extends State<Page1View> {
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: sizeheight * 77 / fullheight),
+          padding: EdgeInsets.only(top: sizeheight * 77 / fullheight, bottom: sizeheight*61/fullheight),
           child: Column(
             children: [
               TopContainer(

@@ -69,6 +69,8 @@ flutter:
     - assets/icons/home.svg
     - assets/icons/milestone.svg
     - assets/icons/stimulasi.svg
+    - assets/icons/star.svg
+    - assets/icons/google.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
