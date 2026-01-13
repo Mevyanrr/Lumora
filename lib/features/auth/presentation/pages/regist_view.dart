@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
-import 'package:lumora/features/auth/presentation/pages/regist.dart';
+import 'package:lumora/features/auth/presentation/pages/login.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
@@ -13,12 +13,12 @@ import 'package:lumora/features/kuisioner/presentation/pages/page3_view.dart';
 import 'package:lumora/features/kuisioner/presentation/widgets/top_container.dart';
 import 'package:lumora/core/widgets/textfield.dart';
 
-class LoginView extends StatefulWidget {
+class RegistView extends StatefulWidget {
   final TextEditingController namauserController;
   final TextEditingController emailController;
   final TextEditingController pwController;
 
-  const LoginView({
+  const RegistView({
     super.key,
     required this.namauserController,
     required this.emailController,
@@ -26,10 +26,10 @@ class LoginView extends StatefulWidget {
   });
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegistView> createState() => _RegistViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegistViewState extends State<RegistView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-            top: sizeheight * 115 / fullheight,
+            top: sizeheight * 91 / fullheight,
             bottom: sizeheight * 67 / fullheight,
           ),
           child: Column(
@@ -67,7 +67,8 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   Text(
-                    "Selamat datang kembali",
+                    "Mari bergabung dan pantau tumbuh\nkembang Si Kecil!",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 18,
@@ -131,32 +132,34 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     SizedBox(height: sizeheight * 9 / fullheight),
                     CustomTxtField(
-                      labelText: "Masukkan kata sandi...",
+                      labelText: "Maukkan kata sandi...",
                       controller: widget.pwController,
                       onChanged: (value) {
                         context.read<KuisionerBloc>().add(IsiNama(value));
                       },
                     ),
-                    SizedBox(height: sizeheight * 8 / fullheight),
-                    GestureDetector(
-                      // onTap: () {
-                      //    Navigator.push(
-                      //      context,
-                      //      MaterialPageRoute(builder: (_) => Page1()),
-                      //    );
-                      // },
-                      child: Text(
-                        "Lupa kata sandi?",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.txtPrimary,
-                        ),
+
+                    SizedBox(height: sizeheight * 16 / fullheight),
+
+                    Text(
+                      "Konfirmasi kata sandi",
+                      style: TextStyle(
+                        color: AppColors.txtPrimary,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
                       ),
                     ),
+                    SizedBox(height: sizeheight * 9 / fullheight),
+                    CustomTxtField(
+                      labelText: "Konfirmasi kata sandi anda...",
+                      controller: widget.pwController,
+                      onChanged: (value) {
+                        context.read<KuisionerBloc>().add(IsiNama(value));
+                      },
+                    ),
 
-                    SizedBox(height: sizeheight * 51 / fullheight),
+                    SizedBox(height: sizeheight * 46 / fullheight),
 
                     ButtonMedium(
                       text: "Masuk",
@@ -219,13 +222,13 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
 
-                    SizedBox(height: sizeheight * 75 / fullheight),
+                    SizedBox(height: sizeheight * 47 / fullheight),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Belum punya akun?",
+                          "Sudah punya akun?",
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Poppins',
@@ -237,11 +240,11 @@ class _LoginViewState extends State<LoginView> {
                           onTap: () {
                              Navigator.push(
                                context,
-                               MaterialPageRoute(builder: (_) => Regist()),
+                               MaterialPageRoute(builder: (_) => Login()),
                              );
                           },
                           child: Text(
-                            " Daftar",
+                            " Login",
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins',

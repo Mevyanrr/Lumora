@@ -4,8 +4,6 @@ import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
-import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
-import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/widgets/top_container.dart';
 import 'package:lumora/core/widgets/textfield.dart';

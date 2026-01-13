@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/features/auth/presentation/pages/login.dart';
+import 'package:lumora/features/auth/presentation/pages/regist.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
-import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
+import 'package:lumora/features/kuisioner/presentation/pages/page3_view.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
+import 'package:lumora/features/kuisioner/presentation/pages/page4_view.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onBoarding.dart';
 
 void main() {
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
           '/kuisioner4': (context) => Page4(),
           '/onboarding': (context) => Onboarding(),
           '/login': (context) => Login(),
+          '/regist': (context) => Regist(),
         },
       ),
     );
