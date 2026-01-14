@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/features/auth/presentation/pages/login.dart';
 import 'package:lumora/features/auth/presentation/pages/regist.dart';
+import 'package:lumora/features/home/presentation/pages/home_page.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/onboarding',
+        initialRoute: '/home',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           '/onboarding': (context) => Onboarding(),
           '/login': (context) => Login(),
           '/regist': (context) => Regist(),
+          '/home': (context) => HomePage()
         },
       ),
     );

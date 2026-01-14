@@ -66,11 +66,28 @@ flutter:
     - assets/images/kuisioner-2.png
     - assets/images/kuisioner-3.png
     - assets/images/kuisioner-4.png
+    - assets/images/ayam.png
+    - assets/images/biji.png
+    - assets/images/sayur.png
+    - assets/images/pisang.png
+    - assets/images/baby-homepage.png
+    - assets/images/gizi-bad.png
+    - assets/images/gizi-good.png
+    - assets/images/gizi-lamp.png
+    - assets/images/info-kes-doll.png
+    - assets/images/info-kes-milk.png
+    - assets/images/kentang.png
+    - assets/images/profildummy.png
+
     - assets/icons/home.svg
     - assets/icons/milestone.svg
     - assets/icons/stimulasi.svg
     - assets/icons/star.svg
     - assets/icons/google.svg
+    - assets/icons/feet.svg
+    - assets/icons/growbaby-feet.svg
+    - assets/icons/growbaby-star.svg
+    - assets/icons/growbaby-world.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
