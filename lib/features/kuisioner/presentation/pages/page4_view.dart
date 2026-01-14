@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
-=======
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
@@ -10,12 +7,9 @@ import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart'
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
 import 'package:lumora/features/kuisioner/presentation/widgets/top_container.dart';
-<<<<<<< HEAD
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onBoarding.dart';
 import 'package:lumora/model/baby_model.dart';
-=======
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 
 class Page4View extends StatefulWidget {
   final TextEditingController aktivitasBayiController;
@@ -76,11 +70,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Tengkurap',
-=======
-                                    value: 'A',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -105,11 +95,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Duduk dengan bantuan',
-=======
-                                    value: 'B',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -133,11 +119,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Duduk sendiri',
-=======
-                                    value: 'C',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -162,11 +144,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Merangkak',
-=======
-                                    value: 'D',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -190,11 +168,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Berdiri dengan pengangan',
-=======
-                                    value: 'E',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -219,11 +193,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Merespon terhadap suara',
-=======
-                                    value: 'F',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -247,11 +217,7 @@ class _Page4ViewState extends State<Page4View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Bayi masi berusia dibawah 2 bulan',
-=======
-                                    value: 'G',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.aktivitasBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -286,7 +252,6 @@ class _Page4ViewState extends State<Page4View> {
                                             height: sizeheight * 45 / fullheight,
                                             backgroundColor: AppColors.txtPrimary,
                                             borderColor: AppColors.txtPrimary,
-<<<<<<< HEAD
                                             onTap: () async{
                                             final finalState = context.read<KuisionerBloc>().state;
                                             final User? user = FirebaseAuth.instance.currentUser;
@@ -310,15 +275,6 @@ class _Page4ViewState extends State<Page4View> {
                                         builder: (_) => Onboarding(),
                                         ),
                                           );
-=======
-                                            onTap: () {
-                                              //  Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (_) => Beranda(),
-                                              //   ),
-                                              // );
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                             },
                                             radius: 15,
                                             txColor: AppColors.background,

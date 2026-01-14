@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lumora/core/theme/colors.dart';
 
-<<<<<<< HEAD
 enum CustomFieldType {
   text,
   number,
@@ -10,9 +9,6 @@ enum CustomFieldType {
   date,
 }
 
-=======
-enum CustomFieldType { text, number, email, password, date }
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 
 class CustomTxtField extends StatelessWidget {
   final String labelText;
@@ -37,44 +33,22 @@ class CustomTxtField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-=======
-    final size = MediaQuery.of(context).size;
-    final sizewidth = size.width;
-    final sizeheight = size.height;
-    final fullheight = 917;
-    final fullwidth = 412;
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
     return TextFormField(
       controller: controller,
       validator: validator,
       readOnly: fieldType == CustomFieldType.date,
-<<<<<<< HEAD
         keyboardType: _getKeyboardType(fieldType),
       onChanged: onChanged,
-=======
-      keyboardType: _getKeyboardType(fieldType),
-      onChanged: fieldType == CustomFieldType.text ? onChanged : null,
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
       onTap: fieldType == CustomFieldType.date
           ? () async {
               final pickedDate = await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
-<<<<<<< HEAD
                 firstDate:
                     DateTime.now().subtract(const Duration(days: 365 * 2)),
                 lastDate: DateTime.now(),
               );
 
-=======
-                firstDate: DateTime.now().subtract(
-                  const Duration(days: 365 * 2),
-                ),
-                lastDate: DateTime.now(),
-              );
-    
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
               if (pickedDate != null) {
                 controller.text =
                     "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
@@ -84,18 +58,8 @@ class CustomTxtField extends StatelessWidget {
           : null,
       decoration: InputDecoration(
         labelText: labelText,
-<<<<<<< HEAD
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelStyle: TextStyle(color: AppColors.txtPrimary),
-=======
-        labelStyle: TextStyle(
-          fontSize: sizewidth * 14 / fullwidth,
-          fontFamily: 'Poppins',
-          fontWeight: FontWeight.w400,
-          color: AppColors.txtPrimary,
-        ),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: AppColors.primaryOrange,
@@ -121,9 +85,5 @@ TextInputType _getKeyboardType(CustomFieldType type) {
     case CustomFieldType.date:
       return TextInputType.none;
   }
-<<<<<<< HEAD
 }
 
-=======
-}
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0

@@ -67,13 +67,9 @@ class _Page2ViewState extends State<Page2View> {
                         fieldType: CustomFieldType.number,
                         controller: widget.bbController,
                         onChanged: (value) {
-<<<<<<< HEAD
                           double bbValue = double.tryParse(value) ?? 0.0;
                           print("DEBUG: Mengirim BB $bbValue ke Bloc");
                           context.read<KuisionerBloc>().add(IsiBB(bbValue));
-=======
-                          context.read<KuisionerBloc>().add(IsiNama(value));
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                         },
                       ),
                       SizedBox(height: sizeheight * 12 / fullheight),
@@ -93,12 +89,8 @@ class _Page2ViewState extends State<Page2View> {
                         fieldType: CustomFieldType.number,
                         controller: widget.tbController,
                         onChanged: (value) {
-<<<<<<< HEAD
                         double tbValue = double.tryParse(value) ?? 0.0;
                           context.read<KuisionerBloc>().add(IsiTB(tbValue));
-=======
-                          context.read<KuisionerBloc>().add(IsiNama(value));
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                         },
                       ),
                       SizedBox(height: sizeheight * 12 / fullheight),
@@ -118,12 +110,8 @@ class _Page2ViewState extends State<Page2View> {
                         fieldType: CustomFieldType.number,
                         controller: widget.lingkarKepalaController,
                         onChanged: (value) {
-<<<<<<< HEAD
                           double lingkarValue = double.tryParse(value) ?? 0.0;
                           context.read<KuisionerBloc>().add(IsiLK(lingkarValue));
-=======
-                          context.read<KuisionerBloc>().add(IsiNama(value));
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                         },
                       ),
         

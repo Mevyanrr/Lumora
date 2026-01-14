@@ -29,7 +29,7 @@ class IsiTB extends KuisionerEvent {
 
 class IsiLK extends KuisionerEvent {
   final double lingkarKepala;
- IsiLK(this.lingkarKepala);
+  IsiLK(this.lingkarKepala);
 }
 
 //PAGE3

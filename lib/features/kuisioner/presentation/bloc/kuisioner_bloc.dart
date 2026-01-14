@@ -27,7 +27,6 @@ class KuisionerBloc extends Bloc<KuisionerEvent, KuisionerState> {
       emit(state.copyWith(tb: event.tb));
     });
 
-<<<<<<< HEAD
     on<IsiLK>((event, emit) {
   emit(state.copyWith(lingkarKepala: event.lingkarKepala));
 });
@@ -75,21 +74,6 @@ class KuisionerBloc extends Bloc<KuisionerEvent, KuisionerState> {
 
   emit(state.copyWith(aktivitasBayi: hasilMapping));
 });
-=======
-     //PAGE3
-    on<PilKondisiBayi>((event, emit) {
-      emit(state.copyWith(kondisiBayi: event.kondisiBayi));
-    });
-    
-    on<PilKontrol>((event, emit) {
-      emit(state.copyWith(pilKontrol: event.pilKontrol));
-    });
-
-    //PAGE4
-    on<PilAktivitasBayi>((event, emit) {
-      emit(state.copyWith(aktivitasBayi: event.aktivitasBayi));
-    });
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 
     on<SubmitKuisioner>((event, emit) {
       // nanti: validasi / kirim ke backend

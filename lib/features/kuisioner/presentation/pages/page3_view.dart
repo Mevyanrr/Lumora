@@ -70,11 +70,7 @@ class _Page3ViewState extends State<Page3View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Lahir prematur',
-=======
-                                    value: 'A',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.kondisiBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -99,11 +95,7 @@ class _Page3ViewState extends State<Page3View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Berat lahir rendah',
-=======
-                                    value: 'B',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.kondisiBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -127,11 +119,7 @@ class _Page3ViewState extends State<Page3View> {
                               Row(
                                 children: [
                                   Radio<String>(
-<<<<<<< HEAD
                                     value: 'Riwayat kejang',
-=======
-                                    value: 'C',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                     groupValue: state.kondisiBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(
@@ -173,11 +161,7 @@ class _Page3ViewState extends State<Page3View> {
                                               return Row(
                             children: [
                               Radio<String>(
-<<<<<<< HEAD
                                 value: 'Ya',
-=======
-                                value: 'A',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                 groupValue: state.pilKontrol,
                                 onChanged: (value) {
                                   context.read<KuisionerBloc>().add(PilKontrol(value!));
@@ -197,11 +181,7 @@ class _Page3ViewState extends State<Page3View> {
                               SizedBox(width: sizewidth * 44 / fullwidth),
                             
                               Radio<String>(
-<<<<<<< HEAD
                                 value: 'Tidak',
-=======
-                                value: 'B',
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                                 groupValue: state.pilKontrol,
                                 onChanged: (value) {
                                   context.read<KuisionerBloc>().add(PilKontrol(value!));

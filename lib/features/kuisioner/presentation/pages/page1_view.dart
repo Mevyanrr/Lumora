@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
-=======
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
@@ -166,7 +163,6 @@ class _Page1ViewState extends State<Page1View> {
                         height: sizeheight * 45 / fullheight,
                         backgroundColor: AppColors.txtPrimary,
                         borderColor: AppColors.txtPrimary,
-<<<<<<< HEAD
                         onTap: () async{
                           final User? user = FirebaseAuth.instance.currentUser;
                           try{
@@ -176,10 +172,6 @@ class _Page1ViewState extends State<Page1View> {
                           }
                           Navigator.push(
 
-=======
-                        onTap: () {
-                          Navigator.push(
->>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
                             context,
                             MaterialPageRoute(builder: (_) => Page2()),
                           );
