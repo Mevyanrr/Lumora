@@ -7,9 +7,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+<<<<<<< HEAD
 
 import 'package:lumora/main.dart';
 
+=======
+import 'package:lumora/main.dart';
+
+
+>>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+=======
+>>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +18,14 @@ import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4_view.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onBoarding.dart';
 
+<<<<<<< HEAD
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+=======
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+>>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -51,7 +59,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
+<<<<<<< HEAD
         initialRoute: '/regist',
+=======
+        initialRoute: '/onboarding',
+>>>>>>> a36d1a057ed236f496f2aca562faae29898a07a0
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
