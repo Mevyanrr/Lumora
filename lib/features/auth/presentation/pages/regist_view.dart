@@ -236,30 +236,34 @@ class _RegistViewState extends State<RegistView> {
         
                       SizedBox(height: sizeheight * 35 / fullheight),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: sizewidth * 70 / fullwidth,
-                            height: 1,
-                            color: AppColors.txtSecondary,
+                          Expanded(
+                            child: Container(
+                              height: 1,
+                              color: AppColors.txtSecondary,
+                            ),
                           ),
                           SizedBox(width: sizewidth * 12 / fullwidth),
                           Text(
                             "Atau masuk dengan",
                             style: TextStyle(
-                              fontSize: sizewidth*14/fullwidth,
+                              fontSize: sizewidth * 14 / fullwidth,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                               color: AppColors.txtPrimary,
                             ),
                           ),
                           SizedBox(width: sizewidth * 12 / fullwidth),
-                          Container(
-                            width: sizewidth * 70 / fullwidth,
-                            height: 1,
-                            color: AppColors.txtSecondary,
+                          Expanded(
+                            child: Container(
+                              height: 1,
+                              color: AppColors.txtSecondary,
+                            ),
                           ),
                         ],
                       ),
+
         
                       SizedBox(height: sizeheight * 24 / fullheight),
         

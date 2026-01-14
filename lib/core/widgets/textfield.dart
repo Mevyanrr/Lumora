@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lumora/core/theme/colors.dart';
 
-enum CustomFieldType {
-  text,
-  number,
-  email,
-  password,
-  date,
-}
-
+enum CustomFieldType { text, number, email, password, date }
 
 class CustomTxtField extends StatelessWidget {
   final String labelText;
@@ -33,22 +26,28 @@ class CustomTxtField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final sizewidth = size.width;
+    final sizeheight = size.height;
+    final fullheight = 917;
+    final fullwidth = 412;
     return TextFormField(
       controller: controller,
       validator: validator,
       readOnly: fieldType == CustomFieldType.date,
-        keyboardType: _getKeyboardType(fieldType),
+      keyboardType: _getKeyboardType(fieldType),
       onChanged: fieldType == CustomFieldType.text ? onChanged : null,
       onTap: fieldType == CustomFieldType.date
           ? () async {
               final pickedDate = await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
-                firstDate:
-                    DateTime.now().subtract(const Duration(days: 365 * 2)),
+                firstDate: DateTime.now().subtract(
+                  const Duration(days: 365 * 2),
+                ),
                 lastDate: DateTime.now(),
               );
-
+    
               if (pickedDate != null) {
                 controller.text =
                     "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
@@ -58,8 +57,13 @@ class CustomTxtField extends StatelessWidget {
           : null,
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: TextStyle(
+          fontSize: sizewidth * 14 / fullwidth,
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w400,
+          color: AppColors.txtPrimary,
+        ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
-        labelStyle: TextStyle(color: AppColors.txtPrimary),
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: AppColors.primaryOrange,
@@ -86,4 +90,3 @@ TextInputType _getKeyboardType(CustomFieldType type) {
       return TextInputType.none;
   }
 }
-
