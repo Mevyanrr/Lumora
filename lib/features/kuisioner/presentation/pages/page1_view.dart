@@ -37,7 +37,7 @@ class _Page1ViewState extends State<Page1View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: sizeheight * 77 / fullheight, bottom: sizeheight*61/fullheight),
+            padding: EdgeInsets.only(top: sizeheight * 70 / fullheight, bottom: sizeheight*61/fullheight),
             child: Column(
               children: [
                 TopContainer(

@@ -50,8 +50,8 @@ class _RegistViewState extends State<RegistView> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-              top: sizeheight * 91 / fullheight,
-              bottom: sizeheight * 67 / fullheight,
+              top: sizeheight * 61 / fullheight,
+              bottom: sizeheight * 61 / fullheight,
             ),
             child: Column(
               children: [
@@ -65,7 +65,7 @@ class _RegistViewState extends State<RegistView> {
                           "Hallo Parents!",
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: sizewidth*28/fullwidth,
+                            fontSize: sizewidth * 28 / fullwidth,
                             fontWeight: FontWeight.w600,
                             color: AppColors.txtPrimary,
                           ),
@@ -79,7 +79,7 @@ class _RegistViewState extends State<RegistView> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: sizewidth*18/fullwidth,
+                        fontSize: sizewidth * 18 / fullwidth,
                         fontWeight: FontWeight.w500,
                         color: AppColors.txtPrimary,
                       ),
@@ -97,7 +97,7 @@ class _RegistViewState extends State<RegistView> {
                           color: AppColors.txtPrimary,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
-                          fontSize: sizewidth*18/fullwidth,
+                          fontSize: sizewidth * 18 / fullwidth,
                         ),
                       ),
                       SizedBox(height: sizeheight * 9 / fullheight),
@@ -109,14 +109,14 @@ class _RegistViewState extends State<RegistView> {
                         // },
                       ),
                       SizedBox(height: sizeheight * 16 / fullheight),
-        
+
                       Text(
                         "Email",
                         style: TextStyle(
                           color: AppColors.txtPrimary,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
-                          fontSize: sizewidth*18/fullwidth,
+                          fontSize: sizewidth * 18 / fullwidth,
                         ),
                       ),
                       SizedBox(height: sizeheight * 9 / fullheight),
@@ -126,14 +126,14 @@ class _RegistViewState extends State<RegistView> {
                         controller: widget.emailController,
                       ),
                       SizedBox(height: sizeheight * 16 / fullheight),
-        
+
                       Text(
                         "Kata sandi",
                         style: TextStyle(
                           color: AppColors.txtPrimary,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
-                          fontSize: sizewidth*18/fullwidth,
+                          fontSize: sizewidth * 18 / fullwidth,
                         ),
                       ),
                       SizedBox(height: sizeheight * 9 / fullheight),
@@ -141,16 +141,16 @@ class _RegistViewState extends State<RegistView> {
                         labelText: "Maukkan kata sandi...",
                         controller: widget.pwController,
                       ),
-        
+
                       SizedBox(height: sizeheight * 16 / fullheight),
-        
+
                       Text(
                         "Konfirmasi kata sandi",
                         style: TextStyle(
                           color: AppColors.txtPrimary,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
-                          fontSize: sizewidth*18/fullwidth,
+                          fontSize: sizewidth * 18 / fullwidth,
                         ),
                       ),
                       SizedBox(height: sizeheight * 9 / fullheight),
@@ -161,9 +161,9 @@ class _RegistViewState extends State<RegistView> {
                         //   context.read<KuisionerBloc>().add(IsiNama(value));
                         // },
                       ),
-        
+
                       SizedBox(height: sizeheight * 46 / fullheight),
-        
+
                       ButtonMedium(
                         text: "Masuk",
                         width: sizewidth * 327 / fullwidth,
@@ -172,49 +172,49 @@ class _RegistViewState extends State<RegistView> {
                         borderColor: AppColors.txtPrimary,
                         onTap: () async {
                           final nama = widget.namauserController.text.trim();
-                            final email = widget.emailController.text.trim();
-                            final password = widget.pwController.text.trim();
-                            final konfirmPassword = widget
-                                .konfirmpwController
-                                .text
-                                .trim();
-        
-                            if (nama.isEmpty ||
-                                email.isEmpty ||
-                                password.isEmpty ||
-                                konfirmPassword.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Semua form wajib diisi!"),
+                          final email = widget.emailController.text.trim();
+                          final password = widget.pwController.text.trim();
+                          final konfirmPassword = widget
+                              .konfirmpwController
+                              .text
+                              .trim();
+
+                          if (nama.isEmpty ||
+                              email.isEmpty ||
+                              password.isEmpty ||
+                              konfirmPassword.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Semua form wajib diisi!"),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (!email.contains('@') || !email.contains('.com')) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Email harus mengandung '@' dan '.com'!",
                                 ),
-                              );
-                              return;
-                            }
-        
-                            if (!email.contains('@') || !email.contains('.com')) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Email harus mengandung '@' dan '.com'!",
-                                  ),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (password.length < 6 ||
+                              !RegExp(r'[A-Z]').hasMatch(password) ||
+                              !RegExp(r'[a-z]').hasMatch(password) ||
+                              !RegExp(r'[0-9]').hasMatch(password)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Password min 6 karakter, ada huruf besar, kecil, dan angka!",
                                 ),
-                              );
-                              return;
-                            }
-        
-                            if (password.length < 6 ||
-                                !RegExp(r'[A-Z]').hasMatch(password) ||
-                                !RegExp(r'[a-z]').hasMatch(password) ||
-                                !RegExp(r'[0-9]').hasMatch(password)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Password min 6 karakter, ada huruf besar, kecil, dan angka!",
-                                  ),
-                                ),
-                              );
-        
-                              if (konfirmPassword != password) {
+                              ),
+                            );
+
+                            if (konfirmPassword != password) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(
@@ -224,6 +224,7 @@ class _RegistViewState extends State<RegistView> {
                               );
                               return;
                             }
+<<<<<<< HEAD
         
         
                               return;
@@ -255,12 +256,22 @@ class _RegistViewState extends State<RegistView> {
                                 isLoading = false;
                               });
                             }
+=======
+
+                            return;
+                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => Page1()),
+                          );
+>>>>>>> mevya
                         },
-        
+
                         radius: 15,
                         txColor: AppColors.background,
                       ),
-        
+
                       SizedBox(height: sizeheight * 35 / fullheight),
                       Row(
                         children: [
@@ -269,7 +280,9 @@ class _RegistViewState extends State<RegistView> {
                             height: 1,
                             color: AppColors.txtSecondary,
                           ),
+
                           SizedBox(width: sizewidth * 12 / fullwidth),
+
                           Text(
                             "Atau masuk dengan",
                             style: TextStyle(
@@ -279,7 +292,9 @@ class _RegistViewState extends State<RegistView> {
                               color: AppColors.txtPrimary,
                             ),
                           ),
+
                           SizedBox(width: sizewidth * 12 / fullwidth),
+<<<<<<< HEAD
                           Container(
                             width: sizewidth * 70 / fullwidth,
                             height: 1,
@@ -288,10 +303,23 @@ class _RegistViewState extends State<RegistView> {
                         ],
                       ),
         
+=======
+
+                          Expanded(
+                            child: Container(
+                              height: 1,
+                              color: AppColors.txtSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+
+>>>>>>> mevya
                       SizedBox(height: sizeheight * 24 / fullheight),
-        
+
                       Center(
                         child: GestureDetector(
+<<<<<<< HEAD
                           onTap: () async{
                             setState(() {
                               isLoading = true;
@@ -310,22 +338,26 @@ class _RegistViewState extends State<RegistView> {
                             }
                           },
         
+=======
+                          onTap: () {},
+
+>>>>>>> mevya
                           child: SvgPicture.asset(
                             "assets/icons/google.svg",
-                            width:sizewidth* 38/fullwidth,
+                            width: sizewidth * 38 / fullwidth,
                           ),
                         ),
                       ),
-        
+
                       SizedBox(height: sizeheight * 47 / fullheight),
-        
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Sudah punya akun?",
                             style: TextStyle(
-                              fontSize: sizewidth*14/fullwidth,
+                              fontSize: sizewidth * 14 / fullwidth,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                               color: AppColors.txtPrimary,
@@ -341,7 +373,7 @@ class _RegistViewState extends State<RegistView> {
                             child: Text(
                               " Login",
                               style: TextStyle(
-                                fontSize: sizewidth*14/fullwidth,
+                                fontSize: sizewidth * 14 / fullwidth,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.primaryBlue,
