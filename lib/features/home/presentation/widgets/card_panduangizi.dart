@@ -5,6 +5,7 @@ class CardPanduanGizi extends StatelessWidget {
   final String title;
   final String portion;
   final String imagePath;
+  final Size size;
   final VoidCallback? onTap;
 
   const CardPanduanGizi({
@@ -12,12 +13,12 @@ class CardPanduanGizi extends StatelessWidget {
     required this.title,
     required this.portion,
     required this.imagePath,
+    required this.size,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final sizewidth = size.width;
     final sizeheight = size.height;
     final fullheight = 917;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
+import 'package:lumora/features/home/presentation/pages/home_page.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
@@ -32,7 +33,7 @@ class _Page4ViewState extends State<Page4View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: sizeheight * 77 / fullheight, bottom: sizeheight*61/fullheight),
+            padding: EdgeInsets.only(top: sizeheight * 70 / fullheight, bottom: sizeheight*61/fullheight),
             child: Column(
               children: [
                 TopContainer(
@@ -249,12 +250,12 @@ class _Page4ViewState extends State<Page4View> {
                                             backgroundColor: AppColors.txtPrimary,
                                             borderColor: AppColors.txtPrimary,
                                             onTap: () {
-                                              //  Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (_) => Beranda(),
-                                              //   ),
-                                              // );
+                                                Navigator.pushReplacement(
+                                                 context,
+                                                 MaterialPageRoute(
+                                                   builder: (_) => HomePage(),
+                                                 ),
+                                               );
                                             },
                                             radius: 15,
                                             txColor: AppColors.background,

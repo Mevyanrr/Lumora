@@ -3,19 +3,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/core/widgets/navbar.dart';
+import 'package:lumora/features/home/presentation/pages/data_bayi.dart';
+import 'package:lumora/features/home/presentation/pages/tahapan_bayi.dart';
 import 'package:lumora/features/home/presentation/widgets/card_growthdata.dart';
 import 'package:lumora/features/home/presentation/widgets/card_hiparents.dart';
 import 'package:lumora/features/home/presentation/widgets/card_infokesehatan.dart';
 import 'package:lumora/features/home/presentation/widgets/card_panduangizi.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -29,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: EdgeInsets.only(
             left: sizewidth * 20 / fullwidth,
-            top: sizeheight * 89 / fullheight,
+            top: sizeheight * 59 / fullheight,
             bottom: sizeheight * 15 / fullheight,
           ),
           child: Column(
@@ -138,7 +135,12 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(height: sizeheight * 6 / fullheight),
                         GestureDetector(
                           onTap: () {
-                            //PAGE TAHAPAN PERTUMBUHAN BAYI
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TahapanBayi(),
+                              ),
+                            );
                           },
                           child: Text(
                             "Si Penasaran >",
@@ -161,6 +163,7 @@ class _HomePageState extends State<HomePage> {
               CardHiparents(
                 desc:
                     "Pada fase ini ajak anak anda mengeksplorasi lingkungan di sekitarnya yaa",
+                size: size,
               ),
               SizedBox(height: sizeheight * 28 / fullheight),
               Padding(
@@ -210,8 +213,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: CardPanduanGizi(
                         title: item['title']!,
-                        portion: item['desc']!,
+                        portion: item['portion']!,
                         imagePath: item['image']!,
+                        size: size,
                         onTap: () {},
                       ),
                     );
@@ -278,7 +282,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        //EDIT DATA
+                        Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DataBayi(),
+                              ),
+                            );
                       },
                       child: Text(
                         "Edit Data >",
@@ -304,6 +313,7 @@ class _HomePageState extends State<HomePage> {
                       beratStatus: GrowthStatus.normal,
                       tinggiStatus: GrowthStatus.kurang,
                       kepalaStatus: GrowthStatus.normal,
+                      size: size,
                     ),
                   ],
                 ),
@@ -336,6 +346,7 @@ class _HomePageState extends State<HomePage> {
                         title: item['title']!,
                         desc: item['desc']!,
                         imagePath: item['image']!,
+                        size: size,
                         onTap: () {},
                       ),
                     );

@@ -2,28 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 
-class CardInfokesehatan extends StatefulWidget {
+class CardInfokesehatan extends StatelessWidget {
   final String title;
   final String desc;
   final String imagePath;
   final VoidCallback onTap;
+  final Size size;
 
   const CardInfokesehatan({
     super.key,
     required this.title,
     required this.desc,
     required this.imagePath,
+    required this.size,
      required this.onTap,
   });
 
   @override
-  State<CardInfokesehatan> createState() => _CardInfokesehatanState();
-}
-
-class _CardInfokesehatanState extends State<CardInfokesehatan> {
-  @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final sizewidth = size.width;
     final sizeheight = size.height;
     final fullheight = 917;
@@ -40,13 +36,13 @@ class _CardInfokesehatanState extends State<CardInfokesehatan> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              widget.imagePath,
+              imagePath,
               height: sizeheight* 69/fullheight,
               fit: BoxFit.contain,
             ),
             SizedBox(height:sizeheight* 6/fullheight),
             Text(
-              widget.title,
+              title,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: sizewidth* 16/fullwidth,
@@ -56,7 +52,7 @@ class _CardInfokesehatanState extends State<CardInfokesehatan> {
             ),
             SizedBox(height:sizeheight* 4/fullheight),
             Text(
-                widget.desc,
+                desc,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   height: 1.5,
@@ -67,7 +63,7 @@ class _CardInfokesehatanState extends State<CardInfokesehatan> {
               ),
 
             SizedBox(height:sizeheight* 8/fullheight),
-            ButtonMedium(text: "Lanjutkan", width: sizewidth*150/fullwidth, height: sizeheight* 35/fullheight, backgroundColor: AppColors.txtPrimary, borderColor: AppColors.txtPrimary, onTap:widget.onTap, radius: sizewidth*50/fullwidth, txColor: AppColors.background)
+            ButtonMedium(text: "Lanjutkan", width: sizewidth*150/fullwidth, height: sizeheight* 35/fullheight, backgroundColor: AppColors.txtPrimary, borderColor: AppColors.txtPrimary, onTap:onTap, radius: sizewidth*50/fullwidth, txColor: AppColors.background)
           ],
         ),
     );
