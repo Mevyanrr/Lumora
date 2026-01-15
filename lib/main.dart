@@ -12,7 +12,7 @@ import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3_view.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4_view.dart';
-import 'package:lumora/features/onBoarding/presentation/pages/onBoarding.dart';
+import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           '/kuisioner2': (context) => Page2(),
           '/kuisioner3': (context) => Page3(),
           '/kuisioner4': (context) => Page4(),
-          '/onboarding': (context) => Onboarding(),
+          '/onboarding3': (context) => Onboarding3(),
           '/login': (context) => Login(),
           '/regist': (context) => Regist(),
           '/home': (context) => HomePage()
