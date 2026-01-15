@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
-import 'package:lumora/features/home/presentation/pages/home_page.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
@@ -37,7 +36,7 @@ class _Page4ViewState extends State<Page4View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: sizeheight * 70 / fullheight, bottom: sizeheight*61/fullheight),
+            padding: EdgeInsets.only(top: sizeheight * 77 / fullheight, bottom: sizeheight*61/fullheight),
             child: Column(
               children: [
                 TopContainer(
@@ -253,7 +252,6 @@ class _Page4ViewState extends State<Page4View> {
                                             height: sizeheight * 45 / fullheight,
                                             backgroundColor: AppColors.txtPrimary,
                                             borderColor: AppColors.txtPrimary,
-<<<<<<< HEAD
                                             onTap: () async{
                                             final finalState = context.read<KuisionerBloc>().state;
                                             final User? user = FirebaseAuth.instance.currentUser;
@@ -277,15 +275,6 @@ class _Page4ViewState extends State<Page4View> {
                                         builder: (_) => Onboarding(),
                                         ),
                                           );
-=======
-                                            onTap: () {
-                                                Navigator.pushReplacement(
-                                                 context,
-                                                 MaterialPageRoute(
-                                                   builder: (_) => HomePage(),
-                                                 ),
-                                               );
->>>>>>> mevya
                                             },
                                             radius: 15,
                                             txColor: AppColors.background,
