@@ -9,16 +9,13 @@ import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
 import 'package:lumora/features/kuisioner/presentation/widgets/top_container.dart';
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
-import 'package:lumora/features/onBoarding/presentation/pages/onBoarding.dart';
+import 'package:lumora/features/onBoarding/presentation/pages/onboarding0.dart';
 import 'package:lumora/model/baby_model.dart';
 
 class Page4View extends StatefulWidget {
   final TextEditingController aktivitasBayiController;
 
-  const Page4View({
-    super.key,
-    required this.aktivitasBayiController,
-  });
+  const Page4View({super.key, required this.aktivitasBayiController});
 
   @override
   State<Page4View> createState() => _Page4ViewState();
@@ -37,35 +34,39 @@ class _Page4ViewState extends State<Page4View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: sizeheight * 70 / fullheight, bottom: sizeheight*61/fullheight),
+            padding: EdgeInsets.only(
+              top: sizeheight * 70 / fullheight,
+              bottom: sizeheight * 61 / fullheight,
+            ),
             child: Column(
               children: [
                 TopContainer(
                   stepPage: "4 / 4",
                   image: "assets/images/kuisioner-4.png",
                 ),
-        
+
                 SizedBox(height: sizeheight * 30 / fullheight),
-        
-               
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: sizewidth*40/fullwidth),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Saat ini bayi sudah bisa?",
-                              style: TextStyle(
-                                color: AppColors.txtPrimary,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                                fontSize: sizewidth*18/fullwidth,
-                              ),
-                            ),
-                            
-                                          BlocBuilder<KuisionerBloc, KuisionerState>(
-                                            builder: (context, state) {
-                                              return Column(
+
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: sizewidth * 40 / fullwidth,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Saat ini bayi sudah bisa?",
+                        style: TextStyle(
+                          color: AppColors.txtPrimary,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: sizewidth * 18 / fullwidth,
+                        ),
+                      ),
+
+                      BlocBuilder<KuisionerBloc, KuisionerState>(
+                        builder: (context, state) {
+                          return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
@@ -79,7 +80,7 @@ class _Page4ViewState extends State<Page4View> {
                                       );
                                     },
                                   ),
-                                  
+
                                   SizedBox(width: sizewidth * 12 / fullwidth),
                                   Text(
                                     'Tengkurap',
@@ -87,12 +88,12 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
-                            
+
                               Row(
                                 children: [
                                   Radio<String>(
@@ -111,12 +112,12 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
-                            
+
                               Row(
                                 children: [
                                   Radio<String>(
@@ -135,13 +136,12 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
-                            
-                            
+
                               Row(
                                 children: [
                                   Radio<String>(
@@ -160,12 +160,12 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
-                            
+
                               Row(
                                 children: [
                                   Radio<String>(
@@ -184,13 +184,12 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
-                            
-                            
+
                               Row(
                                 children: [
                                   Radio<String>(
@@ -209,12 +208,12 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
-                            
+
                               Row(
                                 children: [
                                   Radio<String>(
@@ -233,82 +232,72 @@ class _Page4ViewState extends State<Page4View> {
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth*16/fullwidth,
+                                      fontSize: sizewidth * 16 / fullwidth,
                                     ),
                                   ),
                                 ],
                               ),
                             ],
-                                              );
-                                            },
-                                          ),
-                            
-                                          SizedBox(height: sizeheight * 64 / fullheight),
-                            
-                                         
-                            
-                                          ButtonMedium(
-                                            text: "Selesai",
-                                            width: sizewidth * 327 / fullwidth,
-                                            height: sizeheight * 45 / fullheight,
-                                            backgroundColor: AppColors.txtPrimary,
-                                            borderColor: AppColors.txtPrimary,
-<<<<<<< HEAD
-                                            onTap: () async{
-                                            final finalState = context.read<KuisionerBloc>().state;
-                                            final User? user = FirebaseAuth.instance.currentUser;
-                                            BabyModel babyModel = BabyModel(
-                                              nama: finalState.nama, 
-                                              tanggalLahir: finalState.tanggalLahir ?? DateTime.timestamp(),
-                                              jenisKelamin: finalState.gender,
-                                              beratBadan: finalState.bb, 
-                                              tinggiBadan: finalState.tb, 
-                                              lingkarKepala: finalState.lingkarKepala, 
-                                              riwayatKesehatan: finalState.kondisiBayi, 
-                                              kontrol: finalState.pilKontrol, 
-                                              kondisi: finalState.aktivitasBayi, 
-                                              createdAt: DateTime.now());
-                                              
-                                              print("BB: ${finalState.bb}");
-                                              await KuisionerService().saveKuisionerData(babyModel);
-                                            Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                        builder: (_) => Onboarding(),
-                                        ),
-                                          );
-=======
-                                            onTap: () {
-                                                Navigator.pushReplacement(
-                                                 context,
-                                                 MaterialPageRoute(
-                                                   builder: (_) => HomePage(),
-                                                 ),
-                                               );
->>>>>>> mevya
-                                            },
-                                            radius: 15,
-                                            txColor: AppColors.background,
-                                          ),
-                            
-                                          SizedBox(height: sizeheight * 12 / fullheight),
-                            
-                                          ButtonMedium(
-                                            text: "Kembali",
-                                            width: sizewidth * 327 / fullwidth,
-                                            height: sizeheight * 45 / fullheight,
-                                            backgroundColor: AppColors.background,
-                                            borderColor: AppColors.txtPrimary,
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                            },
-                            
-                                            radius: 15,
-                                            txColor: AppColors.txtPrimary,
-                                          ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
+
+                      SizedBox(height: sizeheight * 64 / fullheight),
+
+                      ButtonMedium(
+                        text: "Selesai",
+                        width: sizewidth * 327 / fullwidth,
+                        height: sizeheight * 45 / fullheight,
+                        backgroundColor: AppColors.txtPrimary,
+                        borderColor: AppColors.txtPrimary,
+                        onTap: () async {
+                          final finalState = context
+                              .read<KuisionerBloc>()
+                              .state;
+                          final User? user = FirebaseAuth.instance.currentUser;
+                          BabyModel babyModel = BabyModel(
+                            nama: finalState.nama,
+                            tanggalLahir:
+                                finalState.tanggalLahir ?? DateTime.timestamp(),
+                            jenisKelamin: finalState.gender,
+                            beratBadan: finalState.bb,
+                            tinggiBadan: finalState.tb,
+                            lingkarKepala: finalState.lingkarKepala,
+                            riwayatKesehatan: finalState.kondisiBayi,
+                            kontrol: finalState.pilKontrol,
+                            kondisi: finalState.aktivitasBayi,
+                            createdAt: DateTime.now(),
+                          );
+
+                          print("BB: ${finalState.bb}");
+                          await KuisionerService().saveKuisionerData(babyModel);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (_) => HomePage()),
+                          );
+                        },
+                        radius: 15,
+                        txColor: AppColors.background,
+                      ),
+
+                      SizedBox(height: sizeheight * 12 / fullheight),
+
+                      ButtonMedium(
+                        text: "Kembali",
+                        width: sizewidth * 327 / fullwidth,
+                        height: sizeheight * 45 / fullheight,
+                        backgroundColor: AppColors.background,
+                        borderColor: AppColors.txtPrimary,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+
+                        radius: 15,
+                        txColor: AppColors.txtPrimary,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

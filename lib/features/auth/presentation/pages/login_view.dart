@@ -1,17 +1,13 @@
 import 'dart:developer';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/features/auth/presentation/pages/regist.dart';
-<<<<<<< HEAD
 import 'package:lumora/features/auth/services/auth_services.dart';
-=======
 import 'package:lumora/features/home/presentation/pages/home_page.dart';
->>>>>>> mevya
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
@@ -173,43 +169,7 @@ class _LoginViewState extends State<LoginView> {
                         height: sizeheight * 45 / fullheight,
                         backgroundColor: AppColors.txtPrimary,
                         borderColor: AppColors.txtPrimary,
-<<<<<<< HEAD
-                        onTap: () async{
-                           final nama = widget.namauserController.text.trim();
-                            final email = widget.emailController.text.trim();
-                            final password = widget.pwController.text.trim();
-        
-                            if (nama.isEmpty ||
-                                email.isEmpty ||
-                                password.isEmpty ) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Semua form wajib diisi!"),
-                                ),
-                              );
-                              return;
-                            } 
-                          setState(() {
-                              isLoading = true;
-                            });
-                            try{
-                              await AuthService().signInWithEmailAndPassword(name: nama, email: email, password: password);
-                              await AuthService().saveUserToFirestore(AuthService().currentUser!, nama);
-                              if(!mounted) return;
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => Page1()),
-                            );
-                            } catch(e){
-                              log("error regist: $e");
-                            } finally {
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
-                          
-=======
-                        onTap: () {
+                        onTap: () async {
                           final nama = widget.namauserController.text.trim();
                           final email = widget.emailController.text.trim();
                           final password = widget.pwController.text.trim();
@@ -224,13 +184,31 @@ class _LoginViewState extends State<LoginView> {
                             );
                             return;
                           }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => HomePage(),
-                            ), // KE HOMEPAGE
-                          );
->>>>>>> mevya
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            await AuthService().signInWithEmailAndPassword(
+                              name: nama,
+                              email: email,
+                              password: password,
+                            );
+                            await AuthService().saveUserToFirestore(
+                              AuthService().currentUser!,
+                              nama,
+                            );
+                            if (!mounted) return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => Page1()),
+                            );
+                          } catch (e) {
+                            log("error regist: $e");
+                          } finally {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
                         },
 
                         radius: 15,
@@ -274,19 +252,26 @@ class _LoginViewState extends State<LoginView> {
 
                       Center(
                         child: GestureDetector(
-                          onTap: () async{
+                          onTap: () async {
                             setState(() {
                               isLoading = true;
                             });
-                            try{
-                              final userCredential = await AuthService().signInWithGoogle();
-                              await AuthService().saveUserToFirestore(userCredential!.user!, userCredential.user!.displayName?? "");
-                              if(!mounted) return;
+                            try {
+                              final userCredential = await AuthService()
+                                  .signInWithGoogle();
+                              await AuthService().saveUserToFirestore(
+                                userCredential!.user!,
+                                userCredential.user!.displayName ?? "",
+                              );
+                              if (!mounted) return;
                               setState(() {
                                 isLoading = false;
                               });
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => Page1()));
-                            } catch(e){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => Page1()),
+                              );
+                            } catch (e) {
                               log("error google sign in: $e");
                             } finally {
                               setState(() {

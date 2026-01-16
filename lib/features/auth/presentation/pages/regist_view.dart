@@ -188,7 +188,7 @@ class _RegistViewState extends State<RegistView> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  "Email harus mengandung '@' dan '.com'!",
+                                  "Email harus mengandung '@' dan 'gmail.com'",
                                 ),
                               ),
                             );
@@ -217,37 +217,48 @@ class _RegistViewState extends State<RegistView> {
                               );
                               return;
                             }
-        
-        
-                              return;
-                            }
-                            
-                            setState(() {
-                              isLoading = true;
-                            });
-                            try{
-                              await AuthService().createUser(name: nama, email: email, password: password, confirmPassword: konfirmPassword);
-                              await AuthService().saveUserToFirestore(AuthService().currentUser!, nama);
-                              if(!mounted) return;
-                              Navigator.push(
+
+                            return;
+                          }
+
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            await AuthService().createUser(
+                              name: nama,
+                              email: email,
+                              password: password,
+                              confirmPassword: konfirmPassword,
+                            );
+                            await AuthService().saveUserToFirestore(
+                              AuthService().currentUser!,
+                              nama,
+                            );
+                            if (!mounted) return;
+                            Navigator.push(
                               context,
                               MaterialPageRoute(builder: (_) => Page1()),
                             );
-                            } on FirebaseAuthException catch(e){
-                              String message = "Terjadi kesalahan";
-                                if (e.code == 'email-already-in-box' || e.code == 'email-already-in-use') {
-                              message = "Akun dengan email tersebut sudah terdaftar";
+                          } on FirebaseAuthException catch (e) {
+                            String message = "Terjadi kesalahan";
+                            if (e.code == 'email-already-in-box' ||
+                                e.code == 'email-already-in-use') {
+                              message =
+                                  "Akun dengan email tersebut sudah terdaftar";
                             } else if (e.code == 'weak-password') {
-                            message = "Password terlalu lemah";
+                              message = "Password terlalu lemah";
                             } else if (e.code == 'invalid-email') {
-                            message = "Format email tidak valid";
+                              message = "Format email tidak valid";
                             }
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-                            } finally {
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(SnackBar(content: Text(message)));
+                          } finally {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
                         },
 
                         radius: 15,
@@ -257,10 +268,11 @@ class _RegistViewState extends State<RegistView> {
                       SizedBox(height: sizeheight * 35 / fullheight),
                       Row(
                         children: [
-                          Container(
-                            width: sizewidth * 70 / fullwidth,
-                            height: 1,
-                            color: AppColors.txtSecondary,
+                          Expanded(
+                            child: Container(
+                              height: 1,
+                              color: AppColors.txtSecondary,
+                            ),
                           ),
 
                           SizedBox(width: sizewidth * 12 / fullwidth),
@@ -268,7 +280,7 @@ class _RegistViewState extends State<RegistView> {
                           Text(
                             "Atau masuk dengan",
                             style: TextStyle(
-                              fontSize: sizewidth*14/fullwidth,
+                              fontSize: sizewidth * 14 / fullwidth,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                               color: AppColors.txtPrimary,
@@ -286,21 +298,27 @@ class _RegistViewState extends State<RegistView> {
                         ],
                       ),
 
-        
                       SizedBox(height: sizeheight * 24 / fullheight),
 
                       Center(
                         child: GestureDetector(
-                          onTap: () async{
+                          onTap: () async {
                             setState(() {
                               isLoading = true;
                             });
-                            try{
-                              final userCredential = await AuthService().signInWithGoogle();
-                              await AuthService().saveUserToFirestore(userCredential!.user!, userCredential.user!.displayName?? "");
-                              if(!mounted) return;
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => Page1()));
-                            } catch(e){
+                            try {
+                              final userCredential = await AuthService()
+                                  .signInWithGoogle();
+                              await AuthService().saveUserToFirestore(
+                                userCredential!.user!,
+                                userCredential.user!.displayName ?? "",
+                              );
+                              if (!mounted) return;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => Page1()),
+                              );
+                            } catch (e) {
                               log("error google sign in: $e");
                             } finally {
                               setState(() {
@@ -308,7 +326,7 @@ class _RegistViewState extends State<RegistView> {
                               });
                             }
                           },
-        
+
                           child: SvgPicture.asset(
                             "assets/icons/google.svg",
                             width: sizewidth * 38 / fullwidth,

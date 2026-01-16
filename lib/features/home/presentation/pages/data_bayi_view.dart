@@ -60,7 +60,7 @@ class _DataBayiState extends State<DataBayiView> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(bottom: sizeheight*37/fullheight),
+          padding: EdgeInsets.only(bottom: sizeheight*57/fullheight),
           child: Column(
             children: [
               Container(
@@ -439,10 +439,10 @@ class _DataBayiState extends State<DataBayiView> {
                 ),
               ),
           
-              SizedBox(height: sizeheight * 24 / fullheight),
+              
           
               ButtonMedium(
-                text: "Selesai",
+                text: "Edit Data",
                 width: sizewidth * 327 / fullwidth,
                 height: sizeheight * 45 / fullheight,
                 backgroundColor: AppColors.txtPrimary,
