@@ -89,6 +89,9 @@ flutter:
     - assets/icons/growbaby-star.svg
     - assets/icons/growbaby-world.svg
     - assets/icons/home-lamp.svg
+    - assets/icons/nutriguide-lamp.svg
+    - assets/icons/nutriguide-warning.svg
+    - assets/icons/nutriguide-checklist.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

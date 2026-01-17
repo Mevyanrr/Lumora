@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/core/widgets/navbar.dart';
+import 'package:lumora/features/home/presentation/bloc/panduaninfo_bloc.dart';
+import 'package:lumora/features/home/presentation/bloc/panduaninfo_event.dart';
 import 'package:lumora/features/home/presentation/pages/data_bayi.dart';
+import 'package:lumora/features/home/presentation/pages/nutriguide.dart';
 import 'package:lumora/features/home/presentation/pages/tahapan_bayi.dart';
 import 'package:lumora/features/home/presentation/widgets/card_growthdata.dart';
 import 'package:lumora/features/home/presentation/widgets/card_hiparents.dart';
@@ -182,7 +186,16 @@ class HomePage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        //PANDUAN GIZI
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (_) =>
+                                  PanduanGiziBloc()..add(LoadPanduanGizi()),
+                              child: Nutriguide(),
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
                         "Selengkapnya >",
@@ -283,11 +296,9 @@ class HomePage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DataBayi(),
-                              ),
-                            );
+                          context,
+                          MaterialPageRoute(builder: (context) => DataBayi()),
+                        );
                       },
                       child: Text(
                         "Edit Data >",

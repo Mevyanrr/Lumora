@@ -42,7 +42,7 @@ class _DataBayiState extends State<DataBayiView> {
           icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             color: AppColors.txtPrimary,
-            weight: sizewidth * 7.5 / fullwidth,
+            size: sizewidth * 7.5 / fullwidth,
           ),
           onPressed: () {
             Navigator.pop(context);
