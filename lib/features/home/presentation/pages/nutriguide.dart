@@ -4,9 +4,14 @@ import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/features/home/presentation/bloc/panduaninfo_bloc.dart';
 import 'package:lumora/features/home/presentation/bloc/panduaninfo_event.dart';
 import 'package:lumora/features/home/presentation/bloc/panduaninfo_state.dart';
+import 'package:lumora/features/home/presentation/bloc/tipsgizi_bloc.dart';
+import 'package:lumora/features/home/presentation/bloc/tipsgizi_event.dart';
+import 'package:lumora/features/home/presentation/bloc/tipsgizi_state.dart';
 import 'package:lumora/features/home/presentation/pages/home_page.dart';
 import 'package:lumora/features/home/presentation/widgets/card_panduangizi.dart';
 import 'package:lumora/features/home/presentation/widgets/card_panduaninfo.dart';
+import 'package:lumora/features/home/presentation/widgets/card_rekomendasimenu.dart';
+import 'package:lumora/features/home/presentation/widgets/card_tipsgizi.dart';
 
 class Nutriguide extends StatefulWidget {
   const Nutriguide({super.key});
@@ -45,8 +50,15 @@ class _NutriguideState extends State<Nutriguide> {
         ),
         backgroundColor: AppColors.background,
       ),
-      body: BlocProvider(
-        create: (context) => PanduanGiziBloc()..add(LoadPanduanGizi()),
+      body: MultiBlocProvider(
+  providers: [
+    BlocProvider(
+      create: (context) => PanduanGiziBloc()..add(LoadPanduanGizi()),
+    ),
+    BlocProvider(
+      create: (context) => TipsGiziBloc()..add(LoadTipsGizi()),
+    ),
+  ],
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
@@ -58,8 +70,7 @@ class _NutriguideState extends State<Nutriguide> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-              right: sizewidth * 18 / fullwidth,),
+                  padding: EdgeInsets.only(right: sizewidth * 18 / fullwidth),
                   child: Text(
                     "Rekomendasi asupan untuk Si kecil, Aria!",
                     style: TextStyle(
@@ -71,7 +82,7 @@ class _NutriguideState extends State<Nutriguide> {
                 ),
                 SizedBox(height: sizeheight * 8 / fullheight),
                 Container(
-                  margin: EdgeInsets.only(right:sizewidth*18/fullwidth ),
+                  margin: EdgeInsets.only(right: sizewidth * 18 / fullwidth),
                   padding: EdgeInsets.symmetric(
                     horizontal: sizewidth * 12 / fullwidth,
                     vertical: sizeheight * 8 / fullheight,
@@ -148,6 +159,32 @@ class _NutriguideState extends State<Nutriguide> {
                     fontWeight: FontWeight.w500,
                     color: AppColors.txtPrimary,
                   ),
+                ),
+
+                SizedBox(height: sizeheight * 8 / fullheight),
+
+                CardRekomendasimenu(
+                  title: "Oatmeal Sereal",
+                  desc:
+                      "Teksturnya yang lembut dan rasanya yang enak membuat sereal menjadi makanan yang cocok diberikan untuk bayi berusia 8 bulan.",
+                  size: size,
+                ),
+                SizedBox(height: sizeheight * 8 / fullheight),
+                CardRekomendasimenu(
+                  title: "Bubur Pisang",
+                  desc:
+                      "Bubur pisang mengandung protein nabati yang membantu pertumbuhan sel dan otot bayi, serta kaya energi alami yang mendukung aktivitas dan perkembangan hariannya",
+                  size: size,
+                ),
+
+                SizedBox(height: sizeheight * 22 / fullheight),
+                 BlocBuilder<TipsGiziBloc, TipsGiziState>(
+                  builder: (context, state) {
+                    if (state is TipsGiziLoaded) {
+                      return CardTipsgizi(items: state.items, size: size);
+                    }
+                    return SizedBox.shrink();
+                  },
                 ),
               ],
             ),

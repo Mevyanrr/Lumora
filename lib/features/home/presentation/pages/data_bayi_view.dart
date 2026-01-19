@@ -42,7 +42,6 @@ class _DataBayiState extends State<DataBayiView> {
           icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             color: AppColors.txtPrimary,
-            size: sizewidth * 7.5 / fullwidth,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -426,6 +425,30 @@ class _DataBayiState extends State<DataBayiView> {
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: sizewidth * 16 / fullwidth,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Radio<String>(
+                                    value: 'H',
+                                    groupValue: state.aktivitasBayi,
+                                    onChanged: (value) {
+                                      context.read<KuisionerBloc>().add(
+                                        PilAktivitasBayi(value!),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(width: sizewidth * 12 / fullwidth),
+                                  Text(
+                                    'Belum bisa semua',
+                                    style: TextStyle(
+                                      color: AppColors.txtPrimary,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: sizewidth*16/fullwidth,
                                     ),
                                   ),
                                 ],

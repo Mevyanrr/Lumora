@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/nutriguide',
+        initialRoute: '/kuisioner1',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),

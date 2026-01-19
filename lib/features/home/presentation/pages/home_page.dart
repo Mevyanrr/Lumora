@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/core/widgets/navbar.dart';
 import 'package:lumora/features/home/presentation/bloc/panduaninfo_bloc.dart';
 import 'package:lumora/features/home/presentation/bloc/panduaninfo_event.dart';
+import 'package:lumora/features/home/presentation/pages/analisis.dart';
 import 'package:lumora/features/home/presentation/pages/data_bayi.dart';
 import 'package:lumora/features/home/presentation/pages/nutriguide.dart';
 import 'package:lumora/features/home/presentation/pages/tahapan_bayi.dart';
@@ -188,13 +188,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => BlocProvider(
-                              create: (_) =>
-                                  PanduanGiziBloc()..add(LoadPanduanGizi()),
-                              child: Nutriguide(),
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (_) => Nutriguide()),
                         );
                       },
                       child: Text(
@@ -266,10 +260,10 @@ class HomePage extends StatelessWidget {
                   backgroundColor: AppColors.txtPrimary,
                   borderColor: AppColors.txtPrimary,
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (_) => Page1()), // KE HOMEPAGE
-                    // );
+                    Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (_) => Analisis()),
+                     );
                   },
 
                   radius: 15,

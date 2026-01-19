@@ -35,7 +35,7 @@ class _Page3ViewState extends State<Page3View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: sizeheight * 70 / fullheight, bottom: sizeheight*61/fullheight),
+            padding: EdgeInsets.only(top: sizeheight * 20 / fullheight, bottom: sizeheight*61/fullheight),
             child: Column(
               children: [
                 TopContainer(
@@ -130,6 +130,30 @@ class _Page3ViewState extends State<Page3View> {
                                   SizedBox(width: sizewidth * 12 / fullwidth),
                                   Text(
                                     'Riwayat kejang',
+                                    style: TextStyle(
+                                      color: AppColors.txtPrimary,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: sizewidth*16/fullwidth,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                               Row(
+                                children: [
+                                  Radio<String>(
+                                    value: 'D',
+                                    groupValue: state.kondisiBayi,
+                                    onChanged: (value) {
+                                      context.read<KuisionerBloc>().add(
+                                        PilKondisiBayi(value!),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(width: sizewidth * 12 / fullwidth),
+                                  Text(
+                                    'Tidak pernah',
                                     style: TextStyle(
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',

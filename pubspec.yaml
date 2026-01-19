@@ -78,6 +78,8 @@ flutter:
     - assets/images/info-kes-milk.png
     - assets/images/kentang.png
     - assets/images/profildummy.png
+    - assets/images/analisis-good.png
+    - assets/images/analisis-bad.png
 
     - assets/icons/home.svg
     - assets/icons/milestone.svg
@@ -92,6 +94,7 @@ flutter:
     - assets/icons/nutriguide-lamp.svg
     - assets/icons/nutriguide-warning.svg
     - assets/icons/nutriguide-checklist.svg
+    - assets/icons/analisis-warning.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
