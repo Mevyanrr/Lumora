@@ -18,7 +18,7 @@ class AnalisisresultBloc extends Bloc<AnalisisresultEvent, AnalisisresultState> 
           AnalisisresultItem(
             title: 'Protein',
             menu: 'Telur',
-            percentage: 0.85,
+            percentage: 0.49,
             barColor: AppColors.secondary,
           ),
           AnalisisresultItem(

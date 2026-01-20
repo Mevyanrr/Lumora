@@ -26,7 +26,6 @@ class CardRekomendasimenu extends StatelessWidget {
         ),
         child: 
             Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

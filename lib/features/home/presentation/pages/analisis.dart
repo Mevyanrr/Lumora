@@ -5,6 +5,7 @@ import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/features/home/presentation/bloc/analisis_event.dart';
 import 'package:lumora/features/home/presentation/bloc/analisis_state.dart';
 import 'package:lumora/features/home/presentation/bloc/analis_bloc.dart';
+import 'package:lumora/features/home/presentation/pages/analisisresult_bad.dart';
 import 'package:lumora/features/home/presentation/pages/analisisresult_good.dart';
 
 class Analisis extends StatelessWidget {
@@ -177,7 +178,7 @@ class Analisis extends StatelessWidget {
                   onTap: () {
                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => AnalisisresultGood()),
+                        MaterialPageRoute(builder: (_) => AnalisisresultBad()),
                       );
                   },
 
