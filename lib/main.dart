@@ -8,6 +8,7 @@ import 'package:lumora/features/auth/presentation/pages/login.dart';
 import 'package:lumora/features/auth/presentation/pages/regist.dart';
 import 'package:lumora/features/home/presentation/pages/data_bayi.dart';
 import 'package:lumora/features/home/presentation/pages/home_page.dart';
+import 'package:lumora/features/home/presentation/pages/nutriguide.dart';
 import 'package:lumora/features/home/presentation/pages/tahapan_bayi.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/regist',
+        initialRoute: '/kuisioner1',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
@@ -67,7 +68,8 @@ class MyApp extends StatelessWidget {
           '/regist': (context) => Regist(),
           '/home': (context) => HomePage(),
           '/babystep': (context) => TahapanBayi(),
-          '/databayi': (context) => DataBayi()
+          '/databayi': (context) => DataBayi(),
+          '/nutriguide': (context) => Nutriguide(),
         },
       ),
     );

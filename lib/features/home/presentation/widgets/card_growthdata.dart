@@ -35,7 +35,6 @@ class GrowthdataCard extends StatelessWidget {
       children: [
         Container(
           width: sizewidth*376/fullwidth,
-          height: sizeheight*96/fullheight,
           padding: EdgeInsets.symmetric(
             horizontal: sizewidth * 16 / fullwidth,
             vertical: sizeheight * 12 / fullheight,

@@ -9,7 +9,6 @@ import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
 import 'package:lumora/features/kuisioner/presentation/widgets/top_container.dart';
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
-import 'package:lumora/features/onBoarding/presentation/pages/onboarding0.dart';
 import 'package:lumora/model/baby_model.dart';
 
 class Page4View extends StatefulWidget {
@@ -34,10 +33,7 @@ class _Page4ViewState extends State<Page4View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-              top: sizeheight * 70 / fullheight,
-              bottom: sizeheight * 61 / fullheight,
-            ),
+            padding: EdgeInsets.only(top: sizeheight * 20 / fullheight, bottom: sizeheight*61/fullheight),
             child: Column(
               children: [
                 TopContainer(
@@ -228,6 +224,30 @@ class _Page4ViewState extends State<Page4View> {
                                   SizedBox(width: sizewidth * 12 / fullwidth),
                                   Text(
                                     'Bayi masi berusia dibawah 2 bulan',
+                                    style: TextStyle(
+                                      color: AppColors.txtPrimary,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: sizewidth * 16 / fullwidth,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Radio<String>(
+                                    value: 'Belum bisa semua',
+                                    groupValue: state.aktivitasBayi,
+                                    onChanged: (value) {
+                                      context.read<KuisionerBloc>().add(
+                                        PilAktivitasBayi(value!),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(width: sizewidth * 12 / fullwidth),
+                                  Text(
+                                    'Belum bisa semua',
                                     style: TextStyle(
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',

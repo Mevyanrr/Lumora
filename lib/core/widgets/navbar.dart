@@ -4,8 +4,7 @@ import 'package:lumora/core/theme/colors.dart';
 
 class Navbar extends StatefulWidget {
   final int selectedItem;
-  const Navbar({
-    super.key, required this.selectedItem});
+  const Navbar({super.key, required this.selectedItem});
 
   @override
   State<Navbar> createState() => _BottomNavState();
@@ -43,40 +42,55 @@ class _BottomNavState extends State<Navbar> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(50),
-      topRight: Radius.circular(50),
-    ),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        showUnselectedLabels: true,
-        selectedItemColor: AppColors.secondary,
-        unselectedItemColor: AppColors.txtPrimary,
-        currentIndex: widget.selectedItem,
-        onTap: changeSelectedNavBar,
-        items: [
-          _navItem(
-            iconPath: 'assets/icons/home.svg',
-            label: 'Beranda',
-            isActive: widget.selectedItem == 0,
-          ),
-          _navItem(
-            iconPath: 'assets/icons/stimulasi.svg',
-            label: 'Stimulasi',
-            isActive: widget.selectedItem == 1,
-          ),
-          _navItem(
-            iconPath: 'assets/icons/milestone.svg',
-            label: 'Milestone',
-            isActive: widget.selectedItem == 2,
-          ),
-        ],
+ @override
+Widget build(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+  final sizewidth = size.width;
+  final fullwidth = 412;
+
+  return Stack(
+    clipBehavior: Clip.none,
+    children: [
+      SizedBox(
+        height: kBottomNavigationBarHeight + 24,
       ),
-    );
-  }
+
+      // NAVBAR FIX DI BAWAH
+      ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(sizewidth * 50 / fullwidth),
+          topRight: Radius.circular(sizewidth * 50 / fullwidth),
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: AppColors.white,
+          elevation: 0,
+          showUnselectedLabels: true,
+          selectedItemColor: AppColors.secondary,
+          unselectedItemColor: AppColors.txtPrimary,
+          currentIndex: widget.selectedItem,
+          onTap: changeSelectedNavBar,
+          items: [
+            _navItem(
+              iconPath: 'assets/icons/home.svg',
+              label: 'Beranda',
+              isActive: widget.selectedItem == 0,
+            ),
+            _navItem(
+              iconPath: 'assets/icons/stimulasi.svg',
+              label: 'Stimulasi',
+              isActive: widget.selectedItem == 1,
+            ),
+            _navItem(
+              iconPath: 'assets/icons/milestone.svg',
+              label: 'Milestone',
+              isActive: widget.selectedItem == 2,
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
 }
