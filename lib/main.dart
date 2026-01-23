@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/kuisioner1',
+        initialRoute: '/login',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),

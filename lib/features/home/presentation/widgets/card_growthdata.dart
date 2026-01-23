@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lumora/core/theme/colors.dart';
+import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
 
 enum GrowthStatus { normal, kurang }
 
@@ -33,6 +34,22 @@ class GrowthdataCard extends StatelessWidget {
 
     return Column(
       children: [
+        StreamBuilder(stream: KuisionerService().getKuisionerData(), builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return CircularProgressIndicator();
+          }
+          if(!snapshot.hasData || snapshot.data == null){
+            return Text("Data kuisioner tidak tersedia");
+          }
+          final babyData = snapshot.data;
+          final bulan = DateTime.now().month - babyData!.tanggalLahir.month + (12 + (DateTime.now().year - babyData.tanggalLahir.year));
+          final bStatus = _hitungStatus('berat', bulan, babyData.beratBadan);
+          final tStatus = _hitungStatus('tinggi', bulan, babyData.tinggiBadan);
+          final kStatus = _hitungStatus('kepala', bulan, babyData.lingkarKepala);
+
+        final currentWorstStatus = _getWorstStatus([bStatus, tStatus, kStatus]);
+        return
+        
         Container(
           width: sizewidth*376/fullwidth,
           padding: EdgeInsets.symmetric(
@@ -45,25 +62,26 @@ class GrowthdataCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _rowItem(title: "Berat Badan:", value: "8,5 kg", status: beratStatus),
+              _rowItem(title: "Berat Badan:", value: "${babyData?.beratBadan.toStringAsFixed(1)} kg", status: bStatus),
               SizedBox(height: sizeheight * 4 / fullheight),
         
               _rowItem(
                 title: "Tinggi Badan:",
-                value: "70 cm",
-                status: tinggiStatus,
+                value: "${(babyData?.tinggiBadan.toInt()).toString()} cm",
+                status: tStatus,
               ),
               SizedBox(height: sizeheight * 4 / fullheight),
         
               _rowItem(
                 title: "Lingkar Kepala:",
-                value: "45 cm",
-                status: kepalaStatus,
+                value: "${(babyData?.lingkarKepala.toInt()).toString()} cm",
+                status: kStatus,
               ),
               
             ],
           ),
-        ),
+        );
+        }),
 
         SizedBox(height: sizeheight * 16 / fullheight),
         
@@ -99,8 +117,9 @@ class GrowthdataCard extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+        )
       ],
+    
     );
   }
 
@@ -157,7 +176,28 @@ class GrowthdataCard extends StatelessWidget {
             ),
           ),
         ),
+    
       ],
+      
     );
   }
+
+  GrowthStatus _hitungStatus(String kategori, int bulan, double nilai){
+    return switch(kategori){
+      'berat' => switch (bulan) {
+        <= 3 => nilai >= 3.5 ? GrowthStatus.normal : GrowthStatus.kurang,
+        <= 6 => nilai >= 6.4 ? GrowthStatus.normal : GrowthStatus.kurang,
+        <= 12 => nilai >= 8.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+        _ => nilai >= 10.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+      },
+    'tinggi' => switch (bulan) {
+        <= 3 => nilai >= 55.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+        <= 6 => nilai >= 64.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+        <= 12 => nilai >= 72.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+        _ => nilai >= 85.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+      },
+    _ => GrowthStatus.normal,
+    };
+  }
+  
 }

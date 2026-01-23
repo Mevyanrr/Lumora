@@ -11,9 +11,12 @@ import 'package:lumora/features/home/presentation/widgets/card_growthdata.dart';
 import 'package:lumora/features/home/presentation/widgets/card_hiparents.dart';
 import 'package:lumora/features/home/presentation/widgets/card_infokesehatan.dart';
 import 'package:lumora/features/home/presentation/widgets/card_panduangizi.dart';
+import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
+import 'package:lumora/model/baby_model.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,55 @@ class HomePage extends StatelessWidget {
               top: sizeheight * 10 / fullheight,
               bottom: sizeheight * 15 / fullheight,
             ),
-            child: Column(
+            child: 
+            StreamBuilder(stream: KuisionerService().getKuisionerData(), builder: (context, snapshot){
+              if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    }
+            final babyData = snapshot.data;
+            if (babyData == null) {
+            return const Center(child: Text("Silahkan isi data bayi terlebih dahulu"));
+          }
+            String babyName = babyData.nama;
+            String bb = babyData.beratBadan.toString() ;
+            String tb = babyData.tinggiBadan.toString();
+            String lk = babyData.lingkarKepala.toString();
+            final now = DateTime.now();
+            int bulan = now.month - babyData.tanggalLahir.month + 
+               (12 * (now.year - babyData.tanggalLahir.year));
+            int hari = now.day - babyData.tanggalLahir.day;
+
+            if (hari < 0) {
+            bulan--;
+            hari += 30; 
+            }
+
+            String intervalTahap = switch (bulan) {
+              >= 0 && <= 2 => "Tahap 0 - 2 Bulan: ",
+              >= 3 && <= 5 => "Tahap 3 - 5 Bulan: ",
+              >= 6 && <= 7 => "Tahap 6 - 7 Bulan: ",
+              >= 8 && <= 10 => "Tahap 8 - 10 Bulan: ",
+            _ => "Tahap 12 bulan keatas", 
+              };
+
+              String tahap = switch (bulan) {
+              >= 0 && <= 2 => "Si Penyesuai Dunia",
+              >= 3 && <= 5 => "Si Pengamat",
+              >= 6 && <= 7 => "Si Penjelajah",
+              >= 8 && <= 10 => "Si Penasaran",
+            _ => "Si kreatif", 
+              };
+
+              String deskripsi = switch (bulan) {
+              >= 0 && <= 2 => "Pada fase ini, fokuslah pada pemberian ASI eksklusif dan bangun ikatan batin",
+              >= 3 && <= 5 => "Pada fase ini, ajak si kecil berinteraksi dengan mainan yang bisa digenggam",
+              >= 6 && <= 7 => "Pada fase ini, kenalkan MPASI pertama dengan tekstur halus",
+              >= 8 && <= 10 => "Pada fase ini, ajak si kecil mengeksplorasi lingkungan sekitarnya dengan merangkak",
+              _=> "Pada fase ini, terus pantau tumbuh kembang si kecil dan berikan stimulasi sesuai usia",
+              };
+
+            return
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -71,6 +122,7 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -87,12 +139,12 @@ class HomePage extends StatelessWidget {
                               ),
                               //BABY NAME
                               Text(
-                                "Aira",
+                                "${babyName}",
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: sizewidth * 22 / fullwidth,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.txtPrimary,
+                                color: AppColors.txtPrimary,
                                 ),
                               ),
                             ],
@@ -111,7 +163,7 @@ class HomePage extends StatelessWidget {
                               ),
                               //BUAT UMUR BAYI
                               Text(
-                                "8 bulan 5 hari",
+                                "$bulan bulan $hari hari",
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: sizewidth * 14 / fullwidth,
@@ -126,8 +178,9 @@ class HomePage extends StatelessWidget {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          
                           Text(
-                            "Tahap 8 - 10 Bulan:",
+                            "$intervalTahap ",
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: sizewidth * 12 / fullwidth,
@@ -146,7 +199,7 @@ class HomePage extends StatelessWidget {
                               );
                             },
                             child: Text(
-                              "Si Penasaran >",
+                              "$tahap >",
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: sizewidth * 18 / fullwidth,
@@ -162,10 +215,10 @@ class HomePage extends StatelessWidget {
                 ),
         
                 SizedBox(height: sizeheight * 14 / fullheight),
-        
+                
                 CardHiparents(
                   desc:
-                      "Pada fase ini ajak anak anda mengeksplorasi lingkungan di sekitarnya yaa",
+                      "$deskripsi",
                   size: size,
                 ),
                 SizedBox(height: sizeheight * 28 / fullheight),
@@ -358,7 +411,8 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            );
+            }),
           ),
         ),
       ),

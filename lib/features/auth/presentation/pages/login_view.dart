@@ -198,10 +198,11 @@ class _LoginViewState extends State<LoginView> {
                               nama,
                             );
                             if (!mounted) return;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => Page1()),
-                            );
+                           Navigator.pushAndRemoveUntil(
+                            context,
+                             MaterialPageRoute(builder: (context) => const HomePage()),
+                            (route) => false,
+                                );
                           } catch (e) {
                             log("error regist: $e");
                           } finally {
@@ -267,10 +268,11 @@ class _LoginViewState extends State<LoginView> {
                               setState(() {
                                 isLoading = false;
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => Page1()),
-                              );
+                              Navigator.pushAndRemoveUntil(
+                              context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                            (route) => false,
+                                    );
                             } catch (e) {
                               log("error google sign in: $e");
                             } finally {

@@ -20,4 +20,20 @@ class KuisionerService {
       print("Gagal menyimpan data kuisioner: $e");
     }
   }
+
+  Stream<BabyModel?> getKuisionerData() { 
+  final userId = auth.currentUser?.uid;
+  if(userId == null) return Stream.value(null);
+
+  return firestore
+      .collection('bayi')
+      .doc(userId)
+      .snapshots()
+      .map((snapshot) {
+        if(snapshot.exists && snapshot.data() != null){
+          return BabyModel.fromFirestore(snapshot);
+        } 
+        return null; 
+      });
+}
 }

@@ -6,6 +6,7 @@ import 'package:lumora/core/widgets/textfield.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_bloc.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_event.dart';
 import 'package:lumora/features/kuisioner/presentation/bloc/kuisioner_state.dart';
+import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
 
 class DataBayiView extends StatefulWidget {
   final TextEditingController nameController;
@@ -62,6 +63,16 @@ class _DataBayiState extends State<DataBayiView> {
           padding: EdgeInsets.only(bottom: sizeheight*57/fullheight),
           child: Column(
             children: [
+              StreamBuilder(stream: KuisionerService().getKuisionerData(), builder: (context, snapshot){
+                if(snapshot.hasData){
+                  final babyData = snapshot.data!;
+                  widget.nameController.text = babyData.nama;
+                  widget.dateController.text = "${babyData.tanggalLahir.day}/${babyData.tanggalLahir.month}/${babyData.tanggalLahir.year}";
+                  widget.bbController.text = babyData.beratBadan.toString();
+                  widget.tbController.text = babyData.tinggiBadan.toString();
+                  widget.lingkarKepalaController.text = babyData.lingkarKepala.toString();
+                }
+              return
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: sizewidth * 18 / fullwidth,
@@ -460,7 +471,8 @@ class _DataBayiState extends State<DataBayiView> {
                     ],
                   ),
                 ),
-              ),
+              );
+  }),
           
               
           

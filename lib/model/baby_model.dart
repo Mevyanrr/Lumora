@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class BabyModel {
   final String nama;
   final DateTime tanggalLahir;
@@ -23,10 +25,11 @@ class BabyModel {
     required this.createdAt,
   });
 
-  factory BabyModel.fromMap(Map<String, dynamic> data){
+  factory BabyModel.fromFirestore(DocumentSnapshot doc){
+    final data = doc.data() as Map<String, dynamic>;
     return BabyModel(
       nama: data['nama'] ?? 'Tidak ada nama', 
-      tanggalLahir: data['tanggalLahir'] ?? DateTime.now(), 
+      tanggalLahir: (data['tanggalLahir'] as Timestamp?)?.toDate()  ?? DateTime.now(), 
       jenisKelamin: data['jenisKelamin'] ?? 'Tidak diketahui', 
       beratBadan: data['beratBadan'] ?? 0.0, 
       tinggiBadan: data['tinggiBadan'] ?? 0.0, 
