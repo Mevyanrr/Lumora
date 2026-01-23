@@ -16,9 +16,9 @@ class _BottomNavState extends State<Navbar> {
     if (index == widget.selectedItem) return;
 
     if (index == 0) {
-      Navigator.pushReplacementNamed(context, '/kuisioner1');
+      Navigator.pushReplacementNamed(context, '/home');
     } else if (index == 1) {
-      Navigator.pushReplacementNamed(context, '');
+      Navigator.pushReplacementNamed(context, '/stimulasi');
     } else if (index == 2) {
       Navigator.pushReplacementNamed(context, '');
     }
@@ -45,10 +45,15 @@ class _BottomNavState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final sizewidth = size.width;
+    final sizeheight = size.height;
+    final fullheight = 917;
+    final fullwidth = 412;
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(50),
-      topRight: Radius.circular(50),
+      borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(sizewidth* 50/fullwidth),
+      topRight: Radius.circular(sizewidth* 50/fullwidth),
     ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
