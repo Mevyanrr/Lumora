@@ -15,9 +15,9 @@ class _BottomNavState extends State<Navbar> {
     if (index == widget.selectedItem) return;
 
     if (index == 0) {
-      Navigator.pushReplacementNamed(context, '/kuisioner1');
+      Navigator.pushReplacementNamed(context, '/home');
     } else if (index == 1) {
-      Navigator.pushReplacementNamed(context, '');
+      Navigator.pushReplacementNamed(context, '/stimulasi');
     } else if (index == 2) {
       Navigator.pushReplacementNamed(context, '');
     }
@@ -42,6 +42,7 @@ class _BottomNavState extends State<Navbar> {
     );
   }
 
+<<<<<<< HEAD
  @override
 Widget build(BuildContext context) {
   final size = MediaQuery.of(context).size;
@@ -53,6 +54,46 @@ Widget build(BuildContext context) {
     children: [
       SizedBox(
         height: kBottomNavigationBarHeight + 24,
+=======
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final sizewidth = size.width;
+    final sizeheight = size.height;
+    final fullheight = 917;
+    final fullwidth = 412;
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(sizewidth* 50/fullwidth),
+      topRight: Radius.circular(sizewidth* 50/fullwidth),
+    ),
+      child: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        showUnselectedLabels: true,
+        selectedItemColor: AppColors.secondary,
+        unselectedItemColor: AppColors.txtPrimary,
+        currentIndex: widget.selectedItem,
+        onTap: changeSelectedNavBar,
+        items: [
+          _navItem(
+            iconPath: 'assets/icons/home.svg',
+            label: 'Beranda',
+            isActive: widget.selectedItem == 0,
+          ),
+          _navItem(
+            iconPath: 'assets/icons/stimulasi.svg',
+            label: 'Stimulasi',
+            isActive: widget.selectedItem == 1,
+          ),
+          _navItem(
+            iconPath: 'assets/icons/milestone.svg',
+            label: 'Milestone',
+            isActive: widget.selectedItem == 2,
+          ),
+        ],
+>>>>>>> 91922d4 (stimulasi done)
       ),
 
       // NAVBAR FIX DI BAWAH

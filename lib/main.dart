@@ -18,6 +18,8 @@ import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/pages/profile.dart';
+import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_bloc.dart';
+import 'package:lumora/features/stimulasi/presentation/pages/stimulasi.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,7 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: AppColors.background, 
+      statusBarColor: AppColors.background,
       statusBarIconBrightness: Brightness.dark, // icon hitam
       statusBarBrightness: Brightness.light, // iOS
     ),
@@ -38,13 +40,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return MultiBlocProvider(
+    return MultiBlocProvider(
       providers: [
-        BlocProvider<KuisionerBloc>(
-          create: (_) => KuisionerBloc(),
-        ),
-        BlocProvider(
-      create: (_) => ProfileBloc(),),
+        BlocProvider<KuisionerBloc>(create: (_) => KuisionerBloc()),
+        BlocProvider(create: (_) => ProfileBloc()),
+        BlocProvider<AktivitasBloc>(create: (_) => AktivitasBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -74,7 +74,8 @@ class MyApp extends StatelessWidget {
           '/babystep': (context) => TahapanBayi(),
           '/databayi': (context) => DataBayi(),
           '/nutriguide': (context) => Nutriguide(),
-          '/profil': (context) => Profile()
+          '/profil': (context) => Profile(),
+          '/stimulasi': (context) => Stimulasi(),
         },
       ),
     );
