@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lumora/core/theme/colors.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 class CardPanduanGizi extends StatelessWidget {
   final String title;
   final String portion;
@@ -21,8 +21,8 @@ class CardPanduanGizi extends StatelessWidget {
   Widget build(BuildContext context) {
     final sizewidth = size.width;
     final sizeheight = size.height;
-    final fullheight = 917;
-    final fullwidth = 412;
+    final double fullheight = 917;
+    final double fullwidth = 412;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -37,11 +37,7 @@ class CardPanduanGizi extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              imagePath,
-              height: sizeheight* 36/fullheight,
-              fit: BoxFit.contain,
-            ),
+            _buildImage(sizewidth, fullwidth),
             SizedBox(height:sizeheight* 8/fullheight),
             Text(
               title,
@@ -64,5 +60,25 @@ class CardPanduanGizi extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildImage(double sizeWidth, double fullwidth) {
+    final double imageSize = sizeWidth * 35 / fullwidth;
+    if(imagePath.toLowerCase().endsWith('.svg')){
+      return SvgPicture.asset(
+        imagePath,
+        width: imageSize,
+        height: imageSize,
+        placeholderBuilder: (BuildContext context) => Icon(Icons.error, color: Colors.red),
+      );
+    } else {
+      return Image.asset(
+        imagePath,
+        width: imageSize,
+        height: imageSize,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) => Icon(Icons.image_not_supported),
+      );
+    }
   }
 }

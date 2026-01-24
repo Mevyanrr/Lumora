@@ -118,15 +118,16 @@ final List<Map<String, dynamic>> tahapanBayi = [
 
   {
     "icon": "assets/icons/growbaby-feet.svg",
-    "title": "Si Penjelajah",
-    "subtitle": "Tahap 6 - 7 Bulan",
+    "title": "Si Penasaran",
+    "subtitle": "Tahap 8 - 10 Bulan",
     "description":
-        "Si kecil mulai ingin bergerak dan mencoba kemampuan fisiknya.",
+        "Si kecil mulai aktif mengeksplorasi sekitar dengan merangkak dan memahami konsep sebab-akibat sederhana.",
     "activities": [
-      "Berguling",
-      "Meraih dan memindahkan benda",
-      "Mengenali orang",
-      "Bersuara berulang",
+    "Merangkak atau mengesot",
+    "Duduk tanpa bantuan",
+    "Melambaikan tangan (dadah)",
+    "Memegang biskuit sendiri",
+    
     ],
   },
 ];
