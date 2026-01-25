@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_svg/flutter_svg.dart';
+=======
+>>>>>>> 6aea03c (profil page ui done)
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/core/widgets/navbar.dart';
@@ -11,8 +14,12 @@ import 'package:lumora/features/home/presentation/widgets/card_growthdata.dart';
 import 'package:lumora/features/home/presentation/widgets/card_hiparents.dart';
 import 'package:lumora/features/home/presentation/widgets/card_infokesehatan.dart';
 import 'package:lumora/features/home/presentation/widgets/card_panduangizi.dart';
+<<<<<<< HEAD
 import 'package:lumora/features/home/services/gemini_analysis_service.dart'; // Import Service
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
+=======
+import 'package:lumora/features/profile/presentation/pages/profile.dart';
+>>>>>>> 6aea03c (profil page ui done)
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -137,6 +144,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
+<<<<<<< HEAD
 
                       SizedBox(height: sizeheight * 12 / fullheight),
                       
@@ -208,6 +216,22 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                           ],
+=======
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Profile(),
+                                ),
+                              );
+                        },
+                        child: CircleAvatar(
+                          radius: sizewidth * 24 / fullwidth,
+                          backgroundImage: AssetImage(
+                            "assets/images/profildummy.png",
+                          ),
+>>>>>>> 6aea03c (profil page ui done)
                         ),
                       ),
 

@@ -33,11 +33,14 @@ dependencies:
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   equatable: ^2.0.8
+  material_symbols_icons: ^4.0.0
+  font_awesome_flutter: ^10.0.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
   flutter_svg: ^2.2.3
   intl: ^0.20.2
+<<<<<<< HEAD
   firebase_core: ^4.0.0
   firebase_auth: ^6.1.3
   firebase_app_check: ^0.4.0+1
@@ -48,6 +51,9 @@ dependencies:
   http: ^1.2.1
   
 
+=======
+  
+>>>>>>> 6aea03c (profil page ui done)
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -105,6 +111,16 @@ flutter:
     - assets/icons/nutriguide-warning.svg
     - assets/icons/nutriguide-checklist.svg
     - assets/icons/analisis-warning.svg
+    - assets/icons/baby.svg
+    - assets/icons/calendar.svg
+    - assets/icons/lingkar-kepala.svg
+    - assets/icons/injection.svg
+    - assets/icons/bb.svg
+    - assets/icons/gender.svg
+    - assets/icons/pin.svg
+    - assets/icons/tb.svg
+    - assets/icons/stimulasi-lamp.svg
+    - assets/icons/stimulasi-time.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

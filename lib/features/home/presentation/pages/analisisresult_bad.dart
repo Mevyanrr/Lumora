@@ -3,13 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/features/home/presentation/pages/home_page.dart';
-import 'package:lumora/features/home/presentation/widgets/card_analisisresult.dart';
-import 'package:lumora/features/home/presentation/widgets/card_rekomendasimenu.dart';
 import 'package:lumora/features/home/presentation/widgets/card_topanalisisresult.dart';
-import 'package:lumora/features/home/presentation/widgets/container_badresult.dart';
+import 'package:lumora/features/home/presentation/widgets/card_rekomendasimenu.dart';
+// import 'package:lumora/features/home/presentation/widgets/container_badresult.dart'; // Kita ganti dengan versi dinamis di bawah
 
 class AnalisisresultBad extends StatelessWidget {
-  const AnalisisresultBad({super.key});
+  // 1. Terima Data
+  final Map<String, dynamic> data;
+
+  const AnalisisresultBad({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,13 @@ class AnalisisresultBad extends StatelessWidget {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
+
+    // 2. Parsing Data (Safe Parsing)
+    final titleText = data['title_text'] ?? "Wah! Gizi belum terpenuhi";
+    final stats = data['analisis_gizi'] ?? {};
+    final saranSingkat = List<String>.from(data['saran_singkat'] ?? []);
+    final rekomendasiMenu = List<dynamic>.from(data['rekomendasi_menu'] ?? []);
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -30,31 +39,86 @@ class AnalisisresultBad extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 3. Header Dinamis
                 CardTopanalisisresult(
                   size: size,
                   image: 'assets/images/analisis-bad.png',
                   icon: 'assets/icons/analisis-warning.svg',
-                  desc1: 'Wah! Gizi belum terpenuhi',
-                  desc2:
-                      'Makanan yang anda berikan belum cukup bergizi untuk perkembangan Si Kecil.',
+                  desc1: titleText, 
+                  desc2: 'Makanan yang anda berikan belum cukup bergizi untuk perkembangan Si Kecil.',
                 ),
 
                 SizedBox(height: sizeheight * 28 / fullheight),
 
-                AnalisisResult(size: size),
+                // 4. Widget Grafik Gizi Dinamis (Pengganti AnalisisResult statis)
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFEBD0), // Warna background card
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text(
+                        "Analisis Gizi Menu",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600, 
+                          fontSize: sizewidth * 16 / fullwidth
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      // Panggil Helper Widget untuk setiap kategori
+                      DynamicGiziBar(label: "Karbohidrat", data: stats['karbohidrat'], color: Colors.teal),
+                      DynamicGiziBar(label: "Protein", data: stats['protein'], color: Colors.pinkAccent),
+                      DynamicGiziBar(label: "Vitamin", data: stats['vitamin'], color: Colors.orange),
+                      DynamicGiziBar(label: "Cairan", data: stats['cairan'], color: Colors.blue),
+                    ],
+                  ),
+                ),
 
                 SizedBox(height: sizeheight * 12 / fullheight),
 
-                Row(
-                  children: [
-                    ContainerBadresult(size: size, text: 'Buah segar'),
-                    SizedBox(width: sizewidth*12/fullwidth,),
-                    ContainerBadresult(size: size, text: 'susu'),
-                  ],
-                ),
+                // 5. Tombol Saran Dinamis (Mengganti ContainerBadresult statis)
+                if (saranSingkat.isNotEmpty)
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: saranSingkat.map((saran) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: sizewidth * 12 / fullwidth, 
+                          vertical: sizeheight * 8 / fullheight
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFE0B2),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.orange.shade200)
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add, size: 14, color: AppColors.txtPrimary),
+                            SizedBox(width: 4),
+                            Text(
+                              saran.replaceAll("+ ", ""), 
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: sizewidth * 12 / fullwidth, 
+                                fontWeight: FontWeight.w500, 
+                                color: AppColors.txtPrimary
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
 
                 SizedBox(height: sizeheight * 8 / fullheight),
 
+                // Footer Text
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -78,31 +142,31 @@ class AnalisisresultBad extends StatelessWidget {
 
                 SizedBox(height: sizeheight * 28 / fullheight),
 
-                Text(
-                  "Rekomendasi Menu Harian",
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: sizewidth * 18 / fullwidth,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.txtPrimary,
+                // 6. Rekomendasi Menu Dinamis
+                if (rekomendasiMenu.isNotEmpty) ...[
+                  Text(
+                    "Rekomendasi Menu Harian",
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: sizewidth * 18 / fullwidth,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.txtPrimary,
+                    ),
                   ),
-                ),
+                  SizedBox(height: sizeheight * 8 / fullheight),
 
-                SizedBox(height: sizeheight * 8 / fullheight),
-
-                CardRekomendasimenu(
-                  title: "Oatmeal Sereal",
-                  desc:
-                      "Teksturnya yang lembut dan rasanya yang enak membuat sereal menjadi makanan yang cocok diberikan untuk bayi berusia 8 bulan.",
-                  size: size,
-                ),
-                SizedBox(height: sizeheight * 8 / fullheight),
-                CardRekomendasimenu(
-                  title: "Bubur Pisang",
-                  desc:
-                      "Bubur pisang mengandung protein nabati yang membantu pertumbuhan sel dan otot bayi, serta kaya energi alami yang mendukung aktivitas dan perkembangan hariannya",
-                  size: size,
-                ),
+                  // Mapping List Rekomendasi
+                  ...rekomendasiMenu.map((menu) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: sizeheight * 8 / fullheight),
+                      child: CardRekomendasimenu(
+                        title: menu['nama_menu'] ?? "Menu Sehat",
+                        desc: menu['deskripsi'] ?? "Deskripsi tidak tersedia",
+                        size: size,
+                      ),
+                    );
+                  }),
+                ],
 
                 SizedBox(height: sizeheight * 40 / fullheight),
 
@@ -114,12 +178,13 @@ class AnalisisresultBad extends StatelessWidget {
                     backgroundColor: AppColors.txtPrimary,
                     borderColor: AppColors.txtPrimary,
                     onTap: () {
-                      Navigator.push(
+                      // Gunakan pushAndRemoveUntil agar stack halaman bersih
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (_) => HomePage()),
+                        (route) => false,
                       );
                     },
-                  
                     radius: 15,
                     txColor: AppColors.background,
                   ),
@@ -128,6 +193,83 @@ class AnalisisresultBad extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+// --- WIDGET HELPER DINAMIS ---
+// Taruh ini di file yang sama atau file terpisah (misal: dynamic_gizi_bar.dart)
+class DynamicGiziBar extends StatelessWidget {
+  final String label;
+  final dynamic data; 
+  final Color color;
+
+  const DynamicGiziBar({
+    super.key, 
+    required this.label, 
+    required this.data, 
+    required this.color
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Parsing data aman
+    int persen = 0;
+    String menu = "Tidak ada";
+    
+    if (data != null && data is Map) {
+      persen = data['persen'] ?? 0;
+      menu = data['menu_penunjang'] ?? "Tidak ada";
+    }
+
+    bool isMissing = menu.toLowerCase() == "tidak ada";
+    bool isGood = persen >= 75;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    isGood ? Icons.check_circle : Icons.error,
+                    size: 16,
+                    color: isGood ? Colors.green : Colors.grey,
+                  ),
+                ],
+              ),
+              Text("$persen%", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            ],
+          ),
+          Text(
+            "Menu Penunjang: $menu",
+            style: TextStyle(
+              fontSize: 11,
+              color: isMissing ? Colors.red : Colors.grey[700],
+              fontStyle: isMissing ? FontStyle.italic : FontStyle.normal,
+            ),
+          ),
+          const SizedBox(height: 4),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: LinearProgressIndicator(
+              value: persen / 100.0,
+              backgroundColor: Colors.white,
+              color: isGood ? color : Colors.grey,
+              minHeight: 8,
+            ),
+          ),
+        ],
       ),
     );
   }

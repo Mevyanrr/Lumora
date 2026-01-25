@@ -16,6 +16,8 @@ import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
+import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:lumora/features/profile/presentation/pages/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<KuisionerBloc>(
           create: (_) => KuisionerBloc(),
         ),
+        BlocProvider(
+      create: (_) => ProfileBloc(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -57,7 +61,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/login',
+        initialRoute: '/home',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
@@ -70,6 +74,7 @@ class MyApp extends StatelessWidget {
           '/babystep': (context) => TahapanBayi(),
           '/databayi': (context) => DataBayi(),
           '/nutriguide': (context) => Nutriguide(),
+          '/profil': (context) => Profile()
         },
       ),
     );
