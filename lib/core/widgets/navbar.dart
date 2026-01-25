@@ -4,8 +4,7 @@ import 'package:lumora/core/theme/colors.dart';
 
 class Navbar extends StatefulWidget {
   final int selectedItem;
-  const Navbar({
-    super.key, required this.selectedItem});
+  const Navbar({super.key, required this.selectedItem});
 
   @override
   State<Navbar> createState() => _BottomNavState();
@@ -47,8 +46,6 @@ class _BottomNavState extends State<Navbar> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final sizewidth = size.width;
-    final sizeheight = size.height;
-    final fullheight = 917;
     final fullwidth = 412;
     return ClipRRect(
       borderRadius: BorderRadius.only(
