@@ -46,8 +46,6 @@ class _BottomNavState extends State<Navbar> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final sizewidth = size.width;
-    final sizeheight = size.height;
-    final fullheight = 917;
     final fullwidth = 412;
     return ClipRRect(
       borderRadius: BorderRadius.only(

@@ -129,10 +129,13 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                                  
+                              },
                               child: CircleAvatar(
                                 radius: sizewidth * 24 / fullwidth,
-                                backgroundImage: const AssetImage("assets/images/profildummy.png"),
+                                backgroundImage: AssetImage("assets/images/profildummy.png"),
                               ),
                             ),
                           ],
