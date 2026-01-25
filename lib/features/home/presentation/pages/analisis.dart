@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
+import 'package:lumora/features/home/data/models/analisisgizi_item.dart';
 import 'package:lumora/features/home/presentation/bloc/analisis_event.dart';
 import 'package:lumora/features/home/presentation/bloc/analisis_state.dart';
 import 'package:lumora/features/home/presentation/bloc/analis_bloc.dart';
 import 'package:lumora/features/home/presentation/pages/analisisresult_bad.dart';
 import 'package:lumora/features/home/presentation/pages/analisisresult_good.dart';
+import 'package:lumora/features/home/services/analisis_service.dart';
+import 'package:lumora/features/home/services/gemini_analysis_service.dart';
 
 class Analisis extends StatelessWidget {
   const Analisis({super.key});
@@ -175,11 +178,50 @@ class Analisis extends StatelessWidget {
                   height: sizeheight * 45 / fullheight,
                   backgroundColor: AppColors.txtPrimary,
                   borderColor: AppColors.txtPrimary,
-                  onTap: () {
-                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => AnalisisresultBad()),
-                      );
+                  onTap: () async {
+                    final bloc = context.read<AnalisisBloc>();
+                    final currentState = bloc.state;
+                    if(currentState is AnalisisInitial){
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => Center(child: CircularProgressIndicator(color: Colors.orange),
+                        )
+                        );
+                        
+                        try{
+                          await AnalisisService().saveMakanan(currentState.makanan);
+                          final result = await GeminiAnalysisService().analyzeNutrient();
+
+                          if(context.mounted){
+                            Navigator.pop(context); 
+                          }
+
+                          if(context.mounted){
+                            if(result.isNotEmpty){
+                              String status = result['status_keseluruhan'] ?? 'bad';
+                              if(status == 'good'){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => AnalisisresultGood(data: result,)),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => AnalisisresultBad(data: result,)),
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Gagal mendapatkan hasil analisis.'), duration: Duration(seconds: 2)),
+                              );
+                            }
+                          }
+                        }catch(e){
+                          print("Error saat menyimpan data: $e");
+                        }
+                    }
+                      
                   },
 
                   radius: 15,

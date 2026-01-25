@@ -6,8 +6,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class GeminiAnalysisService {
-  final String apiKey = '${dotenv.env['API_KEY']}';
-
+  //btw ini api key sengaja disalahin diawal ditambah 'b' biar ga boros
+  final String apiKey = 'AIzaSyBfZzYYgXmcba9MfKrW1NN1VSMqUtZph-I';
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   User? user;
@@ -158,6 +158,116 @@ String prompt = """
       }
 
 
+    } catch(e){
+      print("Error: $e");
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> analyzeNutrient() async {
+    try{
+      user = auth.currentUser;
+      if(user == null){
+        print("LOG: User tidak ditemukan untuk analisis nutrisi Gemini");
+        return {};
+      }
+      print("LOG: Memulai analisis nutrisi Gemini untuk user ${user!.uid}");
+      QuerySnapshot userDoc = await firestore.collection('bayi').doc(auth.currentUser?.uid ?? '').collection('analisis_makanan').orderBy('timestamp', descending: true).limit(1).get();
+      if(userDoc.docs.isEmpty){
+        print("LOG: Data makanan tidak ditemukan untuk user ${user!.uid}");
+        return {};
+      } else if(userDoc.docs.isNotEmpty){
+      final doc = userDoc.docs.first;
+      final List<dynamic> makananDynamic = doc['makanan'] ?? [];
+      final List<String> makanan = makananDynamic.map((item) => item.toString()).toList();
+      print("LOG: Data makanan berhasil diambil untuk analisis nutrisi Gemini: $makanan");
+      String prompt = """
+    Role: Ahli Gizi Anak Profesional & Dokter Spesialis Anak.
+    
+    DATA MAKANAN DARI USER:
+    [${makanan.join(", ")}]
+
+    TUGAS UTAMA:
+    Analisis daftar makanan di atas, lalu kelompokkan item-item tersebut ke dalam 4 Pilar Gizi.
+    
+    ATURAN "MAPPING" (SANGAT PENTING):
+    1. Kamu harus mencari item dari [DATA MAKANAN DARI USER] yang cocok untuk setiap kategori.
+    2. JANGAN MENGARANG menu yang tidak ditulis user.
+    3. Jika user menulis "Nasi Ayam", maka:
+       - Karbohidrat: "Nasi" (diambil dari konteks) atau "Nasi Ayam".
+       - Protein: "Ayam" (diambil dari konteks) atau "Nasi Ayam".
+    4. Jika kategori kosong (misal tidak ada sayur), tulis "Tidak ada" di field menu_penunjang.
+
+    KRITERIA 4 PILAR:
+    1. Karbohidrat: Nasi, bubur, kentang, roti, mie, jagung, ubi, sereal, biskuit.
+    2. Protein: Ayam, daging sapi, hati, telur, ikan, tahu, tempe, keju, yogurt.
+    3. Vitamin (Sayur/Buah): Bayam, wortel, brokoli, pisang, apel, jeruk, pepaya, labu.
+    4. Cairan: Air putih, susu (ASI/Sufor/UHT), kuah sup, jus, air kelapa.
+
+    SCORING & STATUS:
+    - Beri nilai persen (0-100) berdasarkan kualitas & keberadaan item di kategori tersebut.
+    - Status "good": Jika rata-rata persen > 60.
+    - Status "bad": Jika rata-rata persen < 60 atau ada kategori bernilai 0 (Missing).
+
+    FORMAT OUTPUT JSON (Strict JSON, No Markdown):
+    {
+      "status_keseluruhan": "good" atau "bad",
+      "analisis_gizi": {
+        "karbohidrat": { 
+            "persen": 90, 
+            "menu_penunjang": "AMBIL DARI INPUT USER / Tidak ada" 
+        },
+        "protein": { 
+            "persen": 85, 
+            "menu_penunjang": "AMBIL DARI INPUT USER / Tidak ada" 
+        },
+        "vitamin": { 
+            "persen": 10, 
+            "menu_penunjang": "AMBIL DARI INPUT USER / Tidak ada" 
+        },
+        "cairan": { 
+            "persen": 100, 
+            "menu_penunjang": "AMBIL DARI INPUT USER / Tidak ada" 
+        }
+      },
+      "saran_singkat": ["+ Buah", "+ Air"],
+      "rekomendasi_menu": [
+        {
+          "nama_menu": "Nama Menu 1",
+          "deskripsi": "Deskripsi manfaat gizi"
+        },
+        {
+          "nama_menu": "Nama Menu 2",
+          "deskripsi": "Deskripsi manfaat gizi"
+        }
+      ]
+    }
+    """;
+    final response = await http.post(
+    Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey'),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode({
+      'contents': [
+        {'parts': [{'text': prompt}]}
+      ]
+    })
+    ).timeout(const Duration(seconds: 30));
+    
+          print("LOG: Permintaan selesai. Status code: ${response.statusCode}");
+          if(response.statusCode == 200){
+            final responseData = jsonDecode(response.body);
+            final textResponse = responseData['candidates'][0]['content']['parts'][0]['text'];
+            final Map<String, dynamic> parsedResult = _parseGeminiJson(textResponse);
+            return parsedResult;
+          } else {
+            print("LOG: Gagal mendapatkan respon valid dari Gemini. Body: ${response.body}");
+            return {};
+          }
+      } else {
+        return {};
+      }
     } catch(e){
       print("Error: $e");
       return {};
