@@ -102,5 +102,7 @@ flutter:
     - assets/icons/stimulasi-lamp.svg
     - assets/icons/stimulasi-time.svg
     - assets/icons/slim-lamp.svg
+    - assets/icons/stopwatch.svg
+    - assets/icons/fire.svg
 
 

@@ -30,7 +30,7 @@ class Nextstep extends StatelessWidget {
           },
         ),
         title: Text(
-          "Langkah lanjutan",
+          "Langkah Lanjutan",
           style: TextStyle(
             fontSize: sizewidth * 22 / fullwidth,
             fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ class Nextstep extends StatelessWidget {
                          SizedBox(
                           height: sizeheight * 24 / fullheight,
                         ),
-                        
+
                         CardNextstep3(size: size, data: state.note)
                       ],
                     );

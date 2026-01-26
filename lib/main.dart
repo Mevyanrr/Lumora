@@ -13,8 +13,10 @@ import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
+import 'package:lumora/features/milestone/presentation/bloc/milestone_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/nextstep_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/nextstep_event.dart';
+import 'package:lumora/features/milestone/presentation/pages/milestone.dart';
 import 'package:lumora/features/milestone/presentation/pages/nextstep.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
@@ -54,6 +56,9 @@ class MyApp extends StatelessWidget {
     BlocProvider<NextstepBloc>(
       create: (_) => NextstepBloc()..add(FetchNextstep()),
     ),
+    BlocProvider<MilestoneBloc>(
+      create: (_) => MilestoneBloc(),
+    ),
   ],
 
       child: MaterialApp(
@@ -71,7 +76,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/mile-nextstep',
+        initialRoute: '/milestone',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
@@ -86,6 +91,7 @@ class MyApp extends StatelessWidget {
           '/nutriguide': (context) => Nutriguide(),
           '/profil': (context) => Profile(),
           '/stimulasi': (context) => Stimulasi(),
+          '/milestone': (context) => Milestone(),
           '/mile-nextstep': (context) => Nextstep()
         },
       ),

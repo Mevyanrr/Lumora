@@ -1,8 +1,13 @@
-part of 'milestone_bloc.dart';
+abstract class MilestoneEvent {}
 
-abstract class MilestoneEvent extends Equatable {
-  const MilestoneEvent();
+class LoadMilestone extends MilestoneEvent {
+  final int totalTask;
+  final int completedTask;
 
-  @override
-  List<Object> get props => [];
+  LoadMilestone({
+    required this.totalTask,
+    required this.completedTask,
+  });
 }
+
+class FetchAktivitas extends MilestoneEvent {}
