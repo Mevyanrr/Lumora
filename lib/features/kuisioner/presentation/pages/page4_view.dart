@@ -175,7 +175,7 @@ class _Page4ViewState extends State<Page4View> {
                                   ),
                                   SizedBox(width: sizewidth * 12 / fullwidth),
                                   Text(
-                                    'Berdiri dengan pengangan',
+                                    'Berdiri dengan pegangan',
                                     style: TextStyle(
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',
@@ -223,7 +223,7 @@ class _Page4ViewState extends State<Page4View> {
                                   ),
                                   SizedBox(width: sizewidth * 12 / fullwidth),
                                   Text(
-                                    'Bayi masi berusia dibawah 2 bulan',
+                                    'Bayi masih berusia dibawah 2 bulan',
                                     style: TextStyle(
                                       color: AppColors.txtPrimary,
                                       fontFamily: 'Poppins',

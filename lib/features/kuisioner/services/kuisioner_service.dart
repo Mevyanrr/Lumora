@@ -36,4 +36,18 @@ class KuisionerService {
         return null; 
       });
 }
+
+Future<void> updateDataBayi(BabyModel babymodel) async{
+  try{
+    final String uid = auth.currentUser?.uid ?? '';
+    final DocumentReference docRef = firestore.collection('bayi').doc(uid);
+    await docRef.update(babymodel.toMap());
+
+    await docRef.update({
+      'updatedAt': FieldValue.serverTimestamp()
+    });
+  } catch(e){
+    print("Gagal mengupdate data bayi: $e");
+    }
+  }
 }

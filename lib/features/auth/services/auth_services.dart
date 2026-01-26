@@ -76,5 +76,4 @@ class AuthService {
      print("gagal simpan: $e");
     }
   }
-  
   }
