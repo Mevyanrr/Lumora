@@ -143,7 +143,7 @@ class _Page3ViewState extends State<Page3View> {
                                Row(
                                 children: [
                                   Radio<String>(
-                                    value: 'D',
+                                    value: 'Tidak pernah',
                                     groupValue: state.kondisiBayi,
                                     onChanged: (value) {
                                       context.read<KuisionerBloc>().add(

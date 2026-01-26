@@ -13,6 +13,7 @@ import 'package:lumora/features/home/presentation/widgets/card_infokesehatan.dar
 import 'package:lumora/features/home/presentation/widgets/card_panduangizi.dart';
 import 'package:lumora/features/home/services/gemini_analysis_service.dart'; // Import Service
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
+import 'package:lumora/features/profile/presentation/pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -128,10 +129,13 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                                  
+                              },
                               child: CircleAvatar(
                                 radius: sizewidth * 24 / fullwidth,
-                                backgroundImage: const AssetImage("assets/images/profildummy.png"),
+                                backgroundImage: AssetImage("assets/images/profildummy.png"),
                               ),
                             ),
                           ],
