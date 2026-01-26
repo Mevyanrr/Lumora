@@ -75,6 +75,7 @@ flutter:
     - assets/images/profildummy.png
     - assets/images/analisis-good.png
     - assets/images/analisis-bad.png
+    - assets/images/bayi-nextstep.png
 
     - assets/icons/home.svg
     - assets/icons/milestone.svg
@@ -100,5 +101,6 @@ flutter:
     - assets/icons/tb.svg
     - assets/icons/stimulasi-lamp.svg
     - assets/icons/stimulasi-time.svg
+    - assets/icons/slim-lamp.svg
 
 

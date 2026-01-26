@@ -13,6 +13,9 @@ import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
+import 'package:lumora/features/milestone/presentation/bloc/nextstep_bloc.dart';
+import 'package:lumora/features/milestone/presentation/bloc/nextstep_event.dart';
+import 'package:lumora/features/milestone/presentation/pages/nextstep.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/pages/profile.dart';
@@ -38,11 +41,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<KuisionerBloc>(create: (_) => KuisionerBloc()),
-        BlocProvider(create: (_) => ProfileBloc()),
-        BlocProvider<AktivitasBloc>(create: (_) => AktivitasBloc()),
-      ],
+  providers: [
+    BlocProvider<KuisionerBloc>(
+      create: (_) => KuisionerBloc(),
+    ),
+    BlocProvider<ProfileBloc>(
+      create: (_) => ProfileBloc(),
+    ),
+    BlocProvider<AktivitasBloc>(
+      create: (_) => AktivitasBloc(),
+    ),
+    BlocProvider<NextstepBloc>(
+      create: (_) => NextstepBloc()..add(FetchNextstep()),
+    ),
+  ],
+
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
@@ -58,7 +71,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/home',
+        initialRoute: '/mile-nextstep',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
@@ -73,6 +86,7 @@ class MyApp extends StatelessWidget {
           '/nutriguide': (context) => Nutriguide(),
           '/profil': (context) => Profile(),
           '/stimulasi': (context) => Stimulasi(),
+          '/mile-nextstep': (context) => Nextstep()
         },
       ),
     );
