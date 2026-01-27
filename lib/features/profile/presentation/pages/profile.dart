@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
+import 'package:lumora/features/auth/services/auth_services.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_event.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_state.dart';
@@ -73,7 +74,17 @@ class _ProfileState extends State<Profile> {
           horizontal: sizewidth * 18 / fullwidth,
           vertical: sizeheight * 34 / fullheight,
         ),
-        child: Column(
+        child: StreamBuilder(
+          stream: AuthService().getUserData(),
+           builder: (context, snapshot){
+            if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final userData = snapshot.data;
+                  if (userData == null) {
+                    return const Center(child: Text("Silahkan isi data anda terlebih dahulu"));
+                  }
+                  return Column(
           children: [
             Stack(
               alignment: Alignment.bottomRight,
@@ -94,7 +105,9 @@ class _ProfileState extends State<Profile> {
                 ),
 
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    
+                  },
                   child: Container(
                     width: sizewidth * 36 / fullwidth,
                     height: sizeheight * 36 / fullheight,
@@ -115,7 +128,7 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: sizeheight * 16 / fullheight),
 
             Text(
-              "Bunda Aira",
+              "Bunda ${userData.nama}",
               style: TextStyle(
                 fontSize: sizewidth * 20 / fullwidth,
                 fontWeight: FontWeight.w500,
@@ -125,7 +138,7 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: sizeheight * 6 / fullheight),
 
             Text(
-              "bundaAira@gmail.com",
+              "${userData.email}",
               style: TextStyle(
                 fontSize: sizewidth * 16 / fullwidth,
                 fontWeight: FontWeight.w400,
@@ -167,7 +180,11 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ],
-        ),
+        );
+            
+           }
+           
+           )
       ),
       )
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
+import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_bloc.dart';
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_event.dart';
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_state.dart';
@@ -49,7 +50,20 @@ class Informasibayi extends StatelessWidget {
               top: sizeheight * 27 / fullheight,
               bottom: sizeheight * 47 / fullheight,
             ),
-            child: Column(
+            child: 
+            StreamBuilder(
+              stream: KuisionerService().getKuisionerData(),
+              builder: (context, snapshot){
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return const CircularProgressIndicator();
+                }
+                final userData = snapshot.data;
+                if(userData == null){
+                  return const Center(child: Text("Tidak ada data"));
+                }
+
+                return
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -112,7 +126,7 @@ class Informasibayi extends StatelessWidget {
                   ),
 
                   child: Text(
-                    "Bayi sudah bisa tengkurap, Merangkan, dan merespon suara",
+                    "Bayi sudah bisa ${userData.kondisi}",
                     style: TextStyle(
                       fontSize: sizewidth * 16 / fullwidth,
                       fontWeight: FontWeight.w400,
@@ -122,7 +136,8 @@ class Informasibayi extends StatelessWidget {
                 ),
                 
               ],
-            ),
+            );
+             })
           ),
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lumora/model/baby_model.dart';
+import 'package:lumora/model/user_model.dart';
 
 class AuthService {
   final firebaseAuth = FirebaseAuth.instance;
@@ -75,5 +77,21 @@ class AuthService {
     } catch(e){
      print("gagal simpan: $e");
     }
+  }
+
+  Stream<UserModel?> getUserData() {
+    final userId = firebaseAuth.currentUser?.uid;
+    if(userId == null) return Stream.value(null);
+
+    return firestore
+      .collection('user_lumora')
+      .doc(userId)
+      .snapshots()
+      .map((snapshot){
+        if(snapshot.exists && snapshot.data() != null){
+          return UserModel.fromFirestore(snapshot);
+        }
+        return null;
+      });
   }
   }

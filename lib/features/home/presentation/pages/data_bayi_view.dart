@@ -157,7 +157,7 @@ class _DataBayiState extends State<DataBayiView> {
                         fieldType: CustomFieldType.number,
                         controller: widget.bbController,
                         onChanged: (value) {
-                          context.read<KuisionerBloc>().add(IsiNama(value));
+                          context.read<KuisionerBloc>().add(IsiBB(double.tryParse(value)?? 0));
                         },
                       ),
                       SizedBox(height: sizeheight * 12 / fullheight),
@@ -177,7 +177,7 @@ class _DataBayiState extends State<DataBayiView> {
                         fieldType: CustomFieldType.number,
                         controller: widget.tbController,
                         onChanged: (value) {
-                          context.read<KuisionerBloc>().add(IsiNama(value));
+                          context.read<KuisionerBloc>().add(IsiTB(double.tryParse(value)?? 0));
                         },
                       ),
                       SizedBox(height: sizeheight * 12 / fullheight),
@@ -197,7 +197,7 @@ class _DataBayiState extends State<DataBayiView> {
                         fieldType: CustomFieldType.number,
                         controller: widget.lingkarKepalaController,
                         onChanged: (value) {
-                          context.read<KuisionerBloc>().add(IsiNama(value));
+                          context.read<KuisionerBloc>().add(IsiLK(double.tryParse(value)?? 0));
                         },
                       ),
           
@@ -500,7 +500,7 @@ class _DataBayiState extends State<DataBayiView> {
                     kondisi: finalState.aktivitasBayi,
                     createdAt: DateTime.now(),
                   );
-                  await KuisionerService().saveKuisionerData(babyModel);
+                  await KuisionerService().updateDataBayi(babyModel);
                     Navigator.pushReplacement(
                     context,
                    MaterialPageRoute(
