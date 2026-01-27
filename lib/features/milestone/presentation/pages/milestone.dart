@@ -54,112 +54,115 @@ class _MilestoneState extends State<Milestone> {
             return [
               SliverToBoxAdapter(
                 child: SafeArea(
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Text(
-                          "Milestone",
-                          style: TextStyle(
-                            fontSize: sw * 22 / fw,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.txtPrimary,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: sh*5/fh),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            "Milestone",
+                            style: TextStyle(
+                              fontSize: sw * 22 / fw,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.txtPrimary,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: sw * 18 / fw,
-                            right: sw * 18 / fw,
-                            top: sh * 32 / fh),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Monthly Goal",
-                              style: TextStyle(
-                                fontSize: sw * 18 / fw,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.txtPrimary,
-                              ),
-                            ),
-                            SizedBox(height: sh * 8 / fh),
-                            BlocProvider(
-                              create: (_) => MilestoneBloc()
-                                ..add(LoadMilestone(
-                                  totalTask: 12,
-                                  completedTask: 7,
-                                )),
-                              child: MonthlyGoal(size: size),
-                            ),
-                            SizedBox(height: sh * 32 / fh),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CardAktivitas(
-                                  size: size,
-                                  count: 8,
-                                  title: "Bulan",
-                                  icon: "assets/icons/growbaby-feet.svg",
-                                ),
-                                CardAktivitas(
-                                  size: size,
-                                  count: 120,
-                                  title: "Aktivitas",
-                                  icon: "assets/icons/stopwatch.svg",
-                                ),
-                                CardAktivitas(
-                                  size: size,
-                                  count: 40,
-                                  title: "Streaks",
-                                  icon: "assets/icons/fire.svg",
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: sh * 32 / fh),
-                            Container(
-                              width: sw * 376 / fw,
-                              padding: EdgeInsets.symmetric(
-                                  //     horizontal: sw * 8 / fw,
-                                  vertical: sh * 8 / fh),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(63),
-                                color: AppColors.primaryOrange,
-                              ),
-                              child: Center(
-                                child: ButtonsTabBar(
-                                  backgroundColor: AppColors.yellowSemantic,
-                                  unselectedBackgroundColor:
-                                      AppColors.background,
-                                  labelStyle: TextStyle(
-                                    color: AppColors.txtPrimary,
-                                    fontSize: sw * 16 / fw,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  unselectedLabelStyle: TextStyle(
-                                    color: AppColors.txtSecondary,
-                                    fontSize: sw * 16 / fw,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  borderWidth: 1,
-                                  borderColor: AppColors.yellowSemantic,
-                                  radius: sw * 28 / fw,
-                                  height: sh * 48 / fh,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: sw * 24 / fw,
-                                    vertical: sh * 8 / fh,
-                                  ),
-                                  tabs: [
-                                    Tab(text: "Aktivitas Selesai"),
-                                    Tab(text: "Tumbuh Kembang"),
-                                  ],
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: sw * 18 / fw,
+                              right: sw * 18 / fw,
+                              top: sh * 32 / fh),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Monthly Goal",
+                                style: TextStyle(
+                                  fontSize: sw * 18 / fw,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.txtPrimary,
                                 ),
                               ),
-                            ),
-                            SizedBox(height: sh * 32 / fh),
-                          ],
+                              SizedBox(height: sh * 8 / fh),
+                              BlocProvider(
+                                create: (_) => MilestoneBloc()
+                                  ..add(LoadMilestone(
+                                    totalTask: 12,
+                                    completedTask: 7,
+                                  )),
+                                child: MonthlyGoal(size: size),
+                              ),
+                              SizedBox(height: sh * 32 / fh),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CardAktivitas(
+                                    size: size,
+                                    count: 8,
+                                    title: "Bulan",
+                                    icon: "assets/icons/growbaby-feet.svg",
+                                  ),
+                                  CardAktivitas(
+                                    size: size,
+                                    count: 120,
+                                    title: "Aktivitas",
+                                    icon: "assets/icons/stopwatch.svg",
+                                  ),
+                                  CardAktivitas(
+                                    size: size,
+                                    count: 40,
+                                    title: "Streaks",
+                                    icon: "assets/icons/fire.svg",
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: sh * 32 / fh),
+                              Container(
+                                width: sw * 376 / fw,
+                                padding: EdgeInsets.symmetric(
+                                    //     horizontal: sw * 8 / fw,
+                                    vertical: sh * 8 / fh),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(63),
+                                  color: AppColors.primaryOrange,
+                                ),
+                                child: Center(
+                                  child: ButtonsTabBar(
+                                    backgroundColor: AppColors.yellowSemantic,
+                                    unselectedBackgroundColor:
+                                        AppColors.background,
+                                    labelStyle: TextStyle(
+                                      color: AppColors.txtPrimary,
+                                      fontSize: sw * 16 / fw,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    unselectedLabelStyle: TextStyle(
+                                      color: AppColors.txtSecondary,
+                                      fontSize: sw * 16 / fw,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    borderWidth: 1,
+                                    borderColor: AppColors.yellowSemantic,
+                                    radius: sw * 28 / fw,
+                                    height: sh * 48 / fh,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: sw * 24 / fw,
+                                      vertical: sh * 8 / fh,
+                                    ),
+                                    tabs: [
+                                      Tab(text: "Aktivitas Selesai"),
+                                      Tab(text: "Tumbuh Kembang"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: sh * 32 / fh),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -195,7 +198,7 @@ class _MilestoneState extends State<Milestone> {
                             });
 
                             return SizedBox(
-                              height: size.height * 67 / 917,
+                              height: size.height * 70 / 917,
                               child: ListView.builder(
                                 controller: _ageScrollController,
                                 scrollDirection: Axis.horizontal,
@@ -246,7 +249,7 @@ class _MilestoneState extends State<Milestone> {
               ),
               ListView(padding: EdgeInsets.only(left: sw * 18 / fw), children: [
                 SizedBox(
-                  height: size.height * 67 / 917,
+                  height: size.height * 70 / 917,
                   child: Builder(builder: (context) {
                     final currentDayIndex = today - 1;
 
@@ -290,6 +293,7 @@ class _MilestoneState extends State<Milestone> {
                 Padding(
                   padding: EdgeInsets.only(right: sw * 18 / fw),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Aktivitas yang dilakukan",

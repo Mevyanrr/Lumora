@@ -23,7 +23,7 @@ class CardAktivitas extends StatelessWidget {
     final fw = 412;
     return Container(
       width: sw * 118 / fw,
-      height: sh * 71 / fh,
+      height: sh * 72 / fh,
       padding: EdgeInsets.symmetric(
           horizontal: sw * 10 / fw, vertical: sh * 12 / fh),
       decoration: BoxDecoration(

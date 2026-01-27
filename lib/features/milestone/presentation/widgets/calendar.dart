@@ -58,7 +58,7 @@ class CalendarItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: sw * 12 / fw),
       padding: EdgeInsets.all(sw * 10 / fw),
-      height: sh * 67 / fh,
+      height: sh * 70 / fh,
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(sw * 21 / fw),
