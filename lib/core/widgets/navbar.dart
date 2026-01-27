@@ -19,7 +19,7 @@ class _BottomNavState extends State<Navbar> {
     } else if (index == 1) {
       Navigator.pushReplacementNamed(context, '/stimulasi');
     } else if (index == 2) {
-      Navigator.pushReplacementNamed(context, '');
+      Navigator.pushReplacementNamed(context, '/milestone');
     }
   }
 

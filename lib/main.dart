@@ -14,6 +14,7 @@ import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
 import 'package:lumora/features/milestone/presentation/bloc/milestone_bloc.dart';
+import 'package:lumora/features/milestone/presentation/bloc/month_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/nextstep_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/nextstep_event.dart';
 import 'package:lumora/features/milestone/presentation/pages/milestone.dart';
@@ -58,6 +59,9 @@ class MyApp extends StatelessWidget {
     ),
     BlocProvider<MilestoneBloc>(
       create: (_) => MilestoneBloc(),
+    ),
+     BlocProvider<MonthBloc>(
+      create: (_) => MonthBloc(),
     ),
   ],
 

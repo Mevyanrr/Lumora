@@ -44,7 +44,7 @@ class CardAktivitas extends StatelessWidget {
               child: SvgPicture.asset(
                 icon,
                 width: sw * 27 / fw,
-                height: sw * 27 / fw, 
+                height: sw * 27 / fw,
                 colorFilter: ColorFilter.mode(
                   AppColors.primaryOrange,
                   BlendMode.srcIn,
