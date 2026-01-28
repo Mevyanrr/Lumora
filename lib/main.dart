@@ -20,10 +20,12 @@ import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/pages/profile.dart';
 import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_bloc.dart';
 import 'package:lumora/features/stimulasi/presentation/pages/stimulasi.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await dotenv.load(fileName: ".env");
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
