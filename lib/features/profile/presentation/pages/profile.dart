@@ -10,6 +10,8 @@ import 'package:lumora/features/profile/presentation/pages/informasibayi.dart';
 import 'package:lumora/features/profile/presentation/pages/pengaturan.dart';
 import 'package:lumora/features/profile/presentation/widgets/exit.dart';
 import 'package:lumora/features/profile/presentation/widgets/frameprofile.dart';
+import 'package:lumora/features/profile/service/profile_service.dart';
+import 'package:lumora/model/user_model.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -26,6 +28,7 @@ class _ProfileState extends State<Profile> {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
+    final profileService = ProfileService.instance;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -96,17 +99,36 @@ class _ProfileState extends State<Profile> {
                     shape: BoxShape.circle,
                     color: AppColors.green,
                   ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      "assets/images/profildummy.png",
+                  child: 
+                  StreamBuilder(
+                    stream: AuthService().getUserData(), builder: ((context, snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                                  return CircleAvatar(
+                                radius: sizewidth * 24 / fullwidth,
+                                backgroundColor: AppColors.txtSecondary,
+                                child: const CircularProgressIndicator(strokeWidth: 2,),
+                              );
+                                }
+                              final userData = snapshot.data;
+                              return
+                  ClipOval(
+                    child:
+                    Image(image: 
+                      userData?.photoURL != null && userData!.photoURL!.isNotEmpty ? NetworkImage(userData.photoURL!) : const AssetImage('assets/images/profildummy.png') as ImageProvider,
                       fit: BoxFit.cover,
-                    ),
-                  ),
+                    ), 
+                  );
+                  })
+                  )
                 ),
 
                 GestureDetector(
-                  onTap: () {
-                    
+                  onTap: () async {
+                    await profileService.pickImage();
+                    await AuthService().saveProfilePhotoToFirestore(
+                      UserModel(nama: userData.nama, email: userData.email, photoURL: profileService?.ImageUrl, lastSignIn: userData.lastSignIn)
+                    );
+                    setState(() {});
                   },
                   child: Container(
                     width: sizewidth * 36 / fullwidth,

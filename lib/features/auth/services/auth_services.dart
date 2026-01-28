@@ -79,19 +79,34 @@ class AuthService {
     }
   }
 
-  Stream<UserModel?> getUserData() {
-    final userId = firebaseAuth.currentUser?.uid;
-    if(userId == null) return Stream.value(null);
+  Future<void> saveProfilePhotoToFirestore(UserModel usermodel) async{
+    final String uid = firebaseAuth.currentUser?.uid ?? '';
+    final DocumentReference userRef = firestore.collection('user_lumora').doc(uid);
+    if (firebaseAuth.currentUser == null) {
+      print("User belum login, data tidak bisa disimpan");
+      return;
+    }
+    try{
+    await userRef.set(usermodel.toMap(), SetOptions(merge: true));
+    }catch(e){
+      print("gagal simpan: $e");
+    }
+  }
 
-    return firestore
+    Stream<UserModel?> getUserData() { 
+  final userId = firebaseAuth.currentUser?.uid;
+  if(userId == null) return Stream.value(null);
+
+  return firestore
       .collection('user_lumora')
       .doc(userId)
       .snapshots()
-      .map((snapshot){
+      .map((snapshot) {
         if(snapshot.exists && snapshot.data() != null){
           return UserModel.fromFirestore(snapshot);
-        }
-        return null;
+        } 
+        return null; 
       });
-  }
+}
+
   }

@@ -49,6 +49,8 @@ dependencies:
   firebase_storage: ^13.0.0
   flutter_dotenv: ^6.0.0
   http: ^1.2.1
+  image_picker: ^1.2.1
+  file_picker: ^8.1.2
 
 
 

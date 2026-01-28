@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
 import 'package:lumora/core/widgets/navbar.dart';
+import 'package:lumora/features/auth/services/auth_services.dart';
 import 'package:lumora/features/home/presentation/pages/analisis.dart';
 import 'package:lumora/features/home/presentation/pages/data_bayi.dart';
 import 'package:lumora/features/home/presentation/pages/nutriguide.dart';
@@ -133,10 +134,25 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
                                   
                               },
-                              child: CircleAvatar(
+                              child: 
+                              StreamBuilder(stream: AuthService().getUserData(), builder: (context, snapshot){
+                                if(snapshot.connectionState == ConnectionState.waiting){
+                                  return CircleAvatar(
                                 radius: sizewidth * 24 / fullwidth,
-                                backgroundImage: AssetImage("assets/images/profildummy.png"),
+                                backgroundColor: AppColors.txtSecondary,
+                                child: const CircularProgressIndicator(strokeWidth: 2,),
+                              );
+                                }
+                              final userData = snapshot.data;
+
+                              return CircleAvatar(
+                                radius: sizewidth * 24/fullwidth,
+                                backgroundColor: AppColors.txtSecondary,
+                                backgroundImage: userData?.photoURL != null && userData!.photoURL!.isNotEmpty ? NetworkImage(userData.photoURL!) : const AssetImage('assets/images/profildummy.png') as ImageProvider
+                              );
+                              }
                               ),
+                              
                             ),
                           ],
                         ),

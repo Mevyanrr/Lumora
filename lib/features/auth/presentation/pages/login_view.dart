@@ -260,10 +260,6 @@ class _LoginViewState extends State<LoginView> {
                             try {
                               final userCredential = await AuthService()
                                   .signInWithGoogle();
-                              await AuthService().saveUserToFirestore(
-                                userCredential!.user!,
-                                userCredential.user!.displayName ?? "",
-                              );
                               if (!mounted) return;
                               setState(() {
                                 isLoading = false;

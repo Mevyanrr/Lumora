@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UserModel {
   final String nama;
   final String email;
-  final String photoURL;
+  final String? photoURL;
   final DateTime lastSignIn;
 
   UserModel({
