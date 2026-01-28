@@ -7,8 +7,10 @@ import 'package:lumora/features/milestone/presentation/bloc/milestone_event.dart
 import 'package:lumora/features/milestone/presentation/bloc/month_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/month_event.dart';
 import 'package:lumora/features/milestone/presentation/bloc/month_state.dart';
+import 'package:lumora/features/milestone/presentation/cubit/pencapaian_cubit.dart';
 import 'package:lumora/features/milestone/presentation/widgets/calendar.dart';
 import 'package:lumora/features/milestone/presentation/widgets/card_aktivitas.dart';
+import 'package:lumora/features/milestone/presentation/widgets/card_pencapaian.dart';
 import 'package:lumora/features/milestone/presentation/widgets/monthlygoal.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:lumora/features/stimulasi/presentation/widgets/aktivitas_card.dart';
@@ -23,6 +25,11 @@ class Milestone extends StatefulWidget {
 class _MilestoneState extends State<Milestone> {
   final ScrollController _ageScrollController = ScrollController();
   final ScrollController _dayScrollController = ScrollController();
+
+  final cubits = List.generate(
+    5,
+    (_) => PencapaianCubit(),
+  );
 
   @override
   void dispose() {
@@ -55,7 +62,7 @@ class _MilestoneState extends State<Milestone> {
               SliverToBoxAdapter(
                 child: SafeArea(
                   child: Padding(
-                    padding: EdgeInsets.only(top: sh*5/fh),
+                    padding: EdgeInsets.only(top: sh * 5 / fh),
                     child: Column(
                       children: [
                         Center(
@@ -95,7 +102,8 @@ class _MilestoneState extends State<Milestone> {
                               ),
                               SizedBox(height: sh * 32 / fh),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   CardAktivitas(
                                     size: size,
@@ -243,8 +251,26 @@ class _MilestoneState extends State<Milestone> {
                       color: AppColors.txtPrimary,
                     ),
                   ),
-                  Image.asset("assets/images/logo.png"),
-                  Image.asset("assets/images/logo.png"),
+                  SizedBox(
+                    height: sw * 21 / fw,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: sw * 18 / fw),
+                    child: ListView.separated(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: cubits.length,
+                      separatorBuilder: (_, __) =>
+                          SizedBox(height: sh * 12 / fh),
+                      itemBuilder: (context, index) {
+                        return BlocProvider.value(
+                          value: cubits[index],
+                          child: CardPencapaian(size: size),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
               ListView(padding: EdgeInsets.only(left: sw * 18 / fw), children: [
@@ -255,7 +281,7 @@ class _MilestoneState extends State<Milestone> {
 
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (_dayScrollController.hasClients) {
-                        const itemWidth = 80.0; 
+                        const itemWidth = 80.0;
                         _dayScrollController.animateTo(
                           currentDayIndex * itemWidth,
                           duration: Duration(milliseconds: 400),
@@ -303,7 +329,7 @@ class _MilestoneState extends State<Milestone> {
                           color: AppColors.txtPrimary,
                         ),
                       ),
-                      //TARUH CARD AKTIVITAS YG UDH SELESAI
+                      //NI BUAT TARUH CARD AKTIVITAS YG UDH SELESAI
                     ],
                   ),
                 ),
