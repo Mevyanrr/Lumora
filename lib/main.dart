@@ -19,7 +19,7 @@ import 'package:lumora/features/milestone/presentation/bloc/nextstep_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/nextstep_event.dart';
 import 'package:lumora/features/milestone/presentation/pages/milestone.dart';
 import 'package:lumora/features/milestone/presentation/pages/nextstep.dart';
-import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
+import 'package:lumora/features/onBoarding/presentation/pages/onboarding.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/pages/profile.dart';
 import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_bloc.dart';
@@ -80,13 +80,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        initialRoute: '/milestone',
+        initialRoute: '/onboarding',
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
           '/kuisioner3': (context) => Page3(),
           '/kuisioner4': (context) => Page4(),
-          '/onboarding3': (context) => Onboarding3(),
+          '/onboarding': (context) => Onboarding(),
           '/login': (context) => Login(),
           '/regist': (context) => Regist(),
           '/home': (context) => HomePage(),

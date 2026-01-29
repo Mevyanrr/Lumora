@@ -27,12 +27,13 @@ class _BottomNavState extends State<Navbar> {
     required String iconPath,
     required String label,
     required bool isActive,
+    required double iconSz,
   }) {
     return BottomNavigationBarItem(
       icon: SvgPicture.asset(
         iconPath,
-        width: 26,
-        height: 26,
+        width: iconSz,
+        height: iconSz,
         colorFilter: ColorFilter.mode(
           isActive ? AppColors.secondary : AppColors.txtPrimary,
           BlendMode.srcIn,
@@ -45,40 +46,83 @@ class _BottomNavState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final sizewidth = size.width;
-    final fullwidth = 412;
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(sizewidth* 50/fullwidth),
-      topRight: Radius.circular(sizewidth* 50/fullwidth),
+  final sizewidth = size.width;
+  final sizeheight = size.height;
+
+  const fullwidth = 412.0;
+  const fullheight = 917.0;
+
+  final radius = sizewidth * 50 / fullwidth;
+  final navHeight = sizeheight * 90 / fullheight;
+  final iconSz = sizewidth*26/fullwidth;
+
+  return ClipPath(
+    clipper: BottomNavClipper(
+      radius: radius,
+      height: navHeight,
     ),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        showUnselectedLabels: true,
-        selectedItemColor: AppColors.secondary,
-        unselectedItemColor: AppColors.txtPrimary,
-        currentIndex: widget.selectedItem,
-        onTap: changeSelectedNavBar,
+  child: Container(
+    color: AppColors.white, 
+    child: BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.transparent, 
+      elevation: 0,
+      currentIndex: widget.selectedItem,
+      selectedItemColor: AppColors.secondary,
+      unselectedItemColor: AppColors.txtPrimary,
+      onTap: changeSelectedNavBar,
         items: [
           _navItem(
             iconPath: 'assets/icons/home.svg',
             label: 'Beranda',
             isActive: widget.selectedItem == 0,
+            iconSz: iconSz
           ),
           _navItem(
             iconPath: 'assets/icons/stimulasi.svg',
             label: 'Stimulasi',
             isActive: widget.selectedItem == 1,
+            iconSz: iconSz
           ),
           _navItem(
             iconPath: 'assets/icons/milestone.svg',
             label: 'Milestone',
             isActive: widget.selectedItem == 2,
+            iconSz: iconSz
           ),
         ],
-      ),
+      ),)
     );
   }
 }
+
+class BottomNavClipper extends CustomClipper<Path> {
+  final double radius;
+  final double height;
+
+  BottomNavClipper({
+    required this.radius,
+    required this.height,
+  });
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    path.moveTo(0, radius);
+    path.quadraticBezierTo(0, 0, radius, 0);
+
+    path.lineTo(size.width - radius, 0);
+    path.quadraticBezierTo(size.width, 0, size.width, radius);
+
+    path.lineTo(size.width, height);
+    path.lineTo(0, height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+

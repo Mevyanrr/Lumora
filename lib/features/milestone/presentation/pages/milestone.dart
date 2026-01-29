@@ -13,7 +13,6 @@ import 'package:lumora/features/milestone/presentation/widgets/card_aktivitas.da
 import 'package:lumora/features/milestone/presentation/widgets/card_pencapaian.dart';
 import 'package:lumora/features/milestone/presentation/widgets/monthlygoal.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
-import 'package:lumora/features/stimulasi/presentation/widgets/aktivitas_card.dart';
 
 class Milestone extends StatefulWidget {
   const Milestone({super.key});
@@ -52,293 +51,298 @@ class _MilestoneState extends State<Milestone> {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: DefaultTabController(
-        initialIndex: 0,
-        length: 2,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: sh * 5 / fh),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            "Milestone",
-                            style: TextStyle(
-                              fontSize: sw * 22 / fw,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.txtPrimary,
+      extendBody: true,
+        backgroundColor: Colors.transparent,
+        bottomNavigationBar: Navbar(selectedItem: 2),
+        body:
+      Container(
+        decoration: BoxDecoration(color: AppColors.background),
+        child: DefaultTabController(
+          initialIndex: 0,
+          length: 2,
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverToBoxAdapter(
+                  child: SafeArea(
+                    bottom: false,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: sh * 20 / fh, bottom: sh*30/fh ),
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              "Milestone",
+                              style: TextStyle(
+                                fontSize: sw * 22 / fw,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.txtPrimary,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: sw * 18 / fw,
-                              right: sw * 18 / fw,
-                              top: sh * 32 / fh),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Monthly Goal",
-                                style: TextStyle(
-                                  fontSize: sw * 18 / fw,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.txtPrimary,
-                                ),
-                              ),
-                              SizedBox(height: sh * 8 / fh),
-                              BlocProvider(
-                                create: (_) => MilestoneBloc()
-                                  ..add(LoadMilestone(
-                                    totalTask: 12,
-                                    completedTask: 7,
-                                  )),
-                                child: MonthlyGoal(size: size),
-                              ),
-                              SizedBox(height: sh * 32 / fh),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CardAktivitas(
-                                    size: size,
-                                    count: 8,
-                                    title: "Bulan",
-                                    icon: "assets/icons/growbaby-feet.svg",
-                                  ),
-                                  CardAktivitas(
-                                    size: size,
-                                    count: 120,
-                                    title: "Aktivitas",
-                                    icon: "assets/icons/stopwatch.svg",
-                                  ),
-                                  CardAktivitas(
-                                    size: size,
-                                    count: 40,
-                                    title: "Streaks",
-                                    icon: "assets/icons/fire.svg",
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: sh * 32 / fh),
-                              Container(
-                                width: sw * 376 / fw,
-                                padding: EdgeInsets.symmetric(
-                                    //     horizontal: sw * 8 / fw,
-                                    vertical: sh * 8 / fh),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(63),
-                                  color: AppColors.primaryOrange,
-                                ),
-                                child: Center(
-                                  child: ButtonsTabBar(
-                                    backgroundColor: AppColors.yellowSemantic,
-                                    unselectedBackgroundColor:
-                                        AppColors.background,
-                                    labelStyle: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontSize: sw * 16 / fw,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    unselectedLabelStyle: TextStyle(
-                                      color: AppColors.txtSecondary,
-                                      fontSize: sw * 16 / fw,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    borderWidth: 1,
-                                    borderColor: AppColors.yellowSemantic,
-                                    radius: sw * 28 / fw,
-                                    height: sh * 48 / fh,
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: sw * 24 / fw,
-                                      vertical: sh * 8 / fh,
-                                    ),
-                                    tabs: [
-                                      Tab(text: "Aktivitas Selesai"),
-                                      Tab(text: "Tumbuh Kembang"),
-                                    ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: sw * 18 / fw,
+                                right: sw * 18 / fw,
+                                top: sh * 32 / fh),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Monthly Goal",
+                                  style: TextStyle(
+                                    fontSize: sw * 18 / fw,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.txtPrimary,
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: sh * 32 / fh),
-                            ],
+                                SizedBox(height: sh * 8 / fh),
+                                BlocProvider(
+                                  create: (_) => MilestoneBloc()
+                                    ..add(LoadMilestone(
+                                      totalTask: 12,
+                                      completedTask: 7,
+                                    )),
+                                  child: MonthlyGoal(size: size),
+                                ),
+                                SizedBox(height: sh * 32 / fh),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CardAktivitas(
+                                      size: size,
+                                      count: 8,
+                                      title: "Bulan",
+                                      icon: "assets/icons/growbaby-feet.svg",
+                                    ),
+                                    CardAktivitas(
+                                      size: size,
+                                      count: 120,
+                                      title: "Aktivitas",
+                                      icon: "assets/icons/stopwatch.svg",
+                                    ),
+                                    CardAktivitas(
+                                      size: size,
+                                      count: 40,
+                                      title: "Streaks",
+                                      icon: "assets/icons/fire.svg",
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: sh * 32 / fh),
+                                Container(
+                                  width: sw * 376 / fw,
+                                  padding: EdgeInsets.symmetric(
+                                      //     horizontal: sw * 8 / fw,
+                                      vertical: sh * 8 / fh),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(63),
+                                    color: AppColors.primaryOrange,
+                                  ),
+                                  child: Center(
+                                    child: ButtonsTabBar(
+                                      backgroundColor: AppColors.yellowSemantic,
+                                      unselectedBackgroundColor:
+                                          AppColors.background,
+                                      labelStyle: TextStyle(
+                                        color: AppColors.txtPrimary,
+                                        fontSize: sw * 16 / fw,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      unselectedLabelStyle: TextStyle(
+                                        color: AppColors.txtSecondary,
+                                        fontSize: sw * 16 / fw,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      borderWidth: 1,
+                                      borderColor: AppColors.yellowSemantic,
+                                      radius: sw * 28 / fw,
+                                      height: sh * 48 / fh,
+                                      contentPadding: EdgeInsets.symmetric(
+                                        horizontal: sw * 24 / fw,
+                                        vertical: sh * 8 / fh,
+                                      ),
+                                      tabs: [
+                                        Tab(text: "Aktivitas Selesai"),
+                                        Tab(text: "Tumbuh Kembang"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ];
-          },
-          body: TabBarView(
-            children: [
-              ListView(
-                padding: EdgeInsets.only(left: sw * 18 / fw),
-                children: [
-                  BlocProvider(
-                      create: (_) => MonthBloc()..add(LoadMonth(17)),
-                      child: BlocBuilder<MonthBloc, MonthState>(
-                        builder: (context, state) {
-                          if (state is MonthLoaded) {
-                            final currentIndex = state.ages.indexWhere(
-                              (range) =>
-                                  getAgeStatus(range, state.currentMonth) ==
-                                  AgeStatus.current,
-                            );
-
-                            //buat scroll curr nya
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              if (currentIndex != -1 &&
-                                  _ageScrollController.hasClients) {
-                                const itemWidth = 80.0;
-                                _ageScrollController.animateTo(
-                                  currentIndex * itemWidth,
-                                  duration: const Duration(milliseconds: 400),
-                                  curve: Curves.easeOut,
-                                );
-                              }
-                            });
-
-                            return SizedBox(
-                              height: size.height * 70 / 917,
-                              child: ListView.builder(
-                                controller: _ageScrollController,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.ages.length,
-                                itemBuilder: (context, index) {
-                                  final range = state.ages[index];
-                                  final status =
-                                      getAgeStatus(range, state.currentMonth);
-
-                                  return CalendarItem(
-                                    size: size,
-                                    topText: range.label,
-                                    bottomText: "Bulan",
-                                    status: status,
-                                  );
-                                },
-                              ),
-                            );
-                          }
-
-                          return const SizedBox();
-                        },
-                      )),
-                  SizedBox(height: sh * 21 / fh),
-                  Padding(
-                    padding: EdgeInsets.only(right: sw * 18 / fw),
-                    child: Text(
-                      "Pencapaian",
-                      style: TextStyle(
-                        fontSize: sw * 18 / fw,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.txtPrimary,
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(height: sh * 3 / fh),
-                  Text(
-                    "Pada usia ini Si Kecil seharusnya sudah bisa melakukan beberapa hal di bawah berikut.",
-                    style: TextStyle(
-                      fontSize: sw * 14 / fw,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.txtPrimary,
-                    ),
-                  ),
-                  SizedBox(
-                    height: sw * 21 / fw,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: sw * 18 / fw),
-                    child: ListView.separated(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: cubits.length,
-                      separatorBuilder: (_, __) =>
-                          SizedBox(height: sh * 12 / fh),
-                      itemBuilder: (context, index) {
-                        return BlocProvider.value(
-                          value: cubits[index],
-                          child: CardPencapaian(size: size),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              ListView(padding: EdgeInsets.only(left: sw * 18 / fw), children: [
-                SizedBox(
-                  height: size.height * 70 / 917,
-                  child: Builder(builder: (context) {
-                    final currentDayIndex = today - 1;
-
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (_dayScrollController.hasClients) {
-                        const itemWidth = 80.0;
-                        _dayScrollController.animateTo(
-                          currentDayIndex * itemWidth,
-                          duration: Duration(milliseconds: 400),
-                          curve: Curves.easeOut,
-                        );
-                      }
-                    });
-
-                    return ListView.builder(
-                      controller: _dayScrollController,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: daysInMonth,
-                      itemBuilder: (context, index) {
-                        final date = index + 1;
-                        final dateTime = DateTime(now.year, now.month, date);
-                        final dayName = dayNames[dateTime.weekday % 7];
-
-                        final status = date == today
-                            ? AgeStatus.current
-                            : date < today
-                                ? AgeStatus.past
-                                : AgeStatus.future;
-
-                        return CalendarItem(
-                          size: size,
-                          topText: date.toString(),
-                          bottomText: dayName,
-                          status: status,
-                        );
-                      },
-                    );
-                  }),
                 ),
-                SizedBox(height: sh * 21 / fh),
-                Padding(
-                  padding: EdgeInsets.only(right: sw * 18 / fw),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Aktivitas yang dilakukan",
+              ];
+            },
+            body: TabBarView(
+              children: [
+                ListView(
+                  padding: EdgeInsets.only(left: sw * 18 / fw, bottom: sh*110/fh),
+                  children: [
+                    BlocProvider(
+                        create: (_) => MonthBloc()..add(LoadMonth(17)),
+                        child: BlocBuilder<MonthBloc, MonthState>(
+                          builder: (context, state) {
+                            if (state is MonthLoaded) {
+                              final currentIndex = state.ages.indexWhere(
+                                (range) =>
+                                    getAgeStatus(range, state.currentMonth) ==
+                                    AgeStatus.current,
+                              );
+        
+                              //buat scroll curr nya
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                if (currentIndex != -1 &&
+                                    _ageScrollController.hasClients) {
+                                  const itemWidth = 80.0;
+                                  _ageScrollController.animateTo(
+                                    currentIndex * itemWidth,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeOut,
+                                  );
+                                }
+                              });
+        
+                              return SizedBox(
+                                height: size.height * 70 / 917,
+                                child: ListView.builder(
+                                  controller: _ageScrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: state.ages.length,
+                                  itemBuilder: (context, index) {
+                                    final range = state.ages[index];
+                                    final status =
+                                        getAgeStatus(range, state.currentMonth);
+        
+                                    return CalendarItem(
+                                      size: size,
+                                      topText: range.label,
+                                      bottomText: "Bulan",
+                                      status: status,
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+        
+                            return const SizedBox();
+                          },
+                        )),
+                    SizedBox(height: sh * 21 / fh),
+                    Padding(
+                      padding: EdgeInsets.only(right: sw * 18 / fw),
+                      child: Text(
+                        "Pencapaian",
                         style: TextStyle(
                           fontSize: sw * 18 / fw,
                           fontWeight: FontWeight.w500,
                           color: AppColors.txtPrimary,
                         ),
                       ),
-                      //NI BUAT TARUH CARD AKTIVITAS YG UDH SELESAI
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: sh * 3 / fh),
+                    Text(
+                      "Pada usia ini Si Kecil seharusnya sudah bisa melakukan beberapa hal di bawah berikut.",
+                      style: TextStyle(
+                        fontSize: sw * 14 / fw,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.txtPrimary,
+                      ),
+                    ),
+                    SizedBox(
+                      height: sw * 21 / fw,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: sw * 18 / fw),
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cubits.length,
+                        separatorBuilder: (_, __) =>
+                            SizedBox(height: sh * 12 / fh),
+                        itemBuilder: (context, index) {
+                          return BlocProvider.value(
+                            value: cubits[index],
+                            child: CardPencapaian(size: size),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ])
-            ],
+                ListView(padding: EdgeInsets.only(left: sw * 18 / fw), children: [
+                  SizedBox(
+                    height: size.height * 70 / 917,
+                    child: Builder(builder: (context) {
+                      final currentDayIndex = today - 1;
+        
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_dayScrollController.hasClients) {
+                          const itemWidth = 80.0;
+                          _dayScrollController.animateTo(
+                            currentDayIndex * itemWidth,
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeOut,
+                          );
+                        }
+                      });
+        
+                      return ListView.builder(
+                        controller: _dayScrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: daysInMonth,
+                        itemBuilder: (context, index) {
+                          final date = index + 1;
+                          final dateTime = DateTime(now.year, now.month, date);
+                          final dayName = dayNames[dateTime.weekday % 7];
+        
+                          final status = date == today
+                              ? AgeStatus.current
+                              : date < today
+                                  ? AgeStatus.past
+                                  : AgeStatus.future;
+        
+                          return CalendarItem(
+                            size: size,
+                            topText: date.toString(),
+                            bottomText: dayName,
+                            status: status,
+                          );
+                        },
+                      );
+                    }),
+                  ),
+                  SizedBox(height: sh * 21 / fh),
+                  Padding(
+                    padding: EdgeInsets.only(right: sw * 18 / fw),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Aktivitas yang dilakukan",
+                          style: TextStyle(
+                            fontSize: sw * 18 / fw,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.txtPrimary,
+                          ),
+                        ),
+                        //NI BUAT TARUH CARD AKTIVITAS YG UDH SELESAI
+                      ],
+                    ),
+                  ),
+                ])
+              ],
+            ),
           ),
         ),
       ),
-      bottomNavigationBar: Navbar(selectedItem: 2),
     );
   }
 }

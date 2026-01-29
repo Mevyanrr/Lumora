@@ -47,7 +47,6 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/logo.png"
-  adaptive_icon_foreground: "assets/images/logo.png"
   icon_size: 54
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
@@ -97,6 +96,7 @@ flutter:
     - assets/images/analisis-good.png
     - assets/images/analisis-bad.png
     - assets/images/bayi-nextstep.png
+    - assets/images/logo-without-sun.png
 
     - assets/icons/home.svg
     - assets/icons/milestone.svg
@@ -125,5 +125,6 @@ flutter:
     - assets/icons/slim-lamp.svg
     - assets/icons/stopwatch.svg
     - assets/icons/fire.svg
+    
 
 
