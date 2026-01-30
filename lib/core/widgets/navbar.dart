@@ -46,53 +46,50 @@ class _BottomNavState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-  final sizewidth = size.width;
-  final sizeheight = size.height;
+    final sizewidth = size.width;
+    final sizeheight = size.height;
 
-  const fullwidth = 412.0;
-  const fullheight = 917.0;
+    const fullwidth = 412.0;
+    const fullheight = 917.0;
 
-  final radius = sizewidth * 50 / fullwidth;
-  final navHeight = sizeheight * 90 / fullheight;
-  final iconSz = sizewidth*26/fullwidth;
+    final radius = sizewidth * 50 / fullwidth;
+    final navHeight = sizeheight * 90 / fullheight;
+    final iconSz = sizewidth * 26 / fullwidth;
 
-  return ClipPath(
-    clipper: BottomNavClipper(
-      radius: radius,
-      height: navHeight,
-    ),
-  child: Container(
-    color: AppColors.white, 
-    child: BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.transparent, 
-      elevation: 0,
-      currentIndex: widget.selectedItem,
-      selectedItemColor: AppColors.secondary,
-      unselectedItemColor: AppColors.txtPrimary,
-      onTap: changeSelectedNavBar,
-        items: [
-          _navItem(
-            iconPath: 'assets/icons/home.svg',
-            label: 'Beranda',
-            isActive: widget.selectedItem == 0,
-            iconSz: iconSz
+    return ClipPath(
+        clipper: BottomNavClipper(
+          radius: radius,
+          height: navHeight,
+        ),
+        child: Container(
+          color: AppColors.white,
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            currentIndex: widget.selectedItem,
+            selectedItemColor: AppColors.secondary,
+            unselectedItemColor: AppColors.txtPrimary,
+            onTap: changeSelectedNavBar,
+            items: [
+              _navItem(
+                  iconPath: 'assets/icons/home.svg',
+                  label: 'Beranda',
+                  isActive: widget.selectedItem == 0,
+                  iconSz: iconSz),
+              _navItem(
+                  iconPath: 'assets/icons/stimulasi.svg',
+                  label: 'Stimulasi',
+                  isActive: widget.selectedItem == 1,
+                  iconSz: iconSz),
+              _navItem(
+                  iconPath: 'assets/icons/milestone.svg',
+                  label: 'Milestone',
+                  isActive: widget.selectedItem == 2,
+                  iconSz: iconSz),
+            ],
           ),
-          _navItem(
-            iconPath: 'assets/icons/stimulasi.svg',
-            label: 'Stimulasi',
-            isActive: widget.selectedItem == 1,
-            iconSz: iconSz
-          ),
-          _navItem(
-            iconPath: 'assets/icons/milestone.svg',
-            label: 'Milestone',
-            isActive: widget.selectedItem == 2,
-            iconSz: iconSz
-          ),
-        ],
-      ),)
-    );
+        ));
   }
 }
 
@@ -125,4 +122,3 @@ class BottomNavClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-

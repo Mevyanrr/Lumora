@@ -34,13 +34,14 @@ class _StimulasiState extends State<Stimulasi> {
         body: Container(
           decoration: BoxDecoration(color: AppColors.background),
           child: SafeArea(
+            bottom: false,
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.only(
                   left: sizewidth * 18 / fullwidth,
                   right: sizewidth * 18 / fullwidth,
                   top: sizeheight * 20 / fullheight,
-                  bottom: sizeheight * 15 / fullheight,
+                  bottom: sizeheight * 91 / fullheight,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

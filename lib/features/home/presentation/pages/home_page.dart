@@ -29,12 +29,13 @@ class HomePage extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(color: AppColors.background),
         child: SafeArea(
+          bottom: false,
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
                 left: sizewidth * 20 / fullwidth,
-                top: sizeheight * 15 / fullheight,
-                bottom: sizeheight * 20 / fullheight,
+                top: sizeheight * 12 / fullheight,
+                bottom: sizeheight * 101 / fullheight,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -183,7 +183,7 @@ class _MilestoneState extends State<Milestone> {
             body: TabBarView(
               children: [
                 ListView(
-                  padding: EdgeInsets.only(left: sw * 18 / fw, bottom: sh*110/fh),
+                  padding: EdgeInsets.only(left: sw * 18 / fw, bottom: sh*101/fh),
                   children: [
                     BlocProvider(
                         create: (_) => MonthBloc()..add(LoadMonth(17)),
