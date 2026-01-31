@@ -26,7 +26,7 @@ class InformasibayiBloc extends Bloc<InformasibayiEvent, InformasibayiState> {
             ),
             InformasiBayiItem(
               icon: 'assets/icons/pin.svg', 
-              title: babyData?.jenisKelamin ?? '-', //ini harusnya alamat
+              title: babyData?.alamat ?? '-', //ini harusnya alamat
             ),
             InformasiBayiItem(
               icon: 'assets/icons/gender.svg', 

@@ -11,6 +11,9 @@ class BabyModel {
   final String kontrol;
   final String kondisi;
   final DateTime createdAt;
+  final String? alamat;
+  final double? latitude;
+  final double? longitude;
 
   BabyModel({
     required this.nama,
@@ -23,6 +26,9 @@ class BabyModel {
     required this.kontrol,
     required this.kondisi,
     required this.createdAt,
+    required this.alamat,
+    required this.latitude,
+    required this.longitude
   });
 
   factory BabyModel.fromFirestore(DocumentSnapshot doc){
@@ -37,7 +43,10 @@ class BabyModel {
       riwayatKesehatan: data['riwayatKesehatan'] ?? 0.0, 
       kontrol: data['kontrol'] ?? 'Tidak ada kontrol', 
       kondisi: data['kondisi'] ?? 'Tidak ada kondisi',
-      createdAt: DateTime.now()
+      createdAt: DateTime.now(),
+      alamat: data['address'],
+      latitude: data['latitude'],
+      longitude: data['longitude'],
       );
   }
 

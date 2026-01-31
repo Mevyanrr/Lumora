@@ -6,6 +6,7 @@ import 'package:lumora/features/profile/presentation/bloc/informasibayi_bloc.dar
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_event.dart';
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_state.dart';
 import 'package:lumora/features/profile/presentation/widgets/framesecondary.dart';
+import 'package:lumora/helper/pick_location.dart';
 
 class Informasibayi extends StatelessWidget {
   const Informasibayi({super.key});
@@ -90,6 +91,14 @@ class Informasibayi extends StatelessWidget {
                               size: size,
                               icon: item.icon,
                               title: item.title,
+                              onTap: index == 2 ? () async {
+                                final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => PickLocationPage())
+                                );
+
+                                if(result != null){
+                                  await KuisionerService().saveAddress(result["address"]);
+                                }
+                              } : null
                             ),
                           );
                         }),

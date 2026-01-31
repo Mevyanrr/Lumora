@@ -51,6 +51,9 @@ dependencies:
   http: ^1.2.1
   image_picker: ^1.2.1
   file_picker: ^8.1.2
+  google_maps_flutter: ^2.12.3
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
 
 
 

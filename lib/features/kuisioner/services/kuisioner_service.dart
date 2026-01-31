@@ -52,4 +52,16 @@ Future<void> updateDataBayi(BabyModel babymodel) async{
     print("Gagal mengupdate data bayi: $e");
     }
   }
+
+  Future<void> saveAddress(String address) async {
+    final userRef = firestore.collection('bayi').doc(auth.currentUser?.uid);
+    try{
+      return userRef.set({
+        'address' : address ?? ""
+      }, SetOptions(merge: true)
+      );
+    }catch(e){
+      print("$e");
+    }
+  }
 }

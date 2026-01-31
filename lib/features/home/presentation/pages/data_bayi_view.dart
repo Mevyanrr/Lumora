@@ -499,6 +499,9 @@ class _DataBayiState extends State<DataBayiView> {
                     kontrol: finalState.pilKontrol,
                     kondisi: finalState.aktivitasBayi,
                     createdAt: DateTime.now(),
+                    alamat: '',
+                    latitude: 0.0,
+                    longitude: 0.0
                   );
                   await KuisionerService().updateDataBayi(babyModel);
                     Navigator.pushReplacement(

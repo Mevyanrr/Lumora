@@ -287,6 +287,9 @@ class _Page4ViewState extends State<Page4View> {
                             kontrol: finalState.pilKontrol,
                             kondisi: finalState.aktivitasBayi,
                             createdAt: DateTime.now(),
+                            alamat: '',
+                            latitude: 0.0,
+                            longitude: 0.0,
                           );
 
                           print("BB: ${finalState.bb}");

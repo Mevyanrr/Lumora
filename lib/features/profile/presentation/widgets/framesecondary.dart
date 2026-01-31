@@ -6,12 +6,13 @@ class Framesecondary extends StatelessWidget {
   final Size size;
   final String icon;
   final String title;
+  final VoidCallback? onTap;
 
   const Framesecondary({super.key,
   required this.size,
   required this.icon,
   required this.title,
-
+  this.onTap
   });
 
   @override
@@ -20,9 +21,13 @@ class Framesecondary extends StatelessWidget {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
-    return Container(
+    return 
+    GestureDetector(
+      onTap: onTap,
+      child: 
+    Container(
       padding: EdgeInsets.symmetric(
-        vertical: sizeheight * 12 / fullheight,
+        vertical: sizeheight * 15 / fullheight,
         horizontal: sizewidth * 13 / fullwidth,
       ),
       height: sizeheight * 56 / fullheight,
@@ -51,6 +56,7 @@ class Framesecondary extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+        );
   }
 }
