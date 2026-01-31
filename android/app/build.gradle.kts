@@ -6,6 +6,9 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace = "com.example.lumora"
     compileSdk = flutter.compileSdkVersion
@@ -29,6 +32,9 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders = [
+            GOOGLE_MAPS_API_KEY: localProperties.getProperty("MAPS_API_KEY")
+        ]
     }
 
     buildTypes {
