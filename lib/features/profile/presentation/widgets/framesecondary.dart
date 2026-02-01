@@ -6,13 +6,20 @@ class Framesecondary extends StatelessWidget {
   final Size size;
   final String icon;
   final String title;
+<<<<<<< HEAD
   final VoidCallback? onTap;
+=======
+>>>>>>> mevya
 
   const Framesecondary({super.key,
   required this.size,
   required this.icon,
   required this.title,
+<<<<<<< HEAD
   this.onTap
+=======
+
+>>>>>>> mevya
   });
 
   @override
@@ -21,6 +28,7 @@ class Framesecondary extends StatelessWidget {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
+<<<<<<< HEAD
     return 
     GestureDetector(
       onTap: onTap,
@@ -28,6 +36,11 @@ class Framesecondary extends StatelessWidget {
     Container(
       padding: EdgeInsets.symmetric(
         vertical: sizeheight * 15 / fullheight,
+=======
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: sizeheight * 12 / fullheight,
+>>>>>>> mevya
         horizontal: sizewidth * 13 / fullwidth,
       ),
       height: sizeheight * 56 / fullheight,
@@ -56,7 +69,11 @@ class Framesecondary extends StatelessWidget {
           ),
         ],
       ),
+<<<<<<< HEAD
     )
         );
+=======
+    );
+>>>>>>> mevya
   }
 }
