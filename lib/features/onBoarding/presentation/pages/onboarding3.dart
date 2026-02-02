@@ -8,69 +8,83 @@ class Onboarding3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final sizewidth = size.width;
-    final sizeheight = size.height;
-    final fullheight = 917;
-    final fullwidth = 412;
+    final sw = size.width;
+    final sh = size.height;
+
+    const fw = 412;
+    const fh = 917;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/logo.png",
-                height: sizeheight * 154 / fullheight,
-                width: sizewidth * 183 / fullwidth,
-                fit: BoxFit.contain,
-              ),
-        
-              SizedBox(height: sizeheight * 15 / fullheight),
-        
-              Text(
-                "-Thoughtful Care for Growing Babies -\n“Because Every Little Step Matters”",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
-                  fontSize: sizewidth*14/fullwidth,
-                  color: AppColors.txtPrimary,
-                  height: 1.5,
+        child: Padding(
+          padding: EdgeInsets.only(top: sh * 265 / fh),
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start, 
+              children: [
+
+             
+                SizedBox(
+                  height: sh * 154 / fh,
+                  width: sw * 183 / fw,
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-        
-              SizedBox(height: sizeheight * 34 / fullheight),
-        
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => Login()),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Text(
-                      "Bergabung sekarang >",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                        fontSize: sizewidth*14/fullwidth,
-                        color: AppColors.txtPrimary
+
+                SizedBox(height: sh * 15 / fh),
+
+                SizedBox(
+                  height: sh * 45 / fh, 
+                  child: Text(
+                    "-Thoughtful Care for Growing Babies -\n"
+                    "“Because Every Little Step Matters”",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w400,
+                      fontSize: sw * 14 / fw,
+                      color: AppColors.txtPrimary,
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: sh * 34 / fh),
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => Login()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Text(
+                        "Bergabung sekarang >",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          fontSize: sw * 14 / fw,
+                          color: AppColors.txtPrimary,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: sizeheight*5/fullheight,),
-                    Container(
-                      width: sizewidth*145/fullwidth, 
-                      height: 1,
-                      color: AppColors.txtSecondary,
-                    ),
-                  ],
+                      SizedBox(height: sh * 5 / fh),
+                      Container(
+                        width: sw * 145 / fw,
+                        height: 1,
+                        color: AppColors.txtSecondary,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

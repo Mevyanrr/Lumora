@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
+<<<<<<< HEAD
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
+=======
+>>>>>>> mevya
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_bloc.dart';
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_event.dart';
 import 'package:lumora/features/profile/presentation/bloc/informasibayi_state.dart';
 import 'package:lumora/features/profile/presentation/widgets/framesecondary.dart';
+<<<<<<< HEAD
 import 'package:lumora/helper/pick_location.dart';
+=======
+>>>>>>> mevya
 
 class Informasibayi extends StatelessWidget {
   const Informasibayi({super.key});
@@ -51,6 +57,7 @@ class Informasibayi extends StatelessWidget {
               top: sizeheight * 27 / fullheight,
               bottom: sizeheight * 47 / fullheight,
             ),
+<<<<<<< HEAD
             child: 
             StreamBuilder(
               stream: KuisionerService().getKuisionerData(),
@@ -65,6 +72,9 @@ class Informasibayi extends StatelessWidget {
 
                 return
             Column(
+=======
+            child: Column(
+>>>>>>> mevya
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -91,6 +101,7 @@ class Informasibayi extends StatelessWidget {
                               size: size,
                               icon: item.icon,
                               title: item.title,
+<<<<<<< HEAD
                               onTap: index == 2 ? () async {
                                 final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => PickLocationPage())
                                 );
@@ -99,6 +110,8 @@ class Informasibayi extends StatelessWidget {
                                   await KuisionerService().saveAddress(result["address"]);
                                 }
                               } : null
+=======
+>>>>>>> mevya
                             ),
                           );
                         }),
@@ -135,7 +148,11 @@ class Informasibayi extends StatelessWidget {
                   ),
 
                   child: Text(
+<<<<<<< HEAD
                     "Bayi sudah bisa ${userData.kondisi}",
+=======
+                    "Bayi sudah bisa tengkurap, Merangkan, dan merespon suara",
+>>>>>>> mevya
                     style: TextStyle(
                       fontSize: sizewidth * 16 / fullwidth,
                       fontWeight: FontWeight.w400,
@@ -145,8 +162,12 @@ class Informasibayi extends StatelessWidget {
                 ),
                 
               ],
+<<<<<<< HEAD
             );
              })
+=======
+            ),
+>>>>>>> mevya
           ),
         ),
       ),
