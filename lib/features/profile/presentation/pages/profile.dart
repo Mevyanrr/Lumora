@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
-<<<<<<< HEAD
 import 'package:lumora/features/auth/services/auth_services.dart';
-=======
->>>>>>> mevya
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_event.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_state.dart';
@@ -13,11 +10,8 @@ import 'package:lumora/features/profile/presentation/pages/informasibayi.dart';
 import 'package:lumora/features/profile/presentation/pages/pengaturan.dart';
 import 'package:lumora/features/profile/presentation/widgets/exit.dart';
 import 'package:lumora/features/profile/presentation/widgets/frameprofile.dart';
-<<<<<<< HEAD
 import 'package:lumora/features/profile/service/profile_service.dart';
 import 'package:lumora/model/user_model.dart';
-=======
->>>>>>> mevya
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -34,10 +28,7 @@ class _ProfileState extends State<Profile> {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
-<<<<<<< HEAD
     final profileService = ProfileService.instance;
-=======
->>>>>>> mevya
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -86,7 +77,6 @@ class _ProfileState extends State<Profile> {
           horizontal: sizewidth * 18 / fullwidth,
           vertical: sizeheight * 34 / fullheight,
         ),
-<<<<<<< HEAD
         child: StreamBuilder(
           stream: AuthService().getUserData(),
            builder: (context, snapshot){
@@ -98,9 +88,6 @@ class _ProfileState extends State<Profile> {
                     return const Center(child: Text("Silahkan isi data anda terlebih dahulu"));
                   }
                   return Column(
-=======
-        child: Column(
->>>>>>> mevya
           children: [
             Stack(
               alignment: Alignment.bottomRight,
@@ -112,7 +99,6 @@ class _ProfileState extends State<Profile> {
                     shape: BoxShape.circle,
                     color: AppColors.green,
                   ),
-<<<<<<< HEAD
                   child: 
                   StreamBuilder(
                     stream: AuthService().getUserData(), builder: ((context, snapshot){
@@ -144,18 +130,6 @@ class _ProfileState extends State<Profile> {
                     );
                     setState(() {});
                   },
-=======
-                  child: ClipOval(
-                    child: Image.asset(
-                      "assets/images/profildummy.png",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-
-                GestureDetector(
-                  onTap: () {},
->>>>>>> mevya
                   child: Container(
                     width: sizewidth * 36 / fullwidth,
                     height: sizeheight * 36 / fullheight,
@@ -176,11 +150,7 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: sizeheight * 16 / fullheight),
 
             Text(
-<<<<<<< HEAD
               "Bunda ${userData.nama}",
-=======
-              "Bunda Aira",
->>>>>>> mevya
               style: TextStyle(
                 fontSize: sizewidth * 20 / fullwidth,
                 fontWeight: FontWeight.w500,
@@ -190,11 +160,7 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: sizeheight * 6 / fullheight),
 
             Text(
-<<<<<<< HEAD
               "${userData.email}",
-=======
-              "bundaAira@gmail.com",
->>>>>>> mevya
               style: TextStyle(
                 fontSize: sizewidth * 16 / fullwidth,
                 fontWeight: FontWeight.w400,
@@ -236,15 +202,11 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ],
-<<<<<<< HEAD
         );
             
            }
            
            )
-=======
-        ),
->>>>>>> mevya
       ),
       )
     );

@@ -15,25 +15,12 @@ import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page2.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
-<<<<<<< HEAD
 import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
-=======
-import 'package:lumora/features/milestone/presentation/bloc/milestone_bloc.dart';
-import 'package:lumora/features/milestone/presentation/bloc/month_bloc.dart';
-import 'package:lumora/features/milestone/presentation/bloc/nextstep_bloc.dart';
-import 'package:lumora/features/milestone/presentation/bloc/nextstep_event.dart';
-import 'package:lumora/features/milestone/presentation/pages/milestone.dart';
-import 'package:lumora/features/milestone/presentation/pages/nextstep.dart';
-import 'package:lumora/features/onBoarding/presentation/pages/onboarding.dart';
->>>>>>> mevya
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/pages/profile.dart';
 import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_bloc.dart';
 import 'package:lumora/features/stimulasi/presentation/pages/stimulasi.dart';
-<<<<<<< HEAD
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-=======
->>>>>>> mevya
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,14 +43,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-<<<<<<< HEAD
       providers: [
-        BlocProvider<KuisionerBloc>(create: (_) => KuisionerBloc()),
-        BlocProvider(create: (_) => ProfileBloc()),
-        BlocProvider<AktivitasBloc>(create: (_) => AktivitasBloc()),
-      ],
-=======
-  providers: [
     BlocProvider<KuisionerBloc>(
       create: (_) => KuisionerBloc(),
     ),
@@ -83,8 +63,6 @@ class MyApp extends StatelessWidget {
       create: (_) => MonthBloc(),
     ),
   ],
-
->>>>>>> mevya
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
@@ -100,17 +78,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-<<<<<<< HEAD
         initialRoute: '/login',
-=======
-        initialRoute: '/onboarding',
->>>>>>> mevya
         routes: {
           '/kuisioner1': (context) => Page1(),
           '/kuisioner2': (context) => Page2(),
           '/kuisioner3': (context) => Page3(),
           '/kuisioner4': (context) => Page4(),
-          '/onboarding': (context) => Onboarding(),
+          '/onboarding3': (context) => Onboarding3(),
           '/login': (context) => Login(),
           '/regist': (context) => Regist(),
           '/home': (context) => HomePage(),
@@ -119,11 +93,8 @@ class MyApp extends StatelessWidget {
           '/nutriguide': (context) => Nutriguide(),
           '/profil': (context) => Profile(),
           '/stimulasi': (context) => Stimulasi(),
-<<<<<<< HEAD
-=======
           '/milestone': (context) => Milestone(),
           '/mile-nextstep': (context) => Nextstep()
->>>>>>> mevya
         },
       ),
     );
