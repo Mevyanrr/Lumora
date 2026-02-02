@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -6,9 +9,13 @@ plugins {
     id("com.google.gms.google-services")
 }
 
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
 
+if(localPropertiesFile.exists()){
+    localProperties.load(FileInputStream(localPropertiesFile))
+    println("MAPS KEY: " + localProperties.getProperty("MAPS_API_KEY"))
+}
 android {
     namespace = "com.example.lumora"
     compileSdk = flutter.compileSdkVersion
@@ -32,9 +39,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders = [
-            GOOGLE_MAPS_API_KEY: localProperties.getProperty("MAPS_API_KEY")
-        ]
+        manifestPlaceholders["MAPS_API_KEY"] = localProperties.getProperty("MAPS_API_KEY") ?: ""
     }
 
     buildTypes {
