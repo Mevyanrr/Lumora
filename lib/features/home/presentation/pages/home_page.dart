@@ -258,6 +258,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  
                                   Navigator.push(context, MaterialPageRoute(builder: (_) => const Nutriguide()));
                                 },
                                 child: Text(
@@ -422,7 +423,8 @@ class _HomePageState extends State<HomePage> {
                                   desc: item['desc']!,
                                   imagePath: item['image']!,
                                   size: size,
-                                  onTap: () {},
+                                  onTap: () {
+                                  },
                                 ),
                               );
                             }),

@@ -9,6 +9,7 @@ import 'package:lumora/features/stimulasi/presentation/bloc/countdown_bloc.dart'
 import 'package:lumora/features/stimulasi/presentation/bloc/countdown_event.dart';
 import 'package:lumora/features/stimulasi/presentation/widgets/aktivitas_card.dart';
 import 'package:lumora/features/stimulasi/presentation/widgets/countdown.dart';
+import 'package:lumora/features/stimulasi/services/stimulasi_service.dart';
 
 class Stimulasi extends StatefulWidget {
   const Stimulasi({super.key});
@@ -25,8 +26,9 @@ class _StimulasiState extends State<Stimulasi> {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
+
     return BlocProvider(
-      create: (_) => AktivitasBloc()..add(LoadAktivitas()),
+      create: (_) => AktivitasBloc(StimulasiService())..add(LoadAktivitas()),
       child: Scaffold(
         extendBody: true,
         backgroundColor: Colors.transparent,
@@ -67,12 +69,7 @@ class _StimulasiState extends State<Stimulasi> {
                     ),
                     SizedBox(height: sizeheight * 11 / fullheight),
                     BlocProvider(
-                      create: (_) => CountdownBloc()
-                        ..add(
-                          StartCountdown(
-                            DateTime(2026, 1, 31),
-                          ),
-                        ),
+                      create: (_) => CountdownBloc(StimulasiService()),
                       child: CountdownContainer(
                         size: size,
                       ),

@@ -1,13 +1,17 @@
 
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lumora/features/stimulasi/data/models/stimulate_date.dart';
+import 'package:lumora/features/stimulasi/services/stimulasi_service.dart';
 import 'countdown_event.dart';
 import 'countdown_state.dart';
 
 class CountdownBloc extends Bloc<CountdownEvent, CountdownState> {
   Timer? _timer;
+  final StimulasiService stimulate;
+  StreamSubscription? dateStream;
 
-  CountdownBloc()
+  CountdownBloc(this.stimulate)
       : super(
           CountdownState(
             days: 0,
@@ -18,7 +22,59 @@ class CountdownBloc extends Bloc<CountdownEvent, CountdownState> {
         ) {
     on<StartCountdown>(_onStart);
     on<TickCountdown>(_onTick);
+    on<TargetDataChanged>(_onDataChanged);
+    on<UpdateStimulationStatus>(_onUpdateStatus);
+    _initStream();
   }
+
+  Future<void> _onUpdateStatus(UpdateStimulationStatus event, Emitter<CountdownState> emit) async {
+    try{
+      if(event.isCompleted == true){
+        final nextWeek = DateTime.now().add(const Duration(days: 7));
+        await stimulate.saveDate(StimulateDate(targetDate: nextWeek, isCompleted: false));
+        add(StartCountdown(nextWeek));
+      }  else {
+        final currentTarget = state.targetDate;
+        await stimulate.saveDate(StimulateDate(targetDate: currentTarget, isCompleted: false));
+      }
+    }catch(e){
+      print("$e");
+    }
+  }
+
+  void _initStream(){
+    dateStream = stimulate.getDateFromFirestore().listen((data){
+      if(data != null){
+        add(TargetDataChanged(data.targetDate));
+      }
+    });
+}
+
+
+Future<void> _onSaveDate(
+  SaveTargetDate event, Emitter<CountdownState> emit
+  ) async {
+    try{
+    final dataToSave = StimulateDate(
+      targetDate: event.newDate, isCompleted: false);
+      if(dataToSave.isCompleted == true){
+        await stimulate.saveDate(StimulateDate(targetDate: DateTime.now().add(const Duration(days: 7)), isCompleted: false));
+      } else {
+        return;
+      }
+      add(StartCountdown(event.newDate));
+    } catch(e){
+      print("$e");
+    }
+}
+
+void _onDataChanged(TargetDataChanged event, Emitter<CountdownState> emit){
+  if(event != null){
+    add(StartCountdown(event.date!));
+  }
+}
+
+
 
   void _onStart(
       StartCountdown event, Emitter<CountdownState> emit) {
@@ -39,6 +95,7 @@ class CountdownBloc extends Bloc<CountdownEvent, CountdownState> {
 
   CountdownState _calculateState(DateTime target) {
     final now = DateTime.now();
+    //final DateTime target = DateTime(now.day + 7, now.month, now.year);
     final diff = target.difference(now);
 
     if (diff.isNegative) {

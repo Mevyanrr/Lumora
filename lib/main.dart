@@ -27,6 +27,7 @@ import 'package:lumora/features/profile/presentation/pages/profile.dart';
 import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_bloc.dart';
 import 'package:lumora/features/stimulasi/presentation/pages/stimulasi.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:lumora/features/stimulasi/services/stimulasi_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
       create: (_) => ProfileBloc(),
     ),
     BlocProvider<AktivitasBloc>(
-      create: (_) => AktivitasBloc(),
+      create: (_) => AktivitasBloc(StimulasiService()),
     ),
     BlocProvider<NextstepBloc>(
       create: (_) => NextstepBloc()..add(FetchNextstep()),
