@@ -65,4 +65,17 @@ Future<void> updateDataBayi(BabyModel babymodel) async{
       print("$e");
     }
   }
-}
+
+  Future<void> updateTanggalLahir(DateTime tanggalLahir) async {
+    final uid = auth.currentUser?.uid;
+    if (uid == null) return;
+    try {
+      await firestore.collection('bayi').doc(uid).update({
+        'tanggalLahir': Timestamp.fromDate(tanggalLahir),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print("Gagal mengupdate tanggal lahir: $e");
+    }
+  }
+}

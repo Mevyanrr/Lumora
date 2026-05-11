@@ -11,6 +11,39 @@ import 'package:lumora/helper/pick_location.dart';
 class Informasibayi extends StatelessWidget {
   const Informasibayi({super.key});
 
+  Future<void> _pickTanggalLahir(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now().subtract(const Duration(days: 180)),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+      helpText: 'Pilih Tanggal Lahir Bayi',
+      cancelText: 'Batal',
+      confirmText: 'Simpan',
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppColors.primaryOrange,
+              onPrimary: AppColors.txtPrimary,
+              surface: AppColors.background,
+              onSurface: AppColors.txtPrimary,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      // Simpan tanggal lahir baru ke Firestore via KuisionerService
+      await KuisionerService().updateTanggalLahir(picked);
+      // Refresh informasi bayi bloc
+      // ignore: use_build_context_synchronously
+      context.read<InformasibayiBloc>().add(LoadInformasibayi());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -51,102 +84,133 @@ class Informasibayi extends StatelessWidget {
               top: sizeheight * 27 / fullheight,
               bottom: sizeheight * 47 / fullheight,
             ),
-            child: 
-            StreamBuilder(
+            child: StreamBuilder(
               stream: KuisionerService().getKuisionerData(),
-              builder: (context, snapshot){
-                if(snapshot.connectionState == ConnectionState.waiting){
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 }
                 final userData = snapshot.data;
-                if(userData == null){
+                if (userData == null) {
                   return const Center(child: Text("Tidak ada data"));
                 }
 
-                return
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Informasi Umum",
-                  style: TextStyle(
-                    fontSize: sizewidth * 18 / fullwidth,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.txtPrimary,
-                  ),
-                ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Informasi Umum",
+                      style: TextStyle(
+                        fontSize: sizewidth * 18 / fullwidth,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.txtPrimary,
+                      ),
+                    ),
 
-                SizedBox(height: sizeheight * 8 / fullheight),
-                BlocBuilder<InformasibayiBloc, InformasibayiState>(
-                  builder: (context, state) {
-                    if (state is InformasibayiLoaded) {
-                      return Column(
-                        children: List.generate(state.items.length, (index) {
-                          final item = state.items[index];
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              bottom: sizeheight * 8 / fullheight,
-                            ),
-                            child: Framesecondary(
-                              size: size,
-                              icon: item.icon,
-                              title: item.title,
-                              onTap: index == 2 ? () async {
-                                final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => PickLocationPage())
-                                );
+                    SizedBox(height: sizeheight * 8 / fullheight),
+                    BlocBuilder<InformasibayiBloc, InformasibayiState>(
+                      builder: (context, state) {
+                        if (state is InformasibayiLoaded) {
+                          return Column(
+                            children: List.generate(state.items.length, (index) {
+                              final item = state.items[index];
 
-                                if(result != null){
-                                  await KuisionerService().saveAddress(result["address"]);
-                                }
-                              } : null
-                            ),
+                              VoidCallback? onTap;
+
+                              if (index == 1) {
+                                // Index 1 = tanggal lahir, bisa diklik untuk ubah
+                                onTap = () => _pickTanggalLahir(context);
+                              } else if (index == 2) {
+                                // Index 2 = lokasi/alamat
+                                onTap = () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => PickLocationPage(),
+                                    ),
+                                  );
+                                  if (result != null) {
+                                    await KuisionerService()
+                                        .saveAddress(result["address"]);
+                                  }
+                                };
+                              }
+
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: sizeheight * 8 / fullheight,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Framesecondary(
+                                      size: size,
+                                      icon: item.icon,
+                                      title: item.title,
+                                      onTap: onTap,
+                                    ),
+                                    // Tampilkan ikon edit kecil di tanggal lahir
+                                    if (index == 1)
+                                      Positioned(
+                                        right: sizewidth * 12 / fullwidth,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.edit_calendar_outlined,
+                                            size: sizewidth * 18 / fullwidth,
+                                            color: AppColors.txtPrimary,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              );
+                            }),
                           );
-                        }),
-                      );
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
-
-                SizedBox(height: sizeheight * 32 / fullheight),
-
-                Text(
-                  "Informasi Tambahan",
-                  style: TextStyle(
-                    fontSize: sizewidth * 18 / fullwidth,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.txtPrimary,
-                  ),
-                ),
-
-                SizedBox(height: sizeheight * 8 / fullheight),
-
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: sizeheight * 16 / fullheight,
-                    horizontal: sizewidth * 16 / fullwidth,
-                  ),
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      sizewidth * 12 / fullwidth,
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
                     ),
-                    color: AppColors.primaryOrange,
-                  ),
 
-                  child: Text(
-                    "Bayi sudah bisa ${userData.kondisi}",
-                    style: TextStyle(
-                      fontSize: sizewidth * 16 / fullwidth,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.txtPrimary,
+                    SizedBox(height: sizeheight * 32 / fullheight),
+
+                    Text(
+                      "Informasi Tambahan",
+                      style: TextStyle(
+                        fontSize: sizewidth * 18 / fullwidth,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.txtPrimary,
+                      ),
                     ),
-                  ),
-                ),
-                
-              ],
-            );
-             })
+
+                    SizedBox(height: sizeheight * 8 / fullheight),
+
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: sizeheight * 16 / fullheight,
+                        horizontal: sizewidth * 16 / fullwidth,
+                      ),
+
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          sizewidth * 12 / fullwidth,
+                        ),
+                        color: AppColors.primaryOrange,
+                      ),
+
+                      child: Text(
+                        "Bayi sudah bisa ${userData.kondisi}",
+                        style: TextStyle(
+                          fontSize: sizewidth * 16 / fullwidth,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.txtPrimary,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

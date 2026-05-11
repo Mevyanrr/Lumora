@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/navbar.dart';
+import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
 import 'package:lumora/features/milestone/presentation/bloc/milestone_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/milestone_event.dart';
 import 'package:lumora/features/milestone/presentation/bloc/month_bloc.dart';
@@ -33,7 +34,7 @@ class _MilestoneState extends State<Milestone> {
   void initState() {
     super.initState();
     context.read<AktivitasBloc>().add(LoadAktivitas());
-    context.read<MonthBloc>().add(LoadMonth(8)); // Load default age
+    // Usia bayi akan dimuat dinamis via StreamBuilder dari KuisionerService
   }
 
   @override
@@ -56,7 +57,28 @@ class _MilestoneState extends State<Milestone> {
 
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-    return Scaffold(
+    return StreamBuilder(
+      stream: KuisionerService().getKuisionerData(),
+      builder: (context, babySnapshot) {
+        // Hitung usia bayi dalam bulan, sama seperti di home_page.dart
+        int babyAgeMonths = 0;
+        if (babySnapshot.hasData && babySnapshot.data != null) {
+          final babyData = babySnapshot.data!;
+          final now = DateTime.now();
+          babyAgeMonths = now.month -
+              babyData.tanggalLahir.month +
+              (12 * (now.year - babyData.tanggalLahir.year));
+          final hari = now.day - babyData.tanggalLahir.day;
+          if (hari < 0) babyAgeMonths--;
+          if (babyAgeMonths < 0) babyAgeMonths = 0;
+        }
+
+        // Trigger MonthBloc setiap kali usia berubah
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          context.read<MonthBloc>().add(LoadMonth(babyAgeMonths));
+        });
+
+        return Scaffold(
       extendBody: true,
         backgroundColor: Colors.transparent,
         bottomNavigationBar: Navbar(selectedItem: 2),
@@ -121,7 +143,7 @@ class _MilestoneState extends State<Milestone> {
 
                                     return BlocBuilder<MonthBloc, MonthState>(
                                       builder: (context, monthState) {
-                                        int bulan = 8;
+                                        int bulan = babyAgeMonths;
                                         if (monthState is MonthLoaded) {
                                           bulan = monthState.currentMonth;
                                         }
@@ -441,6 +463,8 @@ class _MilestoneState extends State<Milestone> {
           ),
         ),
       ),
+    );
+      },
     );
   }
 }
