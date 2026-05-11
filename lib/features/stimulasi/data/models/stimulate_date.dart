@@ -11,15 +11,24 @@ class StimulateDate {
 
   factory StimulateDate.fromFirestore(DocumentSnapshot doc){
     final data = doc.data() as Map<String, dynamic>;
+    DateTime parsedDate;
+    final raw = data['targetDate'];
+    if (raw is Timestamp) {
+      parsedDate = raw.toDate();
+    } else {
+      // Data lama mungkin tersimpan dalam format tidak valid — kembalikan tanggal masa lalu
+      // agar _initStream otomatis mereset ke bulan depan
+      parsedDate = DateTime(2000, 1, 1);
+    }
     return StimulateDate(
-      targetDate: (data['targetDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      targetDate: parsedDate,
       isCompleted: data['isCompleted'] ?? false
     );
   }
 
   Map<String, dynamic> toMap(){
     return{
-      'targetDate': targetDate,
+      'targetDate': Timestamp.fromDate(targetDate),
       'isCompleted': isCompleted
     };
   }

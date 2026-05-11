@@ -13,6 +13,10 @@ import 'package:lumora/features/milestone/presentation/widgets/card_aktivitas.da
 import 'package:lumora/features/milestone/presentation/widgets/card_pencapaian.dart';
 import 'package:lumora/features/milestone/presentation/widgets/monthlygoal.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_bloc.dart';
+import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_event.dart';
+import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_state.dart';
+import 'package:lumora/features/stimulasi/presentation/widgets/aktivitas_card.dart';
 
 class Milestone extends StatefulWidget {
   const Milestone({super.key});
@@ -25,10 +29,12 @@ class _MilestoneState extends State<Milestone> {
   final ScrollController _ageScrollController = ScrollController();
   final ScrollController _dayScrollController = ScrollController();
 
-  final cubits = List.generate(
-    5,
-    (_) => PencapaianCubit(),
-  );
+  @override
+  void initState() {
+    super.initState();
+    context.read<AktivitasBloc>().add(LoadAktivitas());
+    context.read<MonthBloc>().add(LoadMonth(8)); // Load default age
+  }
 
   @override
   void dispose() {
@@ -97,38 +103,66 @@ class _MilestoneState extends State<Milestone> {
                                   ),
                                 ),
                                 SizedBox(height: sh * 8 / fh),
-                                BlocProvider(
-                                  create: (_) => MilestoneBloc()
-                                    ..add(LoadMilestone(
-                                      totalTask: 12,
-                                      completedTask: 7,
-                                    )),
-                                  child: MonthlyGoal(size: size),
-                                ),
-                                SizedBox(height: sh * 32 / fh),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CardAktivitas(
-                                      size: size,
-                                      count: 8,
-                                      title: "Bulan",
-                                      icon: "assets/icons/growbaby-feet.svg",
-                                    ),
-                                    CardAktivitas(
-                                      size: size,
-                                      count: 120,
-                                      title: "Aktivitas",
-                                      icon: "assets/icons/stopwatch.svg",
-                                    ),
-                                    CardAktivitas(
-                                      size: size,
-                                      count: 40,
-                                      title: "Streaks",
-                                      icon: "assets/icons/fire.svg",
-                                    ),
-                                  ],
+                                BlocBuilder<AktivitasBloc, AktivitasState>(
+                                  builder: (context, aktivitasState) {
+                                    int totalTask = 1;
+                                    int completedTask = 0;
+                                    int totalAktivitas = 0;
+                                    int streaks = 0;
+
+                                    if (aktivitasState is AktivitasLoaded) {
+                                      totalTask = aktivitasState.bulanIni.isEmpty ? 1 : aktivitasState.bulanIni.length;
+                                      completedTask = aktivitasState.bulanIni.where((a) => a.isCompleted).length;
+                                      
+                                      totalAktivitas = [...aktivitasState.bulanLalu, ...aktivitasState.bulanIni]
+                                          .fold(0, (sum, item) => sum + item.doneCount);
+                                      streaks = aktivitasState.streakCount;
+                                    }
+
+                                    return BlocBuilder<MonthBloc, MonthState>(
+                                      builder: (context, monthState) {
+                                        int bulan = 8;
+                                        if (monthState is MonthLoaded) {
+                                          bulan = monthState.currentMonth;
+                                        }
+
+                                        return Column(
+                                          children: [
+                                            MonthlyGoal(
+                                              size: size,
+                                              totalTask: totalTask,
+                                              completedTask: completedTask,
+                                            ),
+                                            SizedBox(height: sh * 32 / fh),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                CardAktivitas(
+                                                  size: size,
+                                                  count: bulan,
+                                                  title: "Bulan",
+                                                  icon: "assets/icons/growbaby-feet.svg",
+                                                ),
+                                                CardAktivitas(
+                                                  size: size,
+                                                  count: totalAktivitas,
+                                                  title: "Aktivitas",
+                                                  icon: "assets/icons/stopwatch.svg",
+                                                ),
+                                                CardAktivitas(
+                                                  size: size,
+                                                  count: streaks,
+                                                  title: "Streaks",
+                                                  icon: "assets/icons/fire.svg",
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
                                 SizedBox(height: sh * 32 / fh),
                                 Container(
@@ -185,9 +219,7 @@ class _MilestoneState extends State<Milestone> {
                 ListView(
                   padding: EdgeInsets.only(left: sw * 18 / fw, bottom: sh*101/fh),
                   children: [
-                    BlocProvider(
-                        create: (_) => MonthBloc()..add(LoadMonth(17)),
-                        child: BlocBuilder<MonthBloc, MonthState>(
+                        BlocBuilder<MonthBloc, MonthState>(
                           builder: (context, state) {
                             if (state is MonthLoaded) {
                               final currentIndex = state.ages.indexWhere(
@@ -233,7 +265,7 @@ class _MilestoneState extends State<Milestone> {
         
                             return const SizedBox();
                           },
-                        )),
+                        ),
                     SizedBox(height: sh * 21 / fh),
                     Padding(
                       padding: EdgeInsets.only(right: sw * 18 / fw),
@@ -260,18 +292,40 @@ class _MilestoneState extends State<Milestone> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: sw * 18 / fw),
-                      child: ListView.separated(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: cubits.length,
-                        separatorBuilder: (_, __) =>
-                            SizedBox(height: sh * 12 / fh),
-                        itemBuilder: (context, index) {
-                          return BlocProvider.value(
-                            value: cubits[index],
-                            child: CardPencapaian(size: size),
-                          );
+                      child: BlocBuilder<AktivitasBloc, AktivitasState>(
+                        builder: (context, aktivitasState) {
+                          if (aktivitasState is AktivitasLoaded) {
+                            final aktivitasList = aktivitasState.bulanIni;
+                            if (aktivitasList.isEmpty) {
+                              return Center(
+                                child: Text(
+                                  'Belum ada aktivitas untuk usia ini.',
+                                  style: TextStyle(
+                                    color: AppColors.txtSecondary,
+                                    fontSize: sw * 14 / fw,
+                                  ),
+                                ),
+                              );
+                            }
+                            return ListView.separated(
+                              padding: EdgeInsets.only(bottom: sh * 20 / fh),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: aktivitasList.length,
+                              separatorBuilder: (_, __) => SizedBox(height: sh * 12 / fh),
+                              itemBuilder: (context, index) {
+                                final aktivitas = aktivitasList[index];
+                                return BlocProvider(
+                                  create: (_) => PencapaianCubit(aktivitas),
+                                  child: CardPencapaian(
+                                    size: size,
+                                    aktivitas: aktivitas,
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                          return const Center(child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -333,7 +387,51 @@ class _MilestoneState extends State<Milestone> {
                             color: AppColors.txtPrimary,
                           ),
                         ),
-                        //NI BUAT TARUH CARD AKTIVITAS YG UDH SELESAI
+                        SizedBox(height: sh * 16 / fh),
+                        BlocBuilder<AktivitasBloc, AktivitasState>(
+                          builder: (context, state) {
+                            if (state is AktivitasLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (state is AktivitasLoaded) {
+                              final doneActivities = [
+                                ...state.bulanLalu,
+                                ...state.bulanIni,
+                              ].where((a) => a.doneCount > 0).toList();
+
+                              if (doneActivities.isEmpty) {
+                                return Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: sh * 20 / fh),
+                                    child: Text(
+                                      "Belum ada aktivitas yang dilakukan",
+                                      style: TextStyle(
+                                        color: AppColors.txtSecondary,
+                                        fontSize: sw * 14 / fw,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+
+                              return ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: sh * 101 / fh),
+                                itemCount: doneActivities.length,
+                                separatorBuilder: (_, __) => SizedBox(height: sh * 16 / fh),
+                                itemBuilder: (context, index) {
+                                  return AktivitasCard(
+                                    data: doneActivities[index],
+                                    size: size,
+                                  );
+                                },
+                              );
+                            }
+                            return const SizedBox();
+                          },
+                        ),
                       ],
                     ),
                   ),

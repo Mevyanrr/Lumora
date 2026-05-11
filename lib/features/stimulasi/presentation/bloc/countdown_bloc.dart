@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/features/stimulasi/data/models/stimulate_date.dart';
@@ -27,57 +26,80 @@ class CountdownBloc extends Bloc<CountdownEvent, CountdownState> {
     _initStream();
   }
 
-  Future<void> _onUpdateStatus(UpdateStimulationStatus event, Emitter<CountdownState> emit) async {
-    try{
-      if(event.isCompleted == true){
-        final nextWeek = DateTime.now().add(const Duration(days: 7));
-        await stimulate.saveDate(StimulateDate(targetDate: nextWeek, isCompleted: false));
-        add(StartCountdown(nextWeek));
-      }  else {
+  Future<void> _onUpdateStatus(
+      UpdateStimulationStatus event, Emitter<CountdownState> emit) async {
+    try {
+      if (event.isCompleted == true) {
+        final now = DateTime.now();
+        // Hari terakhir bulan depan
+        final lastDayOfNextMonth = DateTime(now.year, now.month + 2, 0);
+        await stimulate
+            .saveDate(StimulateDate(targetDate: lastDayOfNextMonth, isCompleted: false));
+        add(StartCountdown(lastDayOfNextMonth));
+      } else {
         final currentTarget = state.targetDate;
-        await stimulate.saveDate(StimulateDate(targetDate: currentTarget, isCompleted: false));
+        await stimulate.saveDate(
+            StimulateDate(targetDate: currentTarget, isCompleted: false));
       }
-    }catch(e){
+    } catch (e) {
       print("$e");
     }
   }
 
-  void _initStream(){
-    dateStream = stimulate.getDateFromFirestore().listen((data){
-      if(data != null){
-        add(TargetDataChanged(data.targetDate));
+  void _initStream() {
+    dateStream = stimulate.getDateFromFirestore().listen((data) async {
+      if (data != null) {
+        final now = DateTime.now();
+        final target = data.targetDate;
+        // Hari terakhir bulan ini (DateTime(year, month+1, 0) = hari terakhir bulan)
+        final lastDayOfThisMonth = DateTime(now.year, now.month + 1, 0, 23, 59, 59);
+        if (target.isBefore(now) ||
+            (target.year == now.year &&
+                target.month == now.month &&
+                target.day == now.day)) {
+          await stimulate.saveDate(
+              StimulateDate(targetDate: lastDayOfThisMonth, isCompleted: false));
+          add(StartCountdown(lastDayOfThisMonth));
+        } else {
+          add(TargetDataChanged(target));
+        }
+      } else {
+        // Belum ada data di Firestore — set ke hari terakhir bulan ini
+        final now = DateTime.now();
+        final lastDayOfThisMonth = DateTime(now.year, now.month + 1, 0, 23, 59, 59);
+        await stimulate.saveDate(
+            StimulateDate(targetDate: lastDayOfThisMonth, isCompleted: false));
+        add(StartCountdown(lastDayOfThisMonth));
       }
     });
-}
+  }
 
-
-Future<void> _onSaveDate(
-  SaveTargetDate event, Emitter<CountdownState> emit
-  ) async {
-    try{
-    final dataToSave = StimulateDate(
-      targetDate: event.newDate, isCompleted: false);
-      if(dataToSave.isCompleted == true){
-        await stimulate.saveDate(StimulateDate(targetDate: DateTime.now().add(const Duration(days: 7)), isCompleted: false));
+  Future<void> _onSaveDate(
+      SaveTargetDate event, Emitter<CountdownState> emit) async {
+    try {
+      final dataToSave =
+          StimulateDate(targetDate: event.newDate, isCompleted: false);
+      if (dataToSave.isCompleted == true) {
+        final now = DateTime.now();
+        await stimulate.saveDate(StimulateDate(
+            targetDate: DateTime(now.year, now.month + 1, now.day),
+            isCompleted: false));
       } else {
         return;
       }
       add(StartCountdown(event.newDate));
-    } catch(e){
+    } catch (e) {
       print("$e");
     }
-}
-
-void _onDataChanged(TargetDataChanged event, Emitter<CountdownState> emit){
-  if(event != null){
-    add(StartCountdown(event.date!));
   }
-}
 
+  void _onDataChanged(TargetDataChanged event, Emitter<CountdownState> emit) {
+    if (event != null) {
+      add(StartCountdown(event.date!));
+    }
+  }
 
-
-  void _onStart(
-      StartCountdown event, Emitter<CountdownState> emit) {
+  void _onStart(StartCountdown event, Emitter<CountdownState> emit) {
     _timer?.cancel();
 
     emit(_calculateState(event.targetDate));
@@ -88,8 +110,7 @@ void _onDataChanged(TargetDataChanged event, Emitter<CountdownState> emit){
     );
   }
 
-  void _onTick(
-      TickCountdown event, Emitter<CountdownState> emit) {
+  void _onTick(TickCountdown event, Emitter<CountdownState> emit) {
     emit(_calculateState(state.targetDate));
   }
 
@@ -122,6 +143,7 @@ void _onDataChanged(TargetDataChanged event, Emitter<CountdownState> emit){
   @override
   Future<void> close() {
     _timer?.cancel();
+    dateStream?.cancel();
     return super.close();
   }
 }

@@ -133,6 +133,7 @@ class _RegistViewState extends State<RegistView> {
                       CustomTxtField(
                         labelText: "Maukkan kata sandi...",
                         controller: widget.pwController,
+                        fieldType: CustomFieldType.password,
                       ),
 
                       SizedBox(height: sizeheight * 16 / fullheight),
@@ -150,6 +151,7 @@ class _RegistViewState extends State<RegistView> {
                       CustomTxtField(
                         labelText: "Konfirmasi kata sandi anda...",
                         controller: widget.konfirmpwController,
+                        fieldType: CustomFieldType.password,
                         // onChanged: (value) {
                         //   context.read<KuisionerBloc>().add(IsiNama(value));
                         // },

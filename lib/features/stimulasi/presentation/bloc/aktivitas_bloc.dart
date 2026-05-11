@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/features/stimulasi/data/models/aktivitas.dart';
 import 'package:lumora/features/stimulasi/presentation/bloc/aktivitas_event.dart';
@@ -10,105 +11,99 @@ import 'package:lumora/features/stimulasi/services/stimulasi_service.dart';
 class AktivitasBloc extends Bloc<AktivitasEvent, AktivitasState> {
   final StimulasiService stimulasi;
   StreamSubscription? _streamSubscription;
-
+  StreamSubscription? _streakSubscription;
+  int _currentStreak = 0;
 
   AktivitasBloc(this.stimulasi) : super(AktivitasLoading()) {
-    on<LoadAktivitas>((event, emit) {
-      _streamSubscription?.cancel();
-      _streamSubscription = stimulasi.getActivityFromFirestore().listen((activities){
-        List<Aktivitas> finalData = activities;
+    on<LoadAktivitas>((event, emit) async {
+      // 1. Init stream streak
+      _streakSubscription?.cancel();
+      _streakSubscription = stimulasi.getStreakStream().listen((streak) {
+        add(UpdateStreak(streak));
+      });
 
-        if(activities.isEmpty){
-          final dummyData = getHardData();
-          for(var item in dummyData){
-            stimulasi.updateActivityProgress(item);
+      // 2. Ambil tanggalLahir bayi dari Firestore & init aktivitas dari template
+      try {
+        final uid = FirebaseAuth.instance.currentUser?.uid;
+        if (uid != null) {
+          final bayiDoc = await FirebaseFirestore.instance
+              .collection('bayi')
+              .doc(uid)
+              .get();
+          final birthDateTimestamp = bayiDoc.data()?['tanggalLahir'];
+          if (birthDateTimestamp != null) {
+            final birthDate = (birthDateTimestamp as Timestamp).toDate();
+            await stimulasi.initAktivitasFromTemplate(birthDate);
           }
-          return;
         }
-      final listBulanLalu = finalData.where((e) => e.periode == PeriodeAktivitas.bulanLalu).toList();
-      final listBulanIni = finalData.where((e) => e.periode == PeriodeAktivitas.bulanIni).toList();
-      final bool isAllCompleted = listBulanIni.isNotEmpty && listBulanIni.every((e) => e.isCompleted == true);
+      } catch (e) {
+        print('Gagal mengambil tanggal lahir: $e');
+      }
 
-      add(UpdateAktivitasStimulasi(listBulanLalu, listBulanIni, isAllCompleted
-      ));
+      // 3. Listen ke aktivitas user secara realtime
+      _streamSubscription?.cancel();
+      _streamSubscription = stimulasi.getActivityFromFirestore().listen((activities) {
+        if (activities.isEmpty) return;
+
+        final listBulanLalu = activities.where((e) => e.periode == PeriodeAktivitas.bulanLalu).toList();
+        final listBulanIni = activities.where((e) => e.periode == PeriodeAktivitas.bulanIni).toList();
+        final bool isAllCompleted =
+            listBulanIni.isNotEmpty && listBulanIni.every((e) => e.isCompleted == true);
+
+        add(UpdateAktivitasStimulasi(listBulanLalu, listBulanIni, isAllCompleted));
       });
     });
 
-      on<UpdateAktivitasStimulasi>((event, emit){
+    on<UpdateAktivitasStimulasi>((event, emit) {
+      emit(AktivitasLoaded(
+        bulanLalu: event.bulanLalu,
+        bulanIni: event.bulanIni,
+        isAllCompleted: event.isAllCompleted,
+        streakCount: _currentStreak,
+      ));
+    });
+
+    on<UpdateStreak>((event, emit) {
+      _currentStreak = event.streakCount;
+      if (state is AktivitasLoaded) {
+        final currentState = state as AktivitasLoaded;
         emit(AktivitasLoaded(
-          bulanLalu: event.bulanLalu, bulanIni: event.bulanIni, isAllCompleted: event.isAllCompleted
-          ));
-      });
+          bulanLalu: currentState.bulanLalu,
+          bulanIni: currentState.bulanIni,
+          isAllCompleted: currentState.isAllCompleted,
+          streakCount: _currentStreak,
+        ));
+      }
+    });
 
-      on<ActivityStatus>((event, emit) async {
-        final old = event.activity;
-    if (old.doneCount >= old.totalCount) return;
+    on<ActivityStatus>((event, emit) async {
+      final old = event.activity;
+      if (old.doneCount >= old.totalCount) return;
 
-    final newDoneCount = old.doneCount + 1;
-    final isNowCompleted = newDoneCount >= old.totalCount;
+      final newDoneCount = old.doneCount + 1;
+      final isNowCompleted = newDoneCount >= old.totalCount;
 
-    final updateActivity = Aktivitas(
-      id: old.id,
-      title: old.title,            
-      description: old.description,
-      fungsi: old.fungsi,
-      actvtotal: old.actvtotal,
-      periode: old.periode,
-      doneCount: newDoneCount,      
-      totalCount: old.totalCount,
-      isCompleted: isNowCompleted,  
-    );
+      final updatedActivity = Aktivitas(
+        id: old.id,
+        title: old.title,
+        description: old.description,
+        fungsi: old.fungsi,
+        actvtotal: old.actvtotal,
+        periode: old.periode,
+        doneCount: newDoneCount,
+        totalCount: old.totalCount,
+        isCompleted: isNowCompleted,
+      );
 
-    await stimulasi.updateActivityProgress(updateActivity);
-
-      });
-      // emit(
-      //   AktivitasLoaded(
-      //     bulanLalu: listBulanLalu,
-      //     bulanIni: listBulanIni,
-      //     isAllCompleted: isAllCompleted
-      //   ),
-      // );
-
-    }
+      await stimulasi.updateActivityProgress(updatedActivity);
+      await stimulasi.updateStreak();
+    });
   }
 
-  List<Aktivitas> getHardData(){
-    return[
-       Aktivitas(
-          id: 'tummy_time',
-          title: "Tummy Time",
-          description: "Latih Si Kecil untuk tengkurap 3 menit sehari, dampingi dan awasi selama tengkurap ya parent",
-          fungsi: "Melatih kemampuan sensorik & motorik",
-          actvtotal: "Lakukan 4 kali selama sebulan",
-          doneCount: 0,
-          totalCount: 30,
-          isCompleted: false,
-          periode: PeriodeAktivitas.bulanLalu,
-        ),
-        Aktivitas(
-          id: 'sayur_buah',
-          title: "Eksplorasi Sayur dan Buah",
-          description: "Ajak Si Kecil memegang buah atau sayuran matang dengan berbagai bentuk",
-          fungsi: "Melatih kemampuan sensorik & motorik",
-          actvtotal: "Lakukan 4 kali selama sebulan",
-          doneCount: 0,
-          totalCount: 4,
-          isCompleted: false,
-          periode: PeriodeAktivitas.bulanIni,
-        ),
-         Aktivitas(
-          id: 'sayur_buah2',
-          title: "Eksplorasi Sayur dan Buah",
-          description: "Ajak Si Kecil memegang buah atau sayuran matang dengan berbagai bentuk",
-          fungsi: "Melatih kemampuan sensorik & motorik",
-          actvtotal: "Lakukan 4 kali selama sebulan",
-          doneCount: 0,
-          totalCount: 4,
-          isCompleted: false,
-          periode: PeriodeAktivitas.bulanIni,
-        ),
-    ];
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    _streakSubscription?.cancel();
+    return super.close();
   }
-
-
+}
