@@ -76,7 +76,7 @@ class TahapanBayi extends StatelessWidget {
 final List<Map<String, dynamic>> tahapanBayi = [
   {
     "icon": "assets/icons/growbaby-world.svg",
-    "title": "Si Penyesuai Dunia 🌍",
+    "title": "Si Penyesuai Dunia",
     "subtitle": "Tahap 0 - 2 Bulan",
     "description":
         "Bayi yang baru lahir sedang beradaptasi dengan dunia luar seperti cahaya, suara, sentuhan, dan ritme hidup.",
@@ -115,18 +115,95 @@ final List<Map<String, dynamic>> tahapanBayi = [
       "Bersuara berulang",
     ],
   },
+// - assets/icons/growbaby-banyabicara.svg
+//     - assets/icons/growbaby-kreatif.svg
+//     - assets/icons/growbaby-mandiri.svg
+//     - assets/icons/growbaby-peniruaktif.svg
+//     - assets/icons/growbaby-petualang.svg
+//     - assets/icons/growbaby-sipenasaran.svg
+  {
+    "icon": "assets/icons/growbaby-sipenasaran.svg",
+    "title": "Si Penasaran",
+    "subtitle": "Tahap 8 - 10 Bulan",
+    "description":
+        "Rasa ingin tahu Si kecil sangat tinggi, suka eksplor dan mencoba hal baru.",
+    "activities": [
+      "Merangkak",
+      "Membuka tutup benda",
+      "Meniru",
+      "Melemparkan benda",
+      "Mulai paham kata sederhana",
+    ],
+  },
 
   {
-    "icon": "assets/icons/growbaby-feet.svg",
-    "title": "Si Penjelajah",
-    "subtitle": "Tahap 6 - 7 Bulan",
+    "icon": "assets/icons/growbaby-peniruaktif.svg",
+    "title": "Si Peniru Aktif",
+    "subtitle": "Tahap 11 - 12 Bulan",
     "description":
-        "Si kecil mulai ingin bergerak dan mencoba kemampuan fisiknya.",
+        "Si kecil mulai belajar dengan meniru apa yang dilihat. Perkembangan sensorik si kecil mulai lebih berkembang.",
     "activities": [
-      "Berguling",
-      "Meraih dan memindahkan benda",
-      "Mengenali orang",
-      "Bersuara berulang",
+      "Meniru gerakan (tepuk tangan, dll)",
+      "Mencoba berdiri",
+      "Melangkahkan kaki",
+      "Menunjuk sesuatu",
+    ],
+  },
+
+  {
+    "icon": "assets/icons/growbaby-petualang.svg",
+    "title": "Si Petualang Kecil",
+    "subtitle": "Tahap 13 - 15 Bulan",
+    "description":
+        "Si kecil makin aktif berjalan dan penasaran menjelajahi sekitar.",
+    "activities": [
+      "Berjalan sendiri",
+      "Mulai makan sendiri",
+      "Naik turun sofa/ tangga",
+      "Meniru ucapan sederhana",
+    ],
+  },
+
+  {
+    "icon": "assets/icons/growbaby-banyabicara.svg",
+    "title": "Si Banyak Bicara",
+    "subtitle": "Tahap 16 - 18 Bulan",
+    "description":
+        "Kemampuan bahasa dan ekspresi si kecil berkembang sangat cepat.",
+    "activities": [
+      "Mengenali nama orang",
+      "Menunjuk benda",
+      "Mengucap beberapa kata jelas",
+      "Emosi berkembang",
+      "Menari saat mendengar musik",
+    ],
+  },
+
+  {
+    "icon": "assets/icons/growbaby-kreatif.svg",
+    "title": "Si Kreatif Aktif",
+    "subtitle": "Tahap 19 - 21 Bulan",
+    "description":
+        "Si kecil mulai suka eksplorasi, bermain imajinatif, dan mencoba banyak hal baru.",
+    "activities": [
+      "Bermain peran (misal pura-pura memasak)",
+      "Corat-coret dengan krayon",
+      "Menyusun balok",
+      "Berlari kesana kemari",
+    ],
+  },
+
+  {
+    "icon": "assets/icons/growbaby-mandiri.svg",
+    "title": "Si Mandiri Mini",
+    "subtitle": "Tahap 22 - 24 Bulan",
+    "description":
+        "Si kecil mulai menunjukkan kemandirian dan kemampuan memahami instruksi sederhana.",
+    "activities": [
+      "Bermain dengan teman sebaya",
+      "Mengikuti instruksi",
+      "Menunjukkan emosi dengan jelas",
+      "Menggabung kata",
     ],
   },
 ];

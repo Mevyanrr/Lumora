@@ -45,13 +45,14 @@ class AnalisisresultBad extends StatelessWidget {
 
                 SizedBox(height: sizeheight * 12 / fullheight),
 
-                Row(
-                  children: [
-                    ContainerBadresult(size: size, text: 'Buah segar'),
-                    SizedBox(width: sizewidth*12/fullwidth,),
-                    ContainerBadresult(size: size, text: 'susu'),
-                  ],
-                ),
+                Wrap(
+  spacing: sizewidth * 8 / fullwidth,   // jarak horizontal antar item
+  runSpacing: sizeheight * 6 / fullheight, // jarak kalau wrap ke baris baru
+  children: [
+    ContainerBadresult(size: size, text: 'Buah segar Buah segar ... Buah segar Buah segar ... Buah segar Buah segar ...   Buah segar Buah segar ... '),
+    ContainerBadresult(size: size, text: 'susu'),
+  ],
+),
 
                 SizedBox(height: sizeheight * 8 / fullheight),
 

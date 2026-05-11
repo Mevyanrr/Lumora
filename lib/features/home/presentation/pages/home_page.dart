@@ -322,39 +322,39 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: sizeheight * 32 / fullheight),
-                  Text(
-                    "Informasi Kesehatan Bayi",
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: sizewidth * 18 / fullwidth,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.txtPrimary,
-                    ),
-                  ),
-                  SizedBox(height: sizeheight * 8 / fullheight),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(infoList.length, (index) {
-                        final item = infoList[index];
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            right: index == infoList.length - 1
-                                ? 0
-                                : sizewidth * 16 / fullwidth,
-                          ),
-                          child: CardInfokesehatan(
-                            title: item['title']!,
-                            desc: item['desc']!,
-                            imagePath: item['image']!,
-                            size: size,
-                            onTap: () {},
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
+                  // SizedBox(height: sizeheight * 32 / fullheight),
+                  // Text(
+                  //   "Informasi Kesehatan Bayi",
+                  //   style: TextStyle(
+                  //     fontFamily: 'Poppins',
+                  //     fontSize: sizewidth * 18 / fullwidth,
+                  //     fontWeight: FontWeight.w500,
+                  //     color: AppColors.txtPrimary,
+                  //   ),
+                  // ),
+                  // SizedBox(height: sizeheight * 8 / fullheight),
+                  // SingleChildScrollView(
+                  //   scrollDirection: Axis.horizontal,
+                  //   child: Row(
+                  //     children: List.generate(infoList.length, (index) {
+                  //       final item = infoList[index];
+                  //       return Padding(
+                  //         padding: EdgeInsets.only(
+                  //           right: index == infoList.length - 1
+                  //               ? 0
+                  //               : sizewidth * 16 / fullwidth,
+                  //         ),
+                  //         child: CardInfokesehatan(
+                  //           title: item['title']!,
+                  //           desc: item['desc']!,
+                  //           imagePath: item['image']!,
+                  //           size: size,
+                  //           onTap: () {},
+                  //         ),
+                  //       );
+                  //     }),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
