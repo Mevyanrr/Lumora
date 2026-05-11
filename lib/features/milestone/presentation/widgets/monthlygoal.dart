@@ -6,10 +6,14 @@ import 'package:lumora/features/milestone/presentation/bloc/milestone_state.dart
 
 class MonthlyGoal extends StatelessWidget {
   final Size size;
+  final int totalTask;
+  final int completedTask;
 
   const MonthlyGoal({
     super.key,
     required this.size,
+    required this.totalTask,
+    required this.completedTask,
   });
 
   @override
@@ -18,14 +22,9 @@ class MonthlyGoal extends StatelessWidget {
     final sh = size.height;
     final fh = 917;
     final fw = 412;
-    return BlocBuilder<MilestoneBloc, MilestoneState>(
-      builder: (context, state) {
-        if (state is! MilestoneLoaded) {
-          return const SizedBox();
-        }
 
-        final double progress = state.progress.clamp(0.0, 1.0);
-        final int percentage = (progress * 100).round();
+    final double progress = totalTask == 0 ? 0.0 : (completedTask / totalTask).clamp(0.0, 1.0);
+    final int percentage = (progress * 100).round();
 
         return Container(
           width: sw * 376 / fw,
@@ -44,7 +43,7 @@ class MonthlyGoal extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${state.completedTask}/${state.totalTask} task',
+                    '$completedTask/$totalTask task',
                     style: TextStyle(
                         fontSize: sw * 16 / fw,
                         fontWeight: FontWeight.w400,
@@ -130,7 +129,5 @@ class MonthlyGoal extends StatelessWidget {
             ],
           ),
         );
-      },
-    );
   }
 }

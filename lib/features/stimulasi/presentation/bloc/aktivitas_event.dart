@@ -15,3 +15,7 @@ class UpdateAktivitasStimulasi extends AktivitasEvent {
   ActivityStatus(this.activity);
   }
 
+class UpdateStreak extends AktivitasEvent {
+  final int streakCount;
+  UpdateStreak(this.streakCount);
+}

@@ -138,6 +138,7 @@ class _LoginViewState extends State<LoginView> {
                       CustomTxtField(
                         labelText: "Masukkan kata sandi...",
                         controller: widget.pwController,
+                        fieldType: CustomFieldType.password,
                         onChanged: (value) {
                           context.read<KuisionerBloc>().add(IsiNama(value));
                         },

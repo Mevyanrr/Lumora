@@ -10,45 +10,52 @@ class NextstepBloc extends Bloc<NextstepEvent, NextstepState> {
     on<FetchNextstep>((event, emit) async {
       emit(NextstepLoading());
 
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 300));
 
       final rekomendasi = RekomendasiAktivitas(
-        title: "Rekomendasi aktivitas bertahap",
-        recommendations: [
-          "Berikan mainan ringan di dekat Si Kecil.",
-          "Praktikkan memindah mainan di dekat si kecil.",
-          "Ajak Si Kecil untuk melakukan hal yang sama.",
-        ],
-        info: [
-          "Durasi: 5–10 menit",
-          "1–2x sehari",
-        ],
+        title: 'Cara membantu Si Kecil',
+        recommendations: _buildRecommendations(event.activityDescription),
+        info: [event.activityAcvtotal],
       );
 
       final note = Catatan(
-    title: "Catatan",
-    items: [
-      CatatanItem(
-        text: "Gunakan benda tidak tajam.",
-        type: CatatanType.info,
-      ),
-      CatatanItem(
-        text:
-            "Jika belum juga dapat dilakukan, konsultasilah ke tenaga medis.",
-        type: CatatanType.warning,
-      ),
-    ],
-  );
-
-      emit(
-        NextstepLoaded(
-          desc: "Memindahkan barang ke tempat lain",
-          img: "assets/images/bayi-nextstep.png",
-          rekomendasi: rekomendasi,
-          note: note,
-
-        ),
+        title: 'Catatan',
+        items: [
+          CatatanItem(
+            text: event.activityFungsi,
+            type: CatatanType.info,
+          ),
+          CatatanItem(
+            text: 'Jika belum juga dapat dilakukan, konsultasilah ke tenaga medis.',
+            type: CatatanType.warning,
+          ),
+        ],
       );
+
+      emit(NextstepLoaded(
+        desc: event.activityTitle,
+        img: 'assets/images/bayi-nextstep.png',
+        rekomendasi: rekomendasi,
+        note: note,
+      ));
     });
+  }
+
+  /// Bagi deskripsi aktivitas menjadi beberapa langkah rekomendasi
+  List<String> _buildRecommendations(String description) {
+    // Pisahkan kalimat jadi max 3 poin tips
+    final sentences = description.split('. ').where((s) => s.trim().isNotEmpty).toList();
+    if (sentences.length <= 1) {
+      return [description.trim()];
+    }
+    // Kelompokkan kalimat jika banyak
+    if (sentences.length == 2) {
+      return sentences.map((s) => s.endsWith('.') ? s : '$s.').toList();
+    }
+    // 3+ kalimat: ambil max 3
+    return sentences
+        .take(3)
+        .map((s) => s.endsWith('.') ? s : '$s.')
+        .toList();
   }
 }

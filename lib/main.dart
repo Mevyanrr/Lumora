@@ -17,10 +17,7 @@ import 'package:lumora/features/kuisioner/presentation/pages/page3.dart';
 import 'package:lumora/features/kuisioner/presentation/pages/page4.dart';
 import 'package:lumora/features/milestone/presentation/bloc/milestone_bloc.dart';
 import 'package:lumora/features/milestone/presentation/bloc/month_bloc.dart';
-import 'package:lumora/features/milestone/presentation/bloc/nextstep_bloc.dart';
-import 'package:lumora/features/milestone/presentation/bloc/nextstep_event.dart';
 import 'package:lumora/features/milestone/presentation/pages/milestone.dart';
-import 'package:lumora/features/milestone/presentation/pages/nextstep.dart';
 import 'package:lumora/features/onBoarding/presentation/pages/onboarding3.dart';
 import 'package:lumora/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:lumora/features/profile/presentation/pages/profile.dart';
@@ -60,13 +57,10 @@ class MyApp extends StatelessWidget {
     BlocProvider<AktivitasBloc>(
       create: (_) => AktivitasBloc(StimulasiService()),
     ),
-    BlocProvider<NextstepBloc>(
-      create: (_) => NextstepBloc()..add(FetchNextstep()),
-    ),
     BlocProvider<MilestoneBloc>(
       create: (_) => MilestoneBloc(),
     ),
-     BlocProvider<MonthBloc>(
+    BlocProvider<MonthBloc>(
       create: (_) => MonthBloc(),
     ),
   ],
@@ -101,7 +95,6 @@ class MyApp extends StatelessWidget {
           '/profil': (context) => Profile(),
           '/stimulasi': (context) => Stimulasi(),
           '/milestone': (context) => Milestone(),
-          '/mile-nextstep': (context) => Nextstep()
         },
       ),
     );
