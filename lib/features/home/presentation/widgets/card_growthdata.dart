@@ -81,41 +81,43 @@ class GrowthdataCard extends StatelessWidget {
               ),
             ),
 
-            // BOX INFO - hanya tampil jika ada yang kurang
-            if (currentWorstStatus == GrowthStatus.kurang) ...[
-              SizedBox(height: sizeheight * 16 / fullheight),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: sizewidth * 16 / fullwidth,
-                  vertical: sizeheight * 8 / fullheight,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(left: sizewidth * 10 / fullwidth),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/home-lamp.svg",
-                        width: sizewidth * 16 / fullwidth,
-                      ),
-                      SizedBox(width: sizewidth * 12 / fullwidth),
-                      Expanded(
-                        child: Text(
-                          "Perlu perhatian lebih pada pertumbuhan bayi.",
-                          style: TextStyle(
-                            fontSize: sizewidth * 12 / fullwidth,
-                            color: AppColors.white,
-                          ),
+            // BOX INFO - biru jika normal, merah jika kurang
+            SizedBox(height: sizeheight * 16 / fullheight),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: sizewidth * 16 / fullwidth,
+                vertical: sizeheight * 8 / fullheight,
+              ),
+              decoration: BoxDecoration(
+                color: currentWorstStatus == GrowthStatus.normal
+                    ? AppColors.primaryBlue
+                    : AppColors.secondary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(left: sizewidth * 10 / fullwidth),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/home-lamp.svg",
+                      width: sizewidth * 16 / fullwidth,
+                    ),
+                    SizedBox(width: sizewidth * 12 / fullwidth),
+                    Expanded(
+                      child: Text(
+                        currentWorstStatus == GrowthStatus.normal
+                            ? "Pertumbuhan bayi sudah sesuai dengan standar pertumbuhan normal."
+                            : "Perlu perhatian lebih pada pertumbuhan bayi.",
+                        style: TextStyle(
+                          fontSize: sizewidth * 12 / fullwidth,
+                          color: AppColors.white,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ],
         );
       },
@@ -182,17 +184,17 @@ class GrowthdataCard extends StatelessWidget {
   GrowthStatus _hitungStatus(String kategori, int bulan, double nilai) {
     return switch (kategori) {
       'berat' => switch (bulan) {
-        <= 3 => nilai >= 3.5 ? GrowthStatus.normal : GrowthStatus.kurang,
-        <= 6 => nilai >= 6.4 ? GrowthStatus.normal : GrowthStatus.kurang,
-        <= 12 => nilai >= 8.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-        _ => nilai >= 10.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-      },
+          <= 3 => nilai >= 3.5 ? GrowthStatus.normal : GrowthStatus.kurang,
+          <= 6 => nilai >= 6.4 ? GrowthStatus.normal : GrowthStatus.kurang,
+          <= 12 => nilai >= 8.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+          _ => nilai >= 10.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+        },
       'tinggi' => switch (bulan) {
-        <= 3 => nilai >= 55.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-        <= 6 => nilai >= 64.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-        <= 12 => nilai >= 72.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-        _ => nilai >= 85.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-      },
+          <= 3 => nilai >= 55.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+          <= 6 => nilai >= 64.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+          <= 12 => nilai >= 72.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+          _ => nilai >= 85.0 ? GrowthStatus.normal : GrowthStatus.kurang,
+        },
       _ => GrowthStatus.normal,
     };
   }
