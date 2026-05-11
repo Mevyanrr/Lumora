@@ -70,10 +70,10 @@ class AnalisisresultBad extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
                       // Panggil Helper Widget untuk setiap kategori
-                      DynamicGiziBar(label: "Karbohidrat", data: stats['karbohidrat'], color: Colors.teal),
-                      DynamicGiziBar(label: "Protein", data: stats['protein'], color: Colors.pinkAccent),
-                      DynamicGiziBar(label: "Vitamin", data: stats['vitamin'], color: Colors.orange),
-                      DynamicGiziBar(label: "Cairan", data: stats['cairan'], color: Colors.blue),
+                      DynamicGiziBar(label: "Karbohidrat", data: stats['karbohidrat'], color: AppColors.green),
+                      DynamicGiziBar(label: "Protein", data: stats['protein'], color: AppColors.secondary),
+                      DynamicGiziBar(label: "Vitamin", data: stats['vitamin'], color: AppColors.yellowSemantic),
+                      DynamicGiziBar(label: "Cairan", data: stats['cairan'], color: AppColors.primaryBlue),
                     ],
                   ),
                 ),
@@ -83,8 +83,8 @@ class AnalisisresultBad extends StatelessWidget {
                 // 5. Tombol Saran Dinamis (Mengganti ContainerBadresult statis)
                 if (saranSingkat.isNotEmpty)
                   Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
+                    spacing: sizewidth * 8 / fullwidth,   // jarak horizontal antar item
+  runSpacing: sizeheight * 6 / fullheight,
                     children: saranSingkat.map((saran) {
                       return Container(
                         padding: EdgeInsets.symmetric(
@@ -92,9 +92,8 @@ class AnalisisresultBad extends StatelessWidget {
                           vertical: sizeheight * 8 / fullheight
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFE0B2),
+                          color: AppColors.primaryOrange,
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.orange.shade200)
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,

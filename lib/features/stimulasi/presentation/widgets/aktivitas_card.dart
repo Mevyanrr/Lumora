@@ -126,28 +126,30 @@ class AktivitasCard extends StatelessWidget {
 
               // PROGRESS BAR
               Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Container(
-                    height: 10,
-                    color: AppColors.txtSecondary, // Warna background bar
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Align(
-                          alignment: Alignment.centerLeft,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            width: constraints.maxWidth * progress,
-                            color: progress >= 1 
-                                ? AppColors.green 
-                                : AppColors.yellowSemantic,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
+  child: ClipRRect(
+    borderRadius: BorderRadius.circular(50),
+    child: Container(
+      height: 10,
+      color: AppColors.txtSecondary,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              width: constraints.maxWidth * progress,
+              color: progress >= 1.0
+                  ? AppColors.green
+                  : progress >= 0.75
+                      ? AppColors.secondary
+                      : AppColors.yellowSemantic,
+            ),
+          );
+        },
+      ),
+    ),
+  ),
+),
               
               SizedBox(width: 8),
               
