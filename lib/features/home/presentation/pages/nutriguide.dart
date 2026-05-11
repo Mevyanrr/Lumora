@@ -4,7 +4,7 @@ import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/features/home/presentation/widgets/card_panduangizi.dart';
 import 'package:lumora/features/home/presentation/widgets/card_rekomendasimenu.dart';
 import 'package:lumora/features/home/presentation/widgets/card_tipsgizi.dart';
-import 'package:lumora/features/home/data/models/tipsgizi_item.dart'; 
+import 'package:lumora/features/home/data/models/tipsgizi_item.dart';
 import 'package:lumora/features/home/services/gemini_analysis_service.dart';
 
 class Nutriguide extends StatefulWidget {
@@ -27,7 +27,7 @@ class _NutriguideState extends State<Nutriguide> {
   String _getIcon(String kategori) {
     final k = kategori.toLowerCase();
     if (k.contains('buah')) return 'assets/images/pisang.png';
-    if (k.contains('sayur')) return 'assets/images/sayur.png'; 
+    if (k.contains('sayur')) return 'assets/images/sayur.png';
     if (k.contains('protein')) return 'assets/images/ayam.png';
     if (k.contains('karbo')) return 'assets/images/kentang.png';
     return 'assets/images/pisang.png';
@@ -73,13 +73,16 @@ class _NutriguideState extends State<Nutriguide> {
                 children: [
                   CircularProgressIndicator(color: AppColors.primaryOrange),
                   const SizedBox(height: 16),
-                  Text("Sedang meracik rekomendasi gizi...", style: TextStyle(color: AppColors.txtPrimary)),
+                  Text("Sedang meracik rekomendasi gizi...",
+                      style: TextStyle(color: AppColors.txtPrimary)),
                 ],
               ),
             );
           }
 
-          if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          if (snapshot.hasError ||
+              !snapshot.hasData ||
+              snapshot.data!.isEmpty) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -92,15 +95,13 @@ class _NutriguideState extends State<Nutriguide> {
           }
 
           final data = snapshot.data!;
-          
 
           final String namaAnak = data['nama_fix'] ?? "Si Kecil";
           final String usiaDetail = data['usia_fix'] ?? "-";
-          
+
           final checklist = data['checklist_rekomendasi'] as List;
           final porsiList = data['panduan_porsi'] as List;
           final menuList = data['menu_harian'] as List;
-          
 
           final rawTips = data['tips_gizi'] as List;
           final List<TipsGiziItem> tipsItems = rawTips.map((textString) {
@@ -136,7 +137,8 @@ class _NutriguideState extends State<Nutriguide> {
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.primaryOrange,
-                      borderRadius: BorderRadius.circular(sizewidth * 22 / fullwidth),
+                      borderRadius:
+                          BorderRadius.circular(sizewidth * 22 / fullwidth),
                     ),
                     child: Text(
                       "Usia: $usiaDetail",
@@ -147,41 +149,61 @@ class _NutriguideState extends State<Nutriguide> {
                       ),
                     ),
                   ),
-                  
+
                   SizedBox(height: sizeheight * 17 / fullheight),
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: sizewidth * 12 / fullwidth,
+                      vertical: sizeheight * 8 / fullheight,
+                    ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.background, 
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
-                         BoxShadow(
-                           color: Colors.black.withOpacity(0.05), 
-                           blurRadius: 10, 
-                           offset: const Offset(0, 4)
-                         )
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
                       ],
                     ),
                     child: Column(
-                      children: checklist.map((item) {
-                        bool isWarning = item['is_warning'] ?? false;
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: checklist.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final item = entry.value;
+                        final bool isWarning = item['is_warning'] ?? false;
+                        final bool isLast = index == checklist.length - 1;
+
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
+                          padding: EdgeInsets.only(
+                            bottom: isLast ? 0 : sizeheight * 4 / fullheight,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                isWarning ? Icons.error_outline : Icons.check_circle_outline,
-                                color: isWarning ? Colors.red : Colors.green,
-                                size: 20,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: sizeheight * 2 / fullheight),
+                                child: Icon(
+                                  isWarning
+                                      ? Icons.error_outline_rounded
+                                      : Icons.check_rounded,
+                                  color: isWarning
+                                      ? AppColors.secondary 
+                                      : AppColors.green, 
+                                  size: sizeheight * 20 / fullheight,
+                                ),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: sizewidth * 10 / fullwidth),
                               Expanded(
                                 child: Text(
                                   item['text'],
                                   style: TextStyle(
-                                    fontSize: 14, 
-                                    color: AppColors.txtPrimary
+                                    fontSize: sizeheight * 14 / fullheight,
+                                    color: AppColors.txtPrimary,
+                                    height: 1.4,
                                   ),
                                 ),
                               ),
@@ -193,7 +215,9 @@ class _NutriguideState extends State<Nutriguide> {
                   ),
 
                   SizedBox(height: sizeheight * 32 / fullheight),
-                  
+
+                  SizedBox(height: sizeheight * 32 / fullheight),
+
                   Text(
                     "Panduan Gizi",
                     style: TextStyle(
@@ -212,7 +236,9 @@ class _NutriguideState extends State<Nutriguide> {
                         final item = porsiList[index];
                         return Padding(
                           padding: EdgeInsets.only(
-                            right: index == porsiList.length - 1 ? 0 : sizewidth * 16 / fullwidth,
+                            right: index == porsiList.length - 1
+                                ? 0
+                                : sizewidth * 16 / fullwidth,
                           ),
                           child: CardPanduanGizi(
                             title: item['kategori'],
@@ -227,7 +253,7 @@ class _NutriguideState extends State<Nutriguide> {
                   ),
 
                   SizedBox(height: sizeheight * 29 / fullheight),
-                  
+
                   Text(
                     "Rekomendasi Menu Harian",
                     style: TextStyle(
@@ -242,7 +268,8 @@ class _NutriguideState extends State<Nutriguide> {
                   Column(
                     children: menuList.map((menu) {
                       return Padding(
-                        padding: EdgeInsets.only(bottom: sizeheight * 8 / fullheight),
+                        padding: EdgeInsets.only(
+                            bottom: sizeheight * 8 / fullheight),
                         child: CardRekomendasimenu(
                           title: menu['nama_menu'],
                           desc: menu['deskripsi'],
@@ -254,10 +281,7 @@ class _NutriguideState extends State<Nutriguide> {
 
                   SizedBox(height: sizeheight * 22 / fullheight),
 
-                  CardTipsgizi(
-                    items: tipsItems, 
-                    size: size
-                  ),
+                  CardTipsgizi(items: tipsItems, size: size),
                 ],
               ),
             ),
