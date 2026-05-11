@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class GeminiAnalysisService {
   //btw ini api key sengaja disalahin diawal ditambah 'b' biar ga boros
-  final String apiKey = 'AIzaSyBfZzYYgXmcba9MfKrW1NN1VSMqUtZph-I';
+  final apiKey = dotenv.get('API_KEY');
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   User? user;
