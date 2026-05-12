@@ -107,7 +107,7 @@ class GrowthdataCard extends StatelessWidget {
                       child: Text(
                         currentWorstStatus == GrowthStatus.normal
                             ? "Pertumbuhan bayi sudah sesuai dengan standar pertumbuhan normal."
-                            : "Perlu perhatian lebih pada pertumbuhan bayi.",
+                            : "Segera bawa ke dokter untuk memeriksa kondisi Si Kecil.",
                         style: TextStyle(
                           fontSize: sizewidth * 12 / fullwidth,
                           color: AppColors.white,

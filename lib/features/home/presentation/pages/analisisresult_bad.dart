@@ -44,36 +44,48 @@ class AnalisisresultBad extends StatelessWidget {
                   size: size,
                   image: 'assets/images/analisis-bad.png',
                   icon: 'assets/icons/analisis-warning.svg',
-                  desc1: titleText, 
-                  desc2: 'Makanan yang anda berikan belum cukup bergizi untuk perkembangan Si Kecil.',
+                  desc1: titleText,
+                  desc2:
+                      'Makanan yang anda berikan belum cukup bergizi untuk perkembangan Si Kecil.',
                 ),
 
                 SizedBox(height: sizeheight * 28 / fullheight),
 
                 // 4. Widget Grafik Gizi Dinamis (Pengganti AnalisisResult statis)
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFEBD0), // Warna background card
+                    color: AppColors.primaryOrange, 
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
+                      Text(
                         "Analisis Gizi Menu",
                         style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600, 
-                          fontSize: sizewidth * 16 / fullwidth
-                        ),
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            fontSize: sizewidth * 16 / fullwidth),
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height:sizeheight * 16 / fullheight),
                       // Panggil Helper Widget untuk setiap kategori
-                      DynamicGiziBar(label: "Karbohidrat", data: stats['karbohidrat'], color: AppColors.green),
-                      DynamicGiziBar(label: "Protein", data: stats['protein'], color: AppColors.secondary),
-                      DynamicGiziBar(label: "Vitamin", data: stats['vitamin'], color: AppColors.yellowSemantic),
-                      DynamicGiziBar(label: "Cairan", data: stats['cairan'], color: AppColors.primaryBlue),
+                      DynamicGiziBar(
+                          label: "Karbohidrat",
+                          data: stats['karbohidrat'],
+                          color: AppColors.green),
+                      DynamicGiziBar(
+                          label: "Protein",
+                          data: stats['protein'],
+                          color: AppColors.secondary),
+                      DynamicGiziBar(
+                          label: "Vitamin",
+                          data: stats['vitamin'],
+                          color: AppColors.yellowSemantic),
+                      DynamicGiziBar(
+                          label: "Cairan",
+                          data: stats['cairan'],
+                          color: AppColors.primaryBlue),
                     ],
                   ),
                 ),
@@ -83,14 +95,13 @@ class AnalisisresultBad extends StatelessWidget {
                 // 5. Tombol Saran Dinamis (Mengganti ContainerBadresult statis)
                 if (saranSingkat.isNotEmpty)
                   Wrap(
-                    spacing: sizewidth * 8 / fullwidth,   // jarak horizontal antar item
-  runSpacing: sizeheight * 6 / fullheight,
+                    spacing: sizewidth * 8 / fullwidth,
+                    runSpacing: sizeheight * 6 / fullheight,
                     children: saranSingkat.map((saran) {
                       return Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: sizewidth * 12 / fullwidth, 
-                          vertical: sizeheight * 8 / fullheight
-                        ),
+                            horizontal: sizewidth * 12 / fullwidth,
+                            vertical: sizeheight * 8 / fullheight),
                         decoration: BoxDecoration(
                           color: AppColors.primaryOrange,
                           borderRadius: BorderRadius.circular(20),
@@ -98,16 +109,16 @@ class AnalisisresultBad extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.add, size: 14, color: AppColors.txtPrimary),
+                            Icon(Icons.add,
+                                size: 14, color: AppColors.txtPrimary),
                             SizedBox(width: 4),
                             Text(
-                              saran.replaceAll("+ ", ""), 
+                              saran.replaceAll("+ ", ""),
                               style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: sizewidth * 12 / fullwidth, 
-                                fontWeight: FontWeight.w500, 
-                                color: AppColors.txtPrimary
-                              ),
+                                  fontFamily: 'Poppins',
+                                  fontSize: sizewidth * 12 / fullwidth,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.txtPrimary),
                             ),
                           ],
                         ),
@@ -157,7 +168,8 @@ class AnalisisresultBad extends StatelessWidget {
                   // Mapping List Rekomendasi
                   ...rekomendasiMenu.map((menu) {
                     return Padding(
-                      padding: EdgeInsets.only(bottom: sizeheight * 8 / fullheight),
+                      padding:
+                          EdgeInsets.only(bottom: sizeheight * 8 / fullheight),
                       child: CardRekomendasimenu(
                         title: menu['nama_menu'] ?? "Menu Sehat",
                         desc: menu['deskripsi'] ?? "Deskripsi tidak tersedia",
@@ -201,22 +213,21 @@ class AnalisisresultBad extends StatelessWidget {
 // Taruh ini di file yang sama atau file terpisah (misal: dynamic_gizi_bar.dart)
 class DynamicGiziBar extends StatelessWidget {
   final String label;
-  final dynamic data; 
+  final dynamic data;
   final Color color;
 
-  const DynamicGiziBar({
-    super.key, 
-    required this.label, 
-    required this.data, 
-    required this.color
-  });
+  const DynamicGiziBar(
+      {super.key,
+      required this.label,
+      required this.data,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
     // Parsing data aman
     int persen = 0;
     String menu = "Tidak ada";
-    
+
     if (data != null && data is Map) {
       persen = data['persen'] ?? 0;
       menu = data['menu_penunjang'] ?? "Tidak ada";
@@ -237,7 +248,8 @@ class DynamicGiziBar extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 14),
                   ),
                   const SizedBox(width: 4),
                   Icon(
@@ -247,7 +259,9 @@ class DynamicGiziBar extends StatelessWidget {
                   ),
                 ],
               ),
-              Text("$persen%", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              Text("$persen%",
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold)),
             ],
           ),
           Text(
@@ -258,7 +272,7 @@ class DynamicGiziBar extends StatelessWidget {
               fontStyle: isMissing ? FontStyle.italic : FontStyle.normal,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(

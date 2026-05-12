@@ -113,6 +113,11 @@ class _HomePageState extends State<HomePage> {
                     }
 
                     String babyName = babyData.nama;
+
+                    final Color genderColor = babyData.jenisKelamin == 'L'
+                        ? AppColors.primaryBlue
+                        : AppColors.secondary;
+
                     final now = DateTime.now();
                     int bulan = now.month -
                         babyData.tanggalLahir.month +
@@ -303,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                                             fontSize:
                                                 sizewidth * 16 / fullwidth,
                                             fontWeight: FontWeight.w500,
-                                            color: AppColors.primaryBlue)),
+                                            color: genderColor)),
                                   ),
                                 ],
                               ),

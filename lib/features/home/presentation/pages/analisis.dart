@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/core/widgets/button_medium.dart';
-import 'package:lumora/features/home/data/models/analisisgizi_item.dart';
 import 'package:lumora/features/home/presentation/bloc/analisis_event.dart';
 import 'package:lumora/features/home/presentation/bloc/analisis_state.dart';
 import 'package:lumora/features/home/presentation/bloc/analis_bloc.dart';
