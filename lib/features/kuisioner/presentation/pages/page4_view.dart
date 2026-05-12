@@ -21,6 +21,17 @@ class Page4View extends StatefulWidget {
 }
 
 class _Page4ViewState extends State<Page4View> {
+  final List<String> _aktivitasOptions = [
+    'Tengkurap',
+    'Duduk dengan bantuan',
+    'Duduk sendiri',
+    'Merangkak',
+    'Berdiri dengan pegangan',
+    'Merespon terhadap suara',
+    'Bayi masih berusia dibawah 2 bulan',
+    'Belum bisa semua',
+  ];
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,7 +44,10 @@ class _Page4ViewState extends State<Page4View> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: sizeheight * 20 / fullheight, bottom: sizeheight*61/fullheight),
+            padding: EdgeInsets.only(
+              top: sizeheight * 20 / fullheight,
+              bottom: sizeheight * 61 / fullheight,
+            ),
             child: Column(
               children: [
                 TopContainer(
@@ -59,205 +73,67 @@ class _Page4ViewState extends State<Page4View> {
                           fontSize: sizewidth * 18 / fullwidth,
                         ),
                       ),
+                      Text(
+                        "Boleh pilih lebih dari satu",
+                        style: TextStyle(
+                          color: AppColors.txtSecondary,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          fontSize: sizewidth * 12 / fullwidth,
+                        ),
+                      ),
+
+                      SizedBox(height: sizeheight * 8 / fullheight),
 
                       BlocBuilder<KuisionerBloc, KuisionerState>(
                         builder: (context, state) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Tengkurap',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
+                            children: _aktivitasOptions.map((option) {
+                              final isSelected = state.aktivitasBayi.contains(option);
+                              return InkWell(
+                                onTap: () {
+                                  context.read<KuisionerBloc>().add(
+                                    ToggleAktivitasBayi(option),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: sizeheight * 4 / fullheight,
                                   ),
-
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Tengkurap',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                        value: isSelected,
+                                        activeColor: AppColors.radio,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        onChanged: (_) {
+                                          context.read<KuisionerBloc>().add(
+                                            ToggleAktivitasBayi(option),
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(width: sizewidth * 4 / fullwidth),
+                                      Expanded(
+                                        child: Text(
+                                          option,
+                                          style: TextStyle(
+                                            color: AppColors.txtPrimary,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: isSelected
+                                                ? FontWeight.w500
+                                                : FontWeight.w400,
+                                            fontSize: sizewidth * 16 / fullwidth,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Duduk dengan bantuan',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Duduk dengan bantuan',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Duduk sendiri',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Duduk sendiri',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Merangkak',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Merangkak',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Berdiri dengan pengangan',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Berdiri dengan pegangan',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Merespon terhadap suara',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Merespon terhadap suara',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Bayi masi berusia dibawah 2 bulan',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Bayi masih berusia dibawah 2 bulan',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Belum bisa semua',
-                                    groupValue: state.aktivitasBayi,
-                                    onChanged: (value) {
-                                      context.read<KuisionerBloc>().add(
-                                        PilAktivitasBayi(value!),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: sizewidth * 12 / fullwidth),
-                                  Text(
-                                    'Belum bisa semua',
-                                    style: TextStyle(
-                                      color: AppColors.txtPrimary,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: sizewidth * 16 / fullwidth,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              );
+                            }).toList(),
                           );
                         },
                       ),
@@ -271,14 +147,11 @@ class _Page4ViewState extends State<Page4View> {
                         backgroundColor: AppColors.txtPrimary,
                         borderColor: AppColors.txtPrimary,
                         onTap: () async {
-                          final finalState = context
-                              .read<KuisionerBloc>()
-                              .state;
+                          final finalState = context.read<KuisionerBloc>().state;
                           final User? user = FirebaseAuth.instance.currentUser;
                           BabyModel babyModel = BabyModel(
                             nama: finalState.nama,
-                            tanggalLahir:
-                                finalState.tanggalLahir ?? DateTime.timestamp(),
+                            tanggalLahir: finalState.tanggalLahir ?? DateTime.now(),
                             jenisKelamin: finalState.gender,
                             beratBadan: finalState.bb,
                             tinggiBadan: finalState.tb,
@@ -292,7 +165,6 @@ class _Page4ViewState extends State<Page4View> {
                             longitude: 0.0,
                           );
 
-                          print("BB: ${finalState.bb}");
                           await KuisionerService().saveKuisionerData(babyModel);
                           Navigator.pushReplacement(
                             context,
@@ -314,7 +186,6 @@ class _Page4ViewState extends State<Page4View> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-
                         radius: 15,
                         txColor: AppColors.txtPrimary,
                       ),

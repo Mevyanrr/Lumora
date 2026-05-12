@@ -7,9 +7,9 @@ class BabyModel {
   final double beratBadan;
   final double tinggiBadan;
   final double lingkarKepala;
-  final String riwayatKesehatan;
+  final List<String> riwayatKesehatan;
   final String kontrol;
-  final String kondisi;
+  final List<String> kondisi;
   final DateTime createdAt;
   final String? alamat;
   final double? latitude;
@@ -28,29 +28,38 @@ class BabyModel {
     required this.createdAt,
     required this.alamat,
     required this.latitude,
-    required this.longitude
+    required this.longitude,
   });
 
-  factory BabyModel.fromFirestore(DocumentSnapshot doc){
+  factory BabyModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
+
+    // Helper untuk parse field yang bisa String (lama) atau List<String> (baru)
+    List<String> parseStringOrList(dynamic value) {
+      if (value == null) return [];
+      if (value is List) return List<String>.from(value);
+      if (value is String && value.isNotEmpty) return [value];
+      return [];
+    }
+
     return BabyModel(
-      nama: data['nama'] ?? 'Tidak ada nama', 
-      tanggalLahir: (data['tanggalLahir'] as Timestamp?)?.toDate()  ?? DateTime.now(), 
-      jenisKelamin: data['jenisKelamin'] ?? 'Tidak diketahui', 
-      beratBadan: data['beratBadan'] ?? 0.0, 
-      tinggiBadan: data['tinggiBadan'] ?? 0.0, 
-      lingkarKepala: data['lingkarKepala'] ?? 0.0, 
-      riwayatKesehatan: data['riwayatKesehatan'] ?? 0.0, 
-      kontrol: data['kontrol'] ?? 'Tidak ada kontrol', 
-      kondisi: data['kondisi'] ?? 'Tidak ada kondisi',
+      nama: data['nama'] ?? 'Tidak ada nama',
+      tanggalLahir: (data['tanggalLahir'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      jenisKelamin: data['jenisKelamin'] ?? 'Tidak diketahui',
+      beratBadan: (data['beratBadan'] ?? 0.0).toDouble(),
+      tinggiBadan: (data['tinggiBadan'] ?? 0.0).toDouble(),
+      lingkarKepala: (data['lingkarKepala'] ?? 0.0).toDouble(),
+      riwayatKesehatan: parseStringOrList(data['riwayatKesehatan']),
+      kontrol: data['kontrol'] ?? 'Tidak ada kontrol',
+      kondisi: parseStringOrList(data['kondisi']),
       createdAt: DateTime.now(),
       alamat: data['address'],
-      latitude: data['latitude'],
-      longitude: data['longitude'],
-      );
+      latitude: (data['latitude'] as num?)?.toDouble(),
+      longitude: (data['longitude'] as num?)?.toDouble(),
+    );
   }
 
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'nama': nama,
       'tanggalLahir': tanggalLahir,

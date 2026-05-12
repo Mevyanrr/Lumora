@@ -8,6 +8,7 @@ import 'package:lumora/features/home/presentation/pages/analisis.dart';
 import 'package:lumora/features/home/presentation/pages/data_bayi.dart';
 import 'package:lumora/features/home/presentation/pages/nutriguide.dart';
 import 'package:lumora/features/home/presentation/pages/tahapan_bayi.dart';
+import 'package:lumora/features/kuisioner/presentation/pages/page1.dart';
 import 'package:lumora/features/home/presentation/widgets/card_growthdata.dart';
 import 'package:lumora/features/home/presentation/widgets/card_hiparents.dart';
 import 'package:lumora/features/home/presentation/widgets/card_infokesehatan.dart';
@@ -69,13 +70,46 @@ class _HomePageState extends State<HomePage> {
                   stream: KuisionerService().getKuisionerData(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.error_outline,
+                                  color: AppColors.txtSecondary, size: 48),
+                              const SizedBox(height: 12),
+                              Text(
+                                "Gagal memuat data. Coba lagi.",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: AppColors.txtSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     }
                     final babyData = snapshot.data;
                     if (babyData == null) {
-                      return const Center(
-                          child:
-                              Text("Silahkan isi data bayi terlebih dahulu"));
+                      // Redirect ke kuisioner jika belum ada data bayi
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => Page1()),
+                        );
+                      });
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
                     }
 
                     String babyName = babyData.nama;

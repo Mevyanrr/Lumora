@@ -199,7 +199,7 @@ class Informasibayi extends StatelessWidget {
                       ),
 
                       child: Text(
-                        "Bayi sudah bisa ${userData.kondisi}",
+                        "Bayi sudah bisa ${userData.kondisi.join(', ')}",
                         style: TextStyle(
                           fontSize: sizewidth * 16 / fullwidth,
                           fontWeight: FontWeight.w400,
