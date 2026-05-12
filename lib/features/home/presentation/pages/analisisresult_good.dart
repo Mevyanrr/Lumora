@@ -30,16 +30,16 @@ class AnalisisresultGood extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: sizewidth * 18 / fullwidth,
-              vertical: sizeheight * 27 / fullheight
-            ),
+                horizontal: sizewidth * 18 / fullwidth,
+                vertical: sizeheight * 27 / fullheight),
             child: Column(
               children: [
                 CardTopanalisisresult(
                   size: size,
                   image: 'assets/images/analisis-good.png',
                   desc1: titleText,
-                  desc2: 'Makanan yang anda berikan sudah cukup bergizi untuk perkembangan Si Kecil.',
+                  desc2:
+                      'Makanan yang anda berikan sudah cukup bergizi untuk perkembangan Si Kecil.',
                 ),
 
                 SizedBox(height: sizeheight * 28 / fullheight),
@@ -48,26 +48,38 @@ class AnalisisresultGood extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.green[50], // Background agak hijau muda
+                    color:
+                        AppColors.primaryOrange, // Background agak hijau muda
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
+                      Text(
                         "Analisis Gizi Menu",
                         style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600, 
-                          fontSize: sizewidth * 16 / fullwidth
-                        ),
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            fontSize: sizewidth * 16 / fullwidth),
                       ),
                       SizedBox(height: 16),
                       // Helper widget yang sama (copy dari file bad result atau buat file terpisah)
-                      DynamicGiziBar(label: "Karbohidrat", data: stats['karbohidrat'], color: AppColors.green),
-                      DynamicGiziBar(label: "Protein", data: stats['protein'], color: AppColors.secondary),
-                      DynamicGiziBar(label: "Vitamin", data: stats['vitamin'], color: AppColors.yellowSemantic),
-                      DynamicGiziBar(label: "Cairan", data: stats['cairan'], color: AppColors.primaryBlue),
+                      DynamicGiziBar(
+                          label: "Karbohidrat",
+                          data: stats['karbohidrat'],
+                          color: AppColors.green),
+                      DynamicGiziBar(
+                          label: "Protein",
+                          data: stats['protein'],
+                          color: AppColors.secondary),
+                      DynamicGiziBar(
+                          label: "Vitamin",
+                          data: stats['vitamin'],
+                          color: AppColors.yellowSemantic),
+                      DynamicGiziBar(
+                          label: "Cairan",
+                          data: stats['cairan'],
+                          color: AppColors.primaryBlue),
                     ],
                   ),
                 ),
@@ -83,15 +95,13 @@ class AnalisisresultGood extends StatelessWidget {
                     ),
                     SizedBox(width: sizewidth * 3 / fullwidth),
                     Expanded(
-                      child: Text(
-                        "Terima kasih sudah pantau asupan gizi Si Kecil. Pertahankan makanan bergizi seimbang ya, parents.",
-                        style: TextStyle(
+                        child: Text(
+                      "Terima kasih sudah pantau asupan gizi Si Kecil. Pertahankan makanan bergizi seimbang ya, parents.",
+                      style: TextStyle(
                           color: AppColors.txtPrimary,
                           fontSize: sizewidth * 12 / fullwidth,
-                          fontWeight: FontWeight.w400
-                        ),
-                      )
-                    )
+                          fontWeight: FontWeight.w400),
+                    ))
                   ],
                 ),
 
@@ -104,11 +114,11 @@ class AnalisisresultGood extends StatelessWidget {
                   backgroundColor: AppColors.txtPrimary,
                   borderColor: AppColors.txtPrimary,
                   onTap: () {
-                     Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => HomePage()),
-                        (route) => false,
-                      );
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => HomePage()),
+                      (route) => false,
+                    );
                   },
                   radius: 15,
                   txColor: AppColors.background,
@@ -124,29 +134,28 @@ class AnalisisresultGood extends StatelessWidget {
 
 class DynamicGiziBar extends StatelessWidget {
   final String label;
-  final dynamic data; 
+  final dynamic data;
   final Color color;
 
-  const DynamicGiziBar({
-    super.key, 
-    required this.label, 
-    required this.data, 
-    required this.color
-  });
+  const DynamicGiziBar(
+      {super.key,
+      required this.label,
+      required this.data,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
     // Parsing data aman
     int persen = 0;
     String menu = "Tidak ada";
-    
+
     if (data != null && data is Map) {
       persen = data['persen'] ?? 0;
       menu = data['menu_penunjang'] ?? "Tidak ada";
     }
 
     bool isMissing = menu.toLowerCase() == "tidak ada";
-    bool isGood = persen >= 75;
+    bool isGood = persen >= 50;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
@@ -160,7 +169,8 @@ class DynamicGiziBar extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 14),
                   ),
                   const SizedBox(width: 4),
                   Icon(
@@ -170,7 +180,9 @@ class DynamicGiziBar extends StatelessWidget {
                   ),
                 ],
               ),
-              Text("$persen%", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              Text("$persen%",
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold)),
             ],
           ),
           Text(

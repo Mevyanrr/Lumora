@@ -30,6 +30,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -37,7 +39,6 @@ class _LoginViewState extends State<LoginView> {
     final sizeheight = size.height;
     final fullheight = 917;
     final fullwidth = 412;
-    bool isLoading = false;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -207,9 +208,7 @@ class _LoginViewState extends State<LoginView> {
                           } catch (e) {
                             log("error regist: $e");
                           } finally {
-                            setState(() {
-                              isLoading = false;
-                            });
+                            if (mounted) setState(() { isLoading = false; });
                           }
                         },
 
@@ -261,10 +260,13 @@ class _LoginViewState extends State<LoginView> {
                             try {
                               final userCredential = await AuthService()
                                   .signInWithGoogle();
+                              if (userCredential != null) {
+                                await AuthService().saveUserToFirestore(
+                                  userCredential.user!,
+                                  userCredential.user!.displayName ?? "",
+                                );
+                              }
                               if (!mounted) return;
-                              setState(() {
-                                isLoading = false;
-                              });
                               Navigator.pushAndRemoveUntil(
                               context,
                           MaterialPageRoute(builder: (context) => const HomePage()),
@@ -273,9 +275,7 @@ class _LoginViewState extends State<LoginView> {
                             } catch (e) {
                               log("error google sign in: $e");
                             } finally {
-                              setState(() {
-                                isLoading = false;
-                              });
+                              if (mounted) setState(() { isLoading = false; });
                             }
                             // Navigator.push(
                             //   context,

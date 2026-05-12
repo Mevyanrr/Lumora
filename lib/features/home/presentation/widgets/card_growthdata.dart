@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lumora/core/theme/colors.dart';
 import 'package:lumora/features/kuisioner/services/kuisioner_service.dart';
 
-enum GrowthStatus { normal, kurang }
+enum GrowthStatus { normal, kurang, lebih }
 
 class GrowthdataCard extends StatelessWidget {
   final GrowthStatus beratStatus;
@@ -125,9 +125,8 @@ class GrowthdataCard extends StatelessWidget {
   }
 
   GrowthStatus _getWorstStatus(List<GrowthStatus> statuses) {
-    if (statuses.contains(GrowthStatus.kurang)) {
-      return GrowthStatus.kurang;
-    }
+    if (statuses.contains(GrowthStatus.kurang)) return GrowthStatus.kurang;
+    if (statuses.contains(GrowthStatus.lebih)) return GrowthStatus.lebih;
     return GrowthStatus.normal;
   }
 
@@ -136,8 +135,6 @@ class GrowthdataCard extends StatelessWidget {
     required String value,
     required GrowthStatus status,
   }) {
-    final isNormal = status == GrowthStatus.normal;
-
     return Row(
       children: [
         Expanded(
@@ -162,13 +159,22 @@ class GrowthdataCard extends StatelessWidget {
 
         //STATUS PER BARIS
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          constraints: const BoxConstraints(minWidth: 56),
           decoration: BoxDecoration(
-            color: isNormal ? AppColors.green : AppColors.secondary,
+            color: switch (status) {
+              GrowthStatus.normal => AppColors.green,
+              GrowthStatus.lebih => AppColors.yellowSemantic,
+              GrowthStatus.kurang => AppColors.secondary,
+            },
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
-            isNormal ? "Normal" : "Kurang",
+            switch (status) {
+              GrowthStatus.normal => "Normal",
+              GrowthStatus.lebih => "Lebih",
+              GrowthStatus.kurang => "Kurang",
+            },
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12,
@@ -182,20 +188,34 @@ class GrowthdataCard extends StatelessWidget {
   }
 
   GrowthStatus _hitungStatus(String kategori, int bulan, double nilai) {
-    return switch (kategori) {
-      'berat' => switch (bulan) {
-          <= 3 => nilai >= 3.5 ? GrowthStatus.normal : GrowthStatus.kurang,
-          <= 6 => nilai >= 6.4 ? GrowthStatus.normal : GrowthStatus.kurang,
-          <= 12 => nilai >= 8.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-          _ => nilai >= 10.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-        },
-      'tinggi' => switch (bulan) {
-          <= 3 => nilai >= 55.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-          <= 6 => nilai >= 64.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-          <= 12 => nilai >= 72.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-          _ => nilai >= 85.0 ? GrowthStatus.normal : GrowthStatus.kurang,
-        },
-      _ => GrowthStatus.normal,
-    };
+    double min, max;
+    switch (kategori) {
+      case 'berat':
+        (min, max) = switch (bulan) {
+          <= 3 => (3.5, 7.5),
+          <= 6 => (6.4, 10.0),
+          <= 12 => (8.0, 13.5),
+          _ => (10.0, 18.0),
+        };
+      case 'tinggi':
+        (min, max) = switch (bulan) {
+          <= 3 => (55.0, 65.0),
+          <= 6 => (64.0, 73.0),
+          <= 12 => (72.0, 83.0),
+          _ => (85.0, 97.0),
+        };
+      case 'kepala':
+        (min, max) = switch (bulan) {
+          <= 3 => (36.0, 42.0),
+          <= 6 => (41.0, 46.0),
+          <= 12 => (44.0, 49.0),
+          _ => (46.0, 52.0),
+        };
+      default:
+        return GrowthStatus.normal;
+    }
+    if (nilai < min) return GrowthStatus.kurang;
+    if (nilai > max) return GrowthStatus.lebih;
+    return GrowthStatus.normal;
   }
 }

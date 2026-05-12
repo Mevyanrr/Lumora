@@ -234,7 +234,7 @@ class DynamicGiziBar extends StatelessWidget {
     }
 
     bool isMissing = menu.toLowerCase() == "tidak ada";
-    bool isGood = persen >= 75;
+    bool isGood = persen >= 50;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),

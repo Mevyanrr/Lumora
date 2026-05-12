@@ -78,7 +78,6 @@ class _DataBayiState extends State<DataBayiView> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(bottom: sizeheight * 57 / fullheight),
-          padding: EdgeInsets.only(bottom: sizeheight * 57 / fullheight),
           child: Column(
             children: [
               StreamBuilder(
@@ -400,19 +399,6 @@ class _DataBayiState extends State<DataBayiView> {
                   final finalState = context.read<KuisionerBloc>().state;
                   final User? user = FirebaseAuth.instance.currentUser;
                   BabyModel babyModel = BabyModel(
-                      nama: finalState.nama,
-                      tanggalLahir: finalState.tanggalLahir ?? DateTime.now(),
-                      jenisKelamin: finalState.gender ?? '',
-                      beratBadan: finalState.bb,
-                      tinggiBadan: finalState.tb,
-                      lingkarKepala: finalState.lingkarKepala,
-                      riwayatKesehatan: finalState.kondisiBayi,
-                      kontrol: finalState.pilKontrol,
-                      kondisi: finalState.aktivitasBayi,
-                      createdAt: DateTime.now(),
-                      alamat: '',
-                      latitude: 0.0,
-                      longitude: 0.0);
                     nama: finalState.nama,
                     tanggalLahir: finalState.tanggalLahir ?? DateTime.now(),
                     jenisKelamin: finalState.gender ?? '',
@@ -429,13 +415,10 @@ class _DataBayiState extends State<DataBayiView> {
                   );
                   await KuisionerService().updateDataBayi(babyModel);
                   Navigator.pushReplacement(
-                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
                     MaterialPageRoute(
                       builder: (_) => HomePage(),
                     ),
-                  );
                   );
                 },
                 radius: 15,

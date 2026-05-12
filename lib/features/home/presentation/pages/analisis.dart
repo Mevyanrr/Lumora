@@ -198,7 +198,15 @@ class Analisis extends StatelessWidget {
 
                           if(context.mounted){
                             if(result.isNotEmpty){
-                              String status = result['status_keseluruhan'] ?? 'bad';
+                              // Hitung status dari sisi client, tidak bergantung penuh ke Gemini
+                              final gizi = (result['analisis_gizi'] as Map<String, dynamic>?) ?? {};
+                              final persenList = gizi.values
+                                  .map((e) => ((e as Map)['persen'] as num?)?.toDouble() ?? 0.0)
+                                  .toList();
+                              final avg = persenList.isEmpty ? 0.0 : persenList.reduce((a, b) => a + b) / persenList.length;
+                              final missingCount = persenList.where((p) => p == 0).length;
+                              final String status = (avg >= 50 && missingCount <= 2) ? 'good' : 'bad';
+
                               if(status == 'good'){
                                 Navigator.push(
                                   context,

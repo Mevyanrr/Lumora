@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumora/core/theme/colors.dart';
@@ -83,7 +84,16 @@ class _ProfileState extends State<Profile> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     }
-                    final userData = snapshot.data;
+                    final firebaseUser = FirebaseAuth.instance.currentUser;
+                    final userData = snapshot.data ??
+                        (firebaseUser != null
+                            ? UserModel(
+                                nama: firebaseUser.displayName ?? '',
+                                email: firebaseUser.email ?? '',
+                                photoURL: firebaseUser.photoURL,
+                                lastSignIn: DateTime.now(),
+                              )
+                            : null);
                     if (userData == null) {
                       return const Center(
                           child:

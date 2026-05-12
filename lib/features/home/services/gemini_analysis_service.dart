@@ -206,8 +206,9 @@ String prompt = """
 
     SCORING & STATUS:
     - Beri nilai persen (0-100) berdasarkan kualitas & keberadaan item di kategori tersebut.
-    - Status "good": Jika rata-rata persen > 60.
-    - Status "bad": Jika rata-rata persen < 60 atau ada kategori bernilai 0 (Missing).
+    - Ingat ini untuk bayi/balita, porsi kecil sudah cukup berarti.
+    - Status "good": Jika rata-rata persen >= 50.
+    - Status "bad": Jika rata-rata persen < 50 atau lebih dari 2 kategori bernilai 0 (tidak ada sama sekali).
 
     FORMAT OUTPUT JSON (Strict JSON, No Markdown):
     {

@@ -26,19 +26,54 @@ class Milestone extends StatefulWidget {
   State<Milestone> createState() => _MilestoneState();
 }
 
-class _MilestoneState extends State<Milestone> {
+class _MilestoneState extends State<Milestone> with TickerProviderStateMixin {
   final ScrollController _ageScrollController = ScrollController();
   final ScrollController _dayScrollController = ScrollController();
+  late final TabController _tabController;
+  bool _dayScrolled = false;
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_onTabChanged);
     context.read<AktivitasBloc>().add(LoadAktivitas());
-    // Usia bayi akan dimuat dinamis via StreamBuilder dari KuisionerService
+  }
+
+  void _onTabChanged() {
+    if (!_tabController.indexIsChanging && _tabController.index == 1 && !_dayScrolled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToToday());
+    }
+  }
+
+  void _scrollToToday({int retries = 5}) {
+    if (_dayScrolled) return;
+    if (!_dayScrollController.hasClients) {
+      if (retries > 0) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _scrollToToday(retries: retries - 1),
+        );
+      }
+      return;
+    }
+    _dayScrolled = true;
+    final now = DateTime.now();
+    final today = now.day;
+    final daysInMonth = DateUtils.getDaysInMonth(now.year, now.month);
+    final pos = _dayScrollController.position;
+    final totalWidth = pos.maxScrollExtent + pos.viewportDimension;
+    final itemWidth = totalWidth / daysInMonth;
+    final centeredOffset = (today - 1) * itemWidth - pos.viewportDimension / 2 + itemWidth / 2;
+    _dayScrollController.animateTo(
+      centeredOffset.clamp(0, pos.maxScrollExtent),
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_onTabChanged);
     _ageScrollController.dispose();
     _dayScrollController.dispose();
     super.dispose();
@@ -84,10 +119,7 @@ class _MilestoneState extends State<Milestone> {
           bottomNavigationBar: Navbar(selectedItem: 2),
           body: Container(
             decoration: BoxDecoration(color: AppColors.background),
-            child: DefaultTabController(
-              initialIndex: 0,
-              length: 2,
-              child: NestedScrollView(
+            child: NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverToBoxAdapter(
@@ -214,6 +246,7 @@ class _MilestoneState extends State<Milestone> {
                                       ),
                                       child: Center(
                                         child: ButtonsTabBar(
+                                          controller: _tabController,
                                           backgroundColor:
                                               AppColors.yellowSemantic,
                                           unselectedBackgroundColor:
@@ -254,6 +287,7 @@ class _MilestoneState extends State<Milestone> {
                   ];
                 },
                 body: TabBarView(
+                  controller: _tabController,
                   children: [
                     ListView(
                       padding: EdgeInsets.only(
@@ -385,22 +419,6 @@ class _MilestoneState extends State<Milestone> {
                             height: size.height * 70 / 917,
                             child: BlocBuilder<MonthBloc, MonthState>(
                               builder: (context, state) {
-                                if (state is MonthLoaded) {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    final today = DateTime.now().day;
-                                    const itemWidth = 80.0;
-                                    if (_dayScrollController.hasClients) {
-                                      _dayScrollController.animateTo(
-                                        (today - 1) * itemWidth,
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeOut,
-                                      );
-                                    }
-                                  });
-                                }
-
                                 return ListView.builder(
                                   controller: _dayScrollController,
                                   scrollDirection: Axis.horizontal,
@@ -500,9 +518,9 @@ class _MilestoneState extends State<Milestone> {
                 ),
               ),
             ),
-          ),
         );
       },
     );
   }
 }
+
