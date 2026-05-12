@@ -186,9 +186,10 @@ class Informasibayi extends StatelessWidget {
                     SizedBox(height: sizeheight * 8 / fullheight),
 
                     Container(
+                      width: double.infinity,
                       padding: EdgeInsets.symmetric(
-                        vertical: sizeheight * 16 / fullheight,
-                        horizontal: sizewidth * 16 / fullwidth,
+                        vertical: sizeheight * 15 / fullheight,
+                        horizontal: sizewidth * 13 / fullwidth,
                       ),
 
                       decoration: BoxDecoration(
