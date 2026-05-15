@@ -135,7 +135,12 @@ class _StimulasiState extends State<Stimulasi> {
                             ],
                           );
                         }
-                        SizedBox(height: sizeheight * 12 / fullheight);
+                        
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    ),
+
+                    SizedBox(height: sizeheight * 12 / fullheight),
                         GestureDetector(
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -174,10 +179,7 @@ class _StimulasiState extends State<Stimulasi> {
                               ],
                             ),
                           ),
-                        );
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                    ),
+                        )
                   ],
                 ),
               ),

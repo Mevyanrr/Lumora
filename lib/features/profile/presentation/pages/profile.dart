@@ -187,7 +187,7 @@ class _ProfileState extends State<Profile> {
                               ),
                               SizedBox(height: sizeheight * 16 / fullheight),
                               Text(
-                                "${userData.nama} - Parent of $babyName",
+                                "${userData.nama} - parent of $babyName",
                                 style: TextStyle(
                                   fontSize: sizewidth * 20 / fullwidth,
                                   fontWeight: FontWeight.w500,
