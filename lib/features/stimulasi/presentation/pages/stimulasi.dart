@@ -135,7 +135,46 @@ class _StimulasiState extends State<Stimulasi> {
                             ],
                           );
                         }
-
+                        SizedBox(height: sizeheight * 12 / fullheight);
+                        GestureDetector(
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Fitur ini masih belum tersedia"),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: sizeheight * 8 / fullheight,
+                              horizontal: sizewidth * 12 / fullwidth,
+                            ),
+                            width: sizewidth * 376 / fullwidth,
+                            height: sizeheight * 45 / fullheight,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  sizewidth * 10 / fullwidth),
+                              color: AppColors.primaryOrange,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Berlangganan untuk melakukan aktivitas lebih banyak",
+                                  style: TextStyle(
+                                      fontSize: sizewidth * 16 / fullwidth,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.txtPrimary),
+                                ),
+                                Icon(
+                                  Icons.chevron_right,
+                                  size: sizewidth * 24 / fullwidth,
+                                  color: AppColors.txtPrimary,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                         return const Center(child: CircularProgressIndicator());
                       },
                     ),

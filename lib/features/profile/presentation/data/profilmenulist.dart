@@ -21,7 +21,7 @@ const List<ProfileMenuItem> profileMenuList = [
   ),
   ProfileMenuItem(
     icon: Icons.support_rounded,
-    title: 'Premium',
+    title: 'Bantuan',
   ),
   ProfileMenuItem(
     icon: Icons.logout_outlined,
